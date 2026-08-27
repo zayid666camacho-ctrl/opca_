@@ -19,7 +19,7 @@ class TipoServicioController extends Controller
     {
         //}
         $tiposervicio = $this->tiposervicioservice->listar();
-        return view('tipo_servicio.index', compact('tipo_servicio'));
+        return view('tipo_servicio.index', compact('tiposervicio'));
     }
 
     /**
