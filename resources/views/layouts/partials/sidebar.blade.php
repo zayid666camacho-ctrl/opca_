@@ -27,8 +27,8 @@
                     ['label' => 'Dashboard',   'route' => 'dashboard.index',  'icon' => 'home'],
                     ['label' => 'Clientes',    'route' => 'clientes.index',      'icon' => 'users'],
                     ['label' => 'Tipo_servicio', 'route' => 'tipo_servicio.index',   'icon' => 'shield'],
-                    ['label' => 'Categorías',  'route' => 'categories.index', 'icon' => 'tag'],
-                    ['label' => 'Productos',   'route' => 'producto.index',   'icon' => 'box'],
+                    ['label' => 'Precio_base',  'route' => 'precio_bases.index', 'icon' => 'tag'],
+                    ['label' => 'Pedidos',   'route' => 'pedidos.index',   'icon' => 'box'],
                     ['label' => 'Reportes',    'route' => 'reports.index',    'icon' => 'chart'],
                     ['label' => 'Configuración', 'route' => 'settings.index', 'icon' => 'cog'],
                 ];
