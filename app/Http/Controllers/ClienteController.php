@@ -2,6 +2,8 @@
 
 namespace App\Http\Controllers;
 
+use App\Http\Requests\StoreClienteRequest;
+use App\Http\Requests\UpdateClienteRequest;
 use App\Models\cliente;
 use App\services\ClientesService;
 use Illuminate\Http\Request;
@@ -19,26 +21,28 @@ class ClienteController extends Controller
     public function index()
     {
         //
-        $clientes = $this->clientesservice->Listar();
-        return view('Clientes.index', compact('clientes'));
+        $clientes = $this->clientesservice->listar();
+        return view('clientes.index', compact('clientes'));
     }
 
     public function create()
     {
         //
-        return view('Clientes.create');
+        return view('clientes.create');
     }
 
-    public function store(Request $request)
+    public function store(StoreClienteRequest $request)
     {
         //
-        $this->clientesservice->Crear($request->all());
-        return view('Clientes.index');
+        $this->clientesservice->crear($request->validated());
+        return redirect()->route('clientes.index');
     }
 
-    public function show()
+    public function show(int $id)
     {
-        //
+    $cliente = $this->clientesservice->obtenerDetalle($id);
+
+    return view('clientes.show', compact('cliente'));
     }
 
 
@@ -46,15 +50,15 @@ class ClienteController extends Controller
     {
         //
         $cliente = $this->clientesservice->buscar($id);
-        return view('Clientes.edit', compact('cliente'));
+        return view('clientes.edit', compact('cliente'));
     }
 
 
-    public function update(int $id, Request $request)
+    public function update(int $id, UpdateClienteRequest $request)
     {
         //
-        $this->clientesservice->actualizar($id, $request->all());
-        return redirect()->route('Clientes.index');
+        $this->clientesservice->actualizar($id, $request->validated());
+        return redirect()->route('clientes.index');
     }
 
 
@@ -62,6 +66,6 @@ class ClienteController extends Controller
     {
         //
         $this->clientesservice->delete($id);
-        return redirect()->route('Clientes.index');
+        return redirect()->route('clientes.index');
     }
 }

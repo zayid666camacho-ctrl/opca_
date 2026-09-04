@@ -14,7 +14,7 @@ class PreciobaseService{
     }
 
     public function listar(){
-        $this->preciobaserepository->listar();
+        return $this->preciobaserepository->listar();
     }
 
     public function crear(array $datos){
@@ -22,7 +22,7 @@ class PreciobaseService{
     }
 
     public function buscar(int $id){
-        $this->preciobaserepository->buscar($id);
+        return $this->preciobaserepository->buscar($id);
     }
     
     public function actualizar(int $id, array $datos){
