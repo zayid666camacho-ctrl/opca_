@@ -12,11 +12,12 @@ class ClientesService{
         $this->clientesrepository = $clientesrepository;
     }
 
-    public function Listar(){
+    public function listar(){
         return $this->clientesrepository->Listar();
     }
 
-    public function Crear(array $datos){
+    public function crear(array $datos){
+        $datos['fecha_registro'] = now();
         return $this->clientesrepository->Crear($datos);
     }
 
@@ -30,6 +31,10 @@ class ClientesService{
 
     public function delete(int $id){
         return $this->clientesrepository->delete($id);
+    }
+
+    public function obtenerDetalle(int $id){
+        return $this->clientesrepository->obtenerDetalle($id);
     }
 
 }
