@@ -6,17 +6,17 @@ use App\Models\cliente;
 
 class ClientesRepository{
 
-    public function Listar(){
+    public function listar(){
         $clientes = cliente::all();
-        return $clientes;
+        return $clientes; 
     }
 
-    public function Crear(array $datos){
+    public function crear(array $datos){
         cliente::create($datos);    
     }
 
     public function buscar(int $id){
-        $clientes = cliente::finOrfail($id);
+        $clientes = cliente::findOrfail($id);
         return $clientes;
     }
 
@@ -27,6 +27,10 @@ class ClientesRepository{
 
     public function delete(int $id){
         cliente::destroy($id);
+    }
+
+    public function obtenerDetalle(int $id){
+        return cliente::findOrFail($id);
     }
 
 }

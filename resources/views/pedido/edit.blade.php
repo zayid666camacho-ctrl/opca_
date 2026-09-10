@@ -50,10 +50,11 @@
 
         @endif
 
-        <form action="{{ route('pedidos.store') }}" method="post">
+        <form action="{{ route('pedidos.update', $pedidos->id) }}" method="post">
 
             @csrf
-            
+            @method('PUT')
+
             <div class="mb-5">
                 <label for="" class="block mb-2 font-semibold">Fecha</label>
                 <input type="date" name="fecha" value="{{ $pedidos->fecha }}" class="w-full border rounded px-3 py-2">
