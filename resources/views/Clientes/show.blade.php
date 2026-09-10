@@ -17,7 +17,7 @@
             <div class="space-x-2">
                 <a href="{{ route('clientes.edit', $cliente->id) }}"
                     class="bg-primary-400 hover:bg-primary-500 text-white px-4 py-2 rounded">
-                    Editar
+                    EDITAR
                 </a>
                 <a href="{{ route('clientes.index') }}"
                     class="bg-gray-300 hover:bg-gray-400 text-white px-4 py-2 rounded">
