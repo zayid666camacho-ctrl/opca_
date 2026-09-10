@@ -34,6 +34,7 @@ class PedidoController extends Controller
     {
         //
         $cliente = $this->clientesservice->listar();
+        
         return view('pedido.create', compact('cliente'));
     }
 

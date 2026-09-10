@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html lang="es" class="h-full bg-slate-50">
+<html lang="es" class="h-full bg-primary-50">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
@@ -13,8 +13,8 @@
                 extend: {
                     colors: {
                         primary: {
-                            50: '#fff1f2', 100: '#EBE1C7', 200: '#fecdd3', 300: '#fda4af',
-                            400: '#fb7185', 500: '#f43f5e', 600: '#ce9ea9', 700: '#be123c',
+                            50: '#fff1f2', 100: '#ffe4e6', 200: '#fecdd3', 300: '#fda4af',
+                            400: '#fb7185', 500: '#b65b6a', 600: '#e11d48', 700: '#be123c',
                             800: '#9f1239', 900: '#881337'
                         }
                     },

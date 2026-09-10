@@ -6,15 +6,15 @@
 <aside
     x-cloak
     :class="sidebarOpen ? 'translate-x-0' : '-translate-x-full lg:translate-x-0'"
-    class="fixed inset-y-0 left-0 z-40 w-64 bg-pink-300 text-gray-950 transform transition-transform duration-200 ease-in-out lg:translate-x-0"
+    class="fixed inset-y-0 left-0 z-40 w-64 bg-primary-500 text-gray-950 transform transition-transform duration-200 ease-in-out lg:translate-x-0"
     aria-label="Menú principal"
 >
     <div class="h-full flex flex-col">
 
         {{-- Logo --}}
         <div class="flex items-center gap-3 h-16 px-6 border-b border-slate-800">
-            <div class="w-9 h-9 rounded-lg bg-primary-900 flex items-center justify-center text-white font-bold">
-                OPCA
+            <div class="w-9 h-9 rounded-lg bg-primary-500 flex items-center justify-center text-white font-bold">
+                opca
             </div>
             <span class="text-gray-950 font-semibold text-lg tracking-tight">{{ config('app.name', 'AdminPanel') }}</span>
         </div>

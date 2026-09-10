@@ -107,7 +107,8 @@
                         <td class="border px-4 py-2">{{ $pedidos->precio}}</td>
                         <td class="border px-4 py-2">{{ $pedidos->saldo_pendiente}}</td>
                         <td class="border px-4 py-2">{{ $pedidos->clientes->nombre}}</td>
-                        <td class="border px-4 py-2">
+                        
+                        
 
 
                         <br>
