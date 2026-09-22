@@ -33,4 +33,8 @@ class ClientesRepository{
         return cliente::findOrFail($id);
     }
 
+    public function buscarPorNombre(string $termino){
+    return cliente::whereRaw("(nombre || ' ' || apellido) LIKE ?", ["%{$termino}%"])->get();
+}
+
 }

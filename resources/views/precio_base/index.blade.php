@@ -1,13 +1,10 @@
 @extends('layouts.app')
 
-
 @section('title')
-    TITULO
+    Precios base
 @endsection
 
-
 @section('content')
-
 
 <x-card>
 <div class="container mx-auto mt-10">
@@ -21,14 +18,11 @@
                 </h2>
 
                 <a href="{{ route('precio_bases.create') }}"
-                class="bg-blue-600 hover:bg-blue-700 text-white px-4 py-2 rounded">
-
+                class="bg-primary-500 hover:bg-primary-600 text-white px-4 py-2 rounded">
                     NUEVO PRECIO BASE
-                <br>
                 </a>
 
             </div>
-
 
             @if (session('store'))
                 <div class="bg-green-100 border border-green-400 text-green-700 px-4 py-3 rounded mb-4">
@@ -48,76 +42,38 @@
                 </div>
             @endif
 
-
-
             <table class="min-w-full border border-gray-200">
 
-                <thead class="bg-gray-200">
-
+                <thead class="bg-slate-50">
                     <tr>
-
-                        <th class="border px-4 py-2">
-                            ID
-                        </th>
-
-                        <th class="border px-4 py-2">
-                            Nombre de la prenda
-                        </th>
-
-                        <th class="border px-4 py-2">
-                            Complejidad
-                        </th>
-
-                        <th class="border px-4 py-2">
-                            Precio 
-                        </th>
-
-                        <th class="border px-4 py-2">
-                            Tiempo de echura
-                        </th>
-
-                        <th class="border px-4 py-2">
-                            Descripcion
-                        </th>
-
+                        <th class="border px-4 py-2">ID</th>
+                        <th class="border px-4 py-2">Nombre de la prenda</th>
+                        <th class="border px-4 py-2">Complejidad</th>
+                        <th class="border px-4 py-2">Precio</th>
+                        <th class="border px-4 py-2">Descripcion</th>
+                        <th class="border px-4 py-2">Acciones</th>
                     </tr>
-
                 </thead>
 
                 <tbody>
-
                 @foreach ($precio_bases as $precio_base)
-
                     <tr class="text-center hover:bg-gray-50">
-                        <td class="border px-4 py-2">{{ $precio_base->id}}</td>
-                        <td class="border px-4 py-2">{{ $precio_base->nombre_prenda}}</td>
-                        <td class="border px-4 py-2">{{ $precio_base->complejidad}}</td>
-                        <td class="border px-4 py-2">{{ $precio_base->precio}}</td>
-                        <td class="border px-4 py-2">{{ $precio_base->descripcion}}</td>
-                        
+                        <td class="border px-4 py-2">{{ $precio_base->id }}</td>
+                        <td class="border px-4 py-2">{{ $precio_base->nombre_prenda }}</td>
+                        <td class="border px-4 py-2">{{ $precio_base->complejidad }}</td>
+                        <td class="border px-4 py-2">{{ $precio_base->precio }}</td>
+                        <td class="border px-4 py-2">{{ $precio_base->descripcion }}</td>
                         <td class="border px-4 py-2">
+                            <a href="{{ route('precio_bases.edit', $precio_base->id) }}" class="inline-block bg-primary-500 hover:bg-primary-600 text-white shadow rounded-lg px-3 py-1.5">Editar</a>
 
-
-                        <br>
-                            <a href="{{ route('precio_bases.edit', $precio_base->id)}}" class="max-w-xl mx-auto bg-purple-400 shadow-lg rounded-lg p-3 my-4">Editar</a>
-
-                            <form action="{{ route('precio_bases.destroy', $precio_base->id)}}" method="post">
+                            <form action="{{ route('precio_bases.destroy', $precio_base->id) }}" method="post" class="inline-block mt-2">
                                 @csrf
                                 @method('DELETE')
-
-                                <br>
-                                <button class="max-w-xl mx-auto bg-red-400 shadow-lg rounded-lg p-3">eliminar</button>
-                                
+                                <button class="bg-red-500 hover:bg-red-600 text-white shadow rounded-lg px-3 py-1.5">eliminar</button>
                             </form>
-
                         </td>
                     </tr>
-
                 @endforeach
-
-                
-
-
                 </tbody>
 
             </table>

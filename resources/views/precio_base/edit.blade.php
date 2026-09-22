@@ -1,7 +1,7 @@
 @extends('layouts.app')
 
 @section('title')
-    TITULO
+    Editar precio base
 @endsection
 
 @section('content')
@@ -26,7 +26,6 @@
         @endif
 
         <form action="{{ route('precio_bases.update', $precio_base->id) }}" method="post">
-
             @csrf
             @method('PUT')
 
@@ -38,9 +37,9 @@
             <div class="mb-5">
                 <label for="" class="block mb-2 font-semibold">Complejidad</label>
                 <select name="complejidad" id="complejidad" class="w-full border rounded px-3 py-4">
-                    <option value="Baja" {{ $precio_base->complejidad == 'baja' ? 'selected' : '' }}>Baja</option>
-                    <option value="Media" {{ $precio_base->complejidad == 'media' ? 'selected' : '' }}>Media</option>
-                    <option value="Alta" {{ $precio_base->complejidad == 'alta' ? 'selected' : '' }}>Alta</option>
+                    <option value="Baja" {{ $precio_base->complejidad == 'Baja' ? 'selected' : '' }}>Baja</option>
+                    <option value="Media" {{ $precio_base->complejidad == 'Media' ? 'selected' : '' }}>Media</option>
+                    <option value="Alta" {{ $precio_base->complejidad == 'Alta' ? 'selected' : '' }}>Alta</option>
                 </select>
             </div>
 
@@ -55,7 +54,7 @@
             </div>
 
             <div class="mb-5">
-                <button type="submit" class="bg-green-600 hover:bg-green-700 text-white rounded px-4 py-2">
+                <button type="submit" class="bg-primary-500 hover:bg-primary-600 text-white rounded px-4 py-2">
                     Actualizar
                 </button>
             </div>

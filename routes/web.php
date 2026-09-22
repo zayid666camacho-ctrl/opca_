@@ -10,8 +10,12 @@ use Illuminate\Support\Facades\Route;
 Route::get('/', [DashboardController::class, 'index'])
         ->name('dashboard.index');
 
+Route::get('/clientes/buscar', [ClienteController::class, 'buscar'])->name('clientes.buscar');
+
 Route::resource('clientes', ClienteController::class);
 Route::resource('tipo_servicio', TipoServicioController::class);
 Route::resource('precio_bases', PrecioBaseController::class);
 Route::resource('pedidos', PedidoController::class);
+
+
 
