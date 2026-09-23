@@ -17,65 +17,41 @@ class TipoServicioController extends Controller
 
     public function index()
     {
-        //}
         $tiposervicio = $this->tiposervicioservice->listar();
         return view('tipo_servicio.index', compact('tiposervicio'));
     }
 
-    /**
-     * Show the form for creating a new resource.
-     */
     public function create()
     {
-        //
         return view('tipo_servicio.create');
     }
 
-    /**
-     * Store a newly created resource in storage.
-     */
     public function store(Request $request)
     {
-        //
-        $this->tiposervicioservice->Crear($request->all());
-        return view('tipo_servicio.index');
+        $this->tiposervicioservice->crear($request->all());
+        return redirect()->route('tipo_servicio.index');
     }
 
-    /**
-     * Display the specified resource.
-     */
     public function show(tipo_servicio $tipo_servicio)
     {
         //
     }
 
-    /**
-     * Show the form for editing the specified resource.
-     */
     public function edit(int $id)
     {
-        //
-        $cliente = $this->tiposervicioservice->edit($id);
-        return view('Clientes.edit', compact('cliente'));
+        $tipo_servicio = $this->tiposervicioservice->edit($id);
+        return view('tipo_servicio.edit', compact('tipo_servicio'));
     }
 
-    /**
-     * Update the specified resource in storage.
-     */
     public function update(int $id, Request $request)
     {
-        //
         $this->tiposervicioservice->actualizar($id, $request->all());
-        return redirect()->route('Clientes.index');
+        return redirect()->route('tipo_servicio.index');
     }
 
-    /**
-     * Remove the specified resource from storage.
-     */
     public function destroy(int $id)
     {
-        //
         $this->tiposervicioservice->delete($id);
-        return redirect()->route('Clientes.index');
+        return redirect()->route('tipo_servicio.index');
     }
 }

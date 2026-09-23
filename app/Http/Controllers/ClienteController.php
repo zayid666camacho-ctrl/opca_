@@ -68,4 +68,11 @@ class ClienteController extends Controller
         $this->clientesservice->delete($id);
         return redirect()->route('clientes.index');
     }
+
+    public function buscar(Request $request)
+{
+    $termino = $request->query('q', '');
+    $clientes = $this->clientesservice->buscarPorNombre($termino);
+    return view('clientes._tabla', compact('clientes'));
+}
 }

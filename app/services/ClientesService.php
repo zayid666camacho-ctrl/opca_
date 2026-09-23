@@ -37,4 +37,8 @@ class ClientesService{
         return $this->clientesrepository->obtenerDetalle($id);
     }
 
+    public function buscarPorNombre(string $termino){
+    return $this->clientesrepository->buscarPorNombre($termino);
+}
+
 }
