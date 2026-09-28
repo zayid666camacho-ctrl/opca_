@@ -74,16 +74,6 @@
             </div>
 
             <div class="mb-5">
-                <label for="" class="block mb-2 font-semibold">Precio</label>
-                <input type="number" name="precio" class="w-full border rounded px-3 py-2">
-            </div>
-
-            <div class="mb-5">
-                <label for="" class="block mb-2 font-semibold">Saldo pendiente</label>
-                <input type="number" name="saldo_pendiente" class="w-full border rounded px-3 py-2">
-            </div>
-
-            <div class="mb-5">
                 <label for="" class="block mb-2 font-semibold">Cliente</label>
                 <select name="idcliente" id="idcliente">
                     @foreach ($cliente as $clientes)

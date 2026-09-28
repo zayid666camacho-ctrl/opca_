@@ -77,15 +77,11 @@
                         </th>
 
                         <th class="border px-4 py-2">
-                            Precio
-                        </th>
-
-                        <th class="border px-4 py-2">
-                            Saldo pendiente
-                        </th>
-
-                        <th class="border px-4 py-2">
                             ID_Cliente
+                        </th>
+
+                        <th class="border px-4 py-2">
+                            Acciones
                         </th>
 
 
@@ -104,17 +100,16 @@
                         <td class="border px-4 py-2">{{ $pedidos->fecha_entrega}}</td>
                         <td class="border px-4 py-2">{{ $pedidos->estado}}</td>
                         <td class="border px-4 py-2">{{ $pedidos->descripcion}}</td>
-                        <td class="border px-4 py-2">{{ $pedidos->precio}}</td>
-                        <td class="border px-4 py-2">{{ $pedidos->saldo_pendiente}}</td>
-                        <td class="border px-4 py-2">{{ $pedidos->clientes->nombre}}</td>
+                        <td class="border px-4 py-2">{{ $pedidos->cliente->nombre}}</td>
                         
                         
 
 
-                        <br>
-                            <a href="{{ route('pedidos.edit', $pedido->id)}}" class="max-w-xl mx-auto bg-purple-400 shadow-lg rounded-lg p-3 my-4">Editar</a>
+                        
+                        <td>
+                            <a href="{{ route('pedidos.edit', $pedidos->id)}}" class="max-w-xl mx-auto bg-purple-400 shadow-lg rounded-lg p-3 my-4">Editar</a>
 
-                            <form action="{{ route('pedidos.destroy', $pedido->id)}}" method="post">
+                            <form action="{{ route('pedidos.destroy', $pedidos->id)}}" method="post">
                                 @csrf
                                 @method('DELETE')
 
@@ -122,8 +117,9 @@
                                 <button class="max-w-xl mx-auto bg-red-400 shadow-lg rounded-lg p-3">eliminar</button>
                                 
                             </form>
-
                         </td>
+
+                        
                     </tr>
 
                 @endforeach

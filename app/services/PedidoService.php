@@ -18,11 +18,13 @@ class PedidoService{
     }
 
     public function crear(array $datos){
+        $datos['precio'] = 0;
+        $datos['saldo_pendiente'] = 0;
         $this->pedidorepository->crear($datos);
     }
 
     public function buscar(int $id){
-        $this->pedidorepository->buscar($id);
+        return $this->pedidorepository->buscar($id);
     }
 
     public function actualizar(int $id, array $datos){
