@@ -2,7 +2,7 @@
 
 
 @section('title')
-    TITULO
+    TITULOo
 @endsection
 
 

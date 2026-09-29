@@ -6,7 +6,7 @@ use App\Models\servicio;
 
 class servicioRepository{
 
-        public function listar(){
+    public function listar(){
         return servicio::with(['pedido', 'precioBase', 'tipoServicio'])->get();
     }
 
