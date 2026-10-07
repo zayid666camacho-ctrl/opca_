@@ -7,11 +7,7 @@ use App\Models\servicio;
 class servicioRepository{
 
     public function listar(){
-        return servicio::with(['pedido', 'precioBase', 'tipoServicio'])->get();
-    }
-
-    public function create(array $datos){
-        servicio::create($datos);
+        return servicio::with(['pedido', 'precio_base', 'tipo_servicio'])->get();
     }
 
     public function crear(array $datos){
@@ -19,7 +15,7 @@ class servicioRepository{
     }
 
     public function buscars(int $id){
-        return servicio::with('pedido', 'precioBase', 'tipoServicio')->findOrfail($id);
+        return servicio::with(['pedido', 'precioBase', 'tipoServicio'])->findOrfail($id);
     }
 
     public function actualizar(int $id, array $datos){

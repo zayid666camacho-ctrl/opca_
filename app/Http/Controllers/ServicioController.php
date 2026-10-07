@@ -31,7 +31,7 @@ class ServicioController extends Controller
     {
         //
         $servicio = $this->servicio_service->listar();
-        return view('servicio.index', compact('servicios'));
+        return view('servicio.index', compact('servicio'));
     }
 
     /**
@@ -41,10 +41,10 @@ class ServicioController extends Controller
     {
         //
         $pedido = $this->pedido_service->listar();
-        $preciobase = $this->preciobase_service->listar();
-        $tiposervicio = $this->tiposervicio_service->listar();
+        $precio_bases = $this->preciobase_service->listar();
+        $tipo_servicios = $this->tiposervicio_service->listar();
 
-        return view('servicio.create', compact('pedidos', 'precio_bases', 'tipo_servicios'));
+        return view('servicio.create', compact('pedido', 'precio_bases', 'tipo_servicios'));
     }
 
     /**
@@ -72,13 +72,13 @@ class ServicioController extends Controller
     public function edit(int $id)
     {
         //
-        $servicio = $this->servicio_service->buscars($id);
+        $servicios = $this->servicio_service->buscars($id);
 
-        $pedido = $this->pedido_service->listar();
-        $preciobase = $this->preciobase_service->listar();
-        $tiposervicio = $this->tiposervicio_service->listar();
+        $pedidos = $this->pedido_service->listar();
+        $precio_bases = $this->preciobase_service->listar();
+        $tipo_servicio = $this->tiposervicio_service->listar();
 
-        return view('servicios.edit', compact('pedidos', 'precio_bases', 'tipo_servicio', 'pedido'));
+        return view('servicio.edit', compact('pedidos', 'precio_bases', 'tipo_servicio', 'servicios'));
     }
 
     /**

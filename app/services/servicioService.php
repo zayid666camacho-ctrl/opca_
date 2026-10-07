@@ -24,7 +24,7 @@ class servicioService{
     }
 
     public function listar(){
-        $this->servicio_repository->listar();
+        return $this->servicio_repository->listar();
     }
 
     public function crear(array $datos){
@@ -37,7 +37,7 @@ class servicioService{
     }
 
     public function buscars(int $id){
-        $this->servicio_repository->buscars($id);
+        return $this->servicio_repository->buscars($id);
     }
 
     public function actualizar(int $id, array $datos){

@@ -1,9 +1,8 @@
-@extends('layouts.app')
+@extends('layouts.module')
 
 
-@section('title')
-    TITULOo
-@endsection
+@section('title', 'pedidos')
+@section('page-title', 'Creaciones NayJa: Pedidos')
 
 
 @section('content')
@@ -15,19 +14,17 @@
         <div class="bg-white shadow-lg rounded-lg p-6">
 
             <div class="flex justify-between items-center mb-6">
-
                 <h2 class="text-3xl font-bold text-gray-700">
                     PEDIDOS
                 </h2>
 
+
                 <a href="{{ route('pedidos.create') }}"
-                class="bg-blue-600 hover:bg-blue-700 text-white px-4 py-2 rounded">
-
+                class="bg-primary-500 hover:bg-primary-600 text-white px-4 py-2 rounded">
                     NUEVO PEDIDO
-                <br>
                 </a>
-
             </div>
+        </div>
 
 
             @if (session('store'))

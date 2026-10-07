@@ -3,6 +3,7 @@
 namespace App\repositories;
 
 use App\Models\pedido;
+use GuzzleHttp\Psr7\Request;
 
 class PedidoRepository{
 
@@ -25,5 +26,11 @@ class PedidoRepository{
     
     public function delete(int $id){
         pedido::destroy($id);
+    }
+
+    public function listar_por_rango($primer_dia, $ultimo_dia){
+        return pedido::whereBetween('fecha', [$primer_dia, $ultimo_dia])
+        ->with('cliente')
+        ->get();
     }
 }

@@ -1,4 +1,4 @@
-@extends('layouts.app')
+@extends('layouts.module')
 
 @section('title')
     Nuevo precio base

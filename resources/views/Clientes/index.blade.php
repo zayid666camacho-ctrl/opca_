@@ -1,8 +1,7 @@
-@extends('layouts.app')
+@extends('layouts.module')
 
-@section('title')
-    Clientes
-@endsection
+@section('title', 'Clientes')
+@section('page-title', 'Creaciones NayJa: Clientes')
 
 @section('content')
 

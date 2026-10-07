@@ -1,4 +1,4 @@
-@extends('layouts.app')
+@extends('layouts.module')
 
 
 @section('title')
@@ -44,7 +44,7 @@
             
             <div class="mb-5">
                 <label for="" class="block mb-2 font-semibold">Fecha</label>
-                <input type="date" name="fecha" class="w-full border rounded px-3 py-2">
+                <input type="date" name="fecha" value="{{ $fecha }}" class="w-full border rounded px-3 py-2">
 
             </div>
 

@@ -1,8 +1,7 @@
-@extends('layouts.app')
+@extends('layouts.module')
 
-@section('title')
-    Precios base
-@endsection
+@section('title', 'Precios base')
+@section('page-title', 'Creaciones NayJa: 'Precios base')
 
 @section('content')
 
