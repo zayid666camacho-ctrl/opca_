@@ -1,7 +1,7 @@
 @extends('layouts.module')
 
-@section('title', 'Precios base')
-@section('page-title', 'Creaciones NayJa: 'Precios base')
+@section('title', Servicios')
+@section('page-title', 'Creaciones NayJa: Servicios')
 
 @section('content')
 
@@ -16,9 +16,9 @@
                     PRECIOS BASE
                 </h2>
 
-                <a href="{{ route('precio_bases.create') }}"
+                <a href="{{ route('servicios.create') }}"
                 class="bg-primary-500 hover:bg-primary-600 text-white px-4 py-2 rounded">
-                    NUEVO PRECIO BASE
+                    NUEVO SERVICIO
                 </a>
 
             </div>
@@ -46,26 +46,28 @@
                 <thead class="bg-slate-50">
                     <tr>
                         <th class="border px-4 py-2">ID</th>
-                        <th class="border px-4 py-2">Nombre de la prenda</th>
-                        <th class="border px-4 py-2">Complejidad</th>
-                        <th class="border px-4 py-2">Precio</th>
                         <th class="border px-4 py-2">Descripcion</th>
-                        <th class="border px-4 py-2">Acciones</th>
+                        <th class="border px-4 py-2">Precio</th>
+                        <th class="border px-4 py-2">id_pedido</th>
+                        <th class="border px-4 py-2">id_precio base</th>
+                        <th class="border px-4 py-2">id_tipo servicio</th>
+                        <th class="border px-4 py-2">acciones</th>
                     </tr>
                 </thead>
 
                 <tbody>
-                @foreach ($precio_bases as $precio_base)
+                @foreach ($servicio as $servicio)
                     <tr class="text-center hover:bg-gray-50">
-                        <td class="border px-4 py-2">{{ $precio_base->id }}</td>
-                        <td class="border px-4 py-2">{{ $precio_base->nombre_prenda }}</td>
-                        <td class="border px-4 py-2">{{ $precio_base->complejidad }}</td>
-                        <td class="border px-4 py-2">{{ $precio_base->precio }}</td>
-                        <td class="border px-4 py-2">{{ $precio_base->descripcion }}</td>
+                        <td class="border px-4 py-2">{{ $servicio->id }}</td>
+                        <td class="border px-4 py-2">{{ $servicio->descripcion }}</td>
+                        <td class="border px-4 py-2">{{ $servicio->precio }}</td>
+                        <td class="border px-4 py-2">{{ $servicio->pedido->descripcion }}</td>
+                        <td class="border px-4 py-2">{{ $servicio->precio_base->nombre_prenda }}</td>
+                        <td class="border px-4 py-2">{{ $servicio->tipo_servicio->servicio }}</td>
                         <td class="border px-4 py-2">
-                            <a href="{{ route('precio_bases.edit', $precio_base->id) }}" class="inline-block bg-primary-500 hover:bg-primary-600 text-white shadow rounded-lg px-3 py-1.5">Editar</a>
+                            <a href="{{ route('servicios.index', $servicio->id) }}" class="inline-block bg-primary-500 hover:bg-primary-600 text-white shadow rounded-lg px-3 py-1.5">Editar</a>
 
-                            <form action="{{ route('precio_bases.destroy', $precio_base->id) }}" method="post" class="inline-block mt-2">
+                            <form action="{{ route('servicios.destroy', $servicio->id) }}" method="post" class="inline-block mt-2">
                                 @csrf
                                 @method('DELETE')
                                 <button class="bg-red-500 hover:bg-red-600 text-white shadow rounded-lg px-3 py-1.5">eliminar</button>

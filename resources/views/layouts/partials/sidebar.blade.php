@@ -14,7 +14,7 @@
         {{-- Logo --}}
         <div class="flex items-center gap-3 h-16 px-6 border-b border-slate-800">
             <div class="w-9 h-9 rounded-lg bg-primary-500 flex items-center justify-center text-white font-bold">
-                opca
+                <span class="w-5 h-5 block">@include('layouts.partials.icons', ['icon' => 'logo'])</span>
             </div>
             <span class="text-gray-950 font-semibold text-lg tracking-tight">{{ config('app.name', 'AdminPanel') }}</span>
         </div>
@@ -24,13 +24,17 @@
 
             @php
                 $links = [
-                    ['label' => 'Dashboard',   'route' => 'dashboard.index',  'icon' => 'home'],
-                    ['label' => 'Clientes',    'route' => 'clientes.index',      'icon' => 'users'],
-                    ['label' => 'Tipo_servicio', 'route' => 'tipo_servicio.index',   'icon' => 'shield'],
-                    ['label' => 'Precio_base',  'route' => 'precio_bases.index', 'icon' => 'tag'],
-                    ['label' => 'Pedidos',   'route' => 'pedidos.index',   'icon' => 'box'],
-                    ['label' => 'Reportes',    'route' => 'reports.index',    'icon' => 'chart'],
-                    ['label' => 'Configuración', 'route' => 'settings.index', 'icon' => 'cog'],
+                    ['label' => 'Dashboard',     'route' => 'dashboard.index',     'icon' => 'home'],
+                    ['label' => 'Calendario',    'route' => 'calendario.index',    'icon' => 'box'],
+                    ['label' => 'Pedidos',       'route' => 'pedidos.index',       'icon' => 'box'],
+                    ['label' => 'Clientes',      'route' => 'clientes.index',      'icon' => 'users'],
+                    ['label' => 'Precios base',  'route' => 'precio_bases.index',  'icon' => 'tag'],
+                    ['label' => 'Tipo_servicio', 'route' => 'tipo_servicio.index', 'icon' => 'shield'],
+                    ['label' => 'Servicios',     'route' => 'servicios.index',     'icon' => 'chart'],
+                    ['label' => 'Inventario',    'route' => 'inventario.index',    'icon' => 'tag'],
+                    ['label' => 'Trabajos',      'route' => 'galeria.index',       'icon' => 'chart'],
+                    ['label' => 'Finanzas',      'route' => 'finanzas.index',      'icon' => 'shield'],
+                    ['label' => 'Configuración', 'route' => 'configuracion.index', 'icon' => 'cog'],
                 ];
             @endphp
 

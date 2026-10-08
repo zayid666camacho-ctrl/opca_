@@ -30,12 +30,13 @@ class PedidoController extends Controller
     /**
      * Show the form for creating a new resource.
      */
-    public function create()
+    public function create(Request $request)
     {
         //
         $cliente = $this->clientesservice->listar();
+        $fecha = $request->query('fecha');
         
-        return view('pedido.create', compact('cliente'));
+        return view('pedido.create', compact('cliente', 'fecha'));
     }
 
     /**
@@ -44,8 +45,9 @@ class PedidoController extends Controller
     public function store(Request $request)
     {
         //
+        
         $this->pedidoservice->Crear($request->all());
-        return redirect()->route('pedido.index');
+        return redirect()->route('pedidos.index');
     }
 
     /**
@@ -86,6 +88,6 @@ class PedidoController extends Controller
     {
         //
         $this->pedidoservice->delete($id);
-        return redirect()->route('pedido.index');
+        return redirect()->route('pedidos.index');
     }
 }

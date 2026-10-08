@@ -3,11 +3,12 @@
 namespace App\repositories;
 
 use App\Models\pedido;
+use GuzzleHttp\Psr7\Request;
 
 class PedidoRepository{
 
     public function listar(){
-        return pedido::with('pedido')->get();
+        return pedido::with('cliente')->get();
     }
 
     public function crear(array $datos){
@@ -15,15 +16,21 @@ class PedidoRepository{
     }
 
     public function buscar(int $id){
-        $pedido = pedido::findOrfail($id);
+        return pedido::with('cliente')->findOrfail($id);
     }
 
     public function actualizar(int $id, array $datos){
         $pedido = pedido::findOrfail($id);
-        pedido::update($datos);
+        $pedido->update($datos);
     }
     
     public function delete(int $id){
         pedido::destroy($id);
+    }
+
+    public function listar_por_rango($primer_dia, $ultimo_dia){
+        return pedido::whereBetween('fecha', [$primer_dia, $ultimo_dia])
+        ->with('cliente')
+        ->get();
     }
 }

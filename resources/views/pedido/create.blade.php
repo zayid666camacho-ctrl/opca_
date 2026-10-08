@@ -1,4 +1,4 @@
-@extends('layouts.app')
+@extends('layouts.module')
 
 
 @section('title')
@@ -44,7 +44,7 @@
             
             <div class="mb-5">
                 <label for="" class="block mb-2 font-semibold">Fecha</label>
-                <input type="date" name="fecha" class="w-full border rounded px-3 py-2">
+                <input type="date" name="fecha" value="{{ $fecha }}" class="w-full border rounded px-3 py-2">
 
             </div>
 
@@ -71,16 +71,6 @@
                 <label for="" class="block mb-2 font-semibold">Descripcion</label>
                 <input type="text" name="descripcion" class="w-full border rounded px-3 py-2">
 
-            </div>
-
-            <div class="mb-5">
-                <label for="" class="block mb-2 font-semibold">Precio</label>
-                <input type="number" name="precio" class="w-full border rounded px-3 py-2">
-            </div>
-
-            <div class="mb-5">
-                <label for="" class="block mb-2 font-semibold">Saldo pendiente</label>
-                <input type="number" name="saldo_pendiente" class="w-full border rounded px-3 py-2">
             </div>
 
             <div class="mb-5">
