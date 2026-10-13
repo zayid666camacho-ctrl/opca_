@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html lang="es" class="h-full bg-primary-50">
+<html lang="es" class="h-full bg-white">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
@@ -12,9 +12,16 @@
                 extend: {
                     colors: {
                         primary: {
-                            50: '#fff1f2', 100: '#ffe4e6', 200: '#fecdd3', 300: '#fda4af',
-                            400: '#fb7185', 500: '#b65b6a', 600: '#e11d48', 700: '#be123c',
-                            800: '#9f1239', 900: '#881337'
+                            50:  '#FFFFFF',
+                            100: '#F0F5FF',
+                            200: '#DCE8F8',
+                            300: '#C5D7F2',
+                            400: '#A9C4E8',
+                            500: '#DCE8F8',
+                            600: '#C5D7F2',
+                            700: '#A9C4E8',
+                            800: '#171717',
+                            900: '#171717'
                         }
                     },
                     fontFamily: {
@@ -34,7 +41,7 @@
 
     @stack('styles')
 </head>
-<body class="h-full text-slate-800 antialiased">
+<body class="h-full text-neutral-900 antialiased">
 
     @include('layouts.partials.navbar')
 

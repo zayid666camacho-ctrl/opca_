@@ -17,7 +17,12 @@ Route::get('/clientes/buscar', [ClienteController::class, 'buscar'])->name('clie
 Route::resource('clientes', ClienteController::class);
 Route::resource('tipo_servicio', TipoServicioController::class);
 Route::resource('precio_bases', PrecioBaseController::class);
+
+Route::get('/pedidos/kanban', [PedidoController::class, 'kanban'])->name('pedidos.kanban');
+Route::get('/pedidos/filtrar', [PedidoController::class, 'filtrar'])->name('pedidos.filtrar');
+Route::patch('/pedidos/{id}/estado', [PedidoController::class, 'cambiarEstado'])->name('pedidos.estado');
 Route::resource('pedidos', PedidoController::class);
+
 Route::resource('servicios', ServicioController::class);
 
 Route::get('/calendario', [CalendarioController::class, 'index'])->name('calendario.index');

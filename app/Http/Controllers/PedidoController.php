@@ -23,8 +23,42 @@ class PedidoController extends Controller
     public function index()
     {
         //
-        $pedido = $this->pedidoservice->listar();
-        return view('pedido.index', compact('pedido'));
+        $pedidos = $this->pedidoservice->filtrar(null, null, null, null);
+        return view('pedido.index', compact('pedidos'));
+    }
+
+    public function kanban()
+    {
+        $dias = 15;
+        $pedidos_por_estado = $this->pedidoservice->listar_para_kanban($dias);
+        $estados = ['recibido', 'en_proceso', 'terminado', 'entregado', 'cancelado'];
+
+        return view('pedido.kanban', compact('pedidos_por_estado', 'estados', 'dias'));
+    }
+
+    public function cambiarEstado(int $id, Request $request)
+    {
+        $request->validate([
+            'estado' => 'required|in:recibido,en_proceso,terminado,entregado,cancelado',
+        ]);
+
+        $resultado = $this->pedidoservice->cambiar_estado($id, $request->input('estado'));
+
+        if (!$resultado['ok']) {
+            return response()->json(['mensaje' => $resultado['mensaje']], 422);
+        }
+
+        return response()->json(['ok' => true]);
+    }
+
+    public function filtrar(Request $request){
+        $pedidos = $this->pedidoservice->filtrar(
+            $request->query('cliente'),
+            $request->query('estado'),
+            $request->query('desde'),
+            $request->query('hasta')
+        );
+        return view('pedido._tabla', compact('pedidos'));
     }
 
     /**
