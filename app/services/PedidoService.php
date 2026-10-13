@@ -40,4 +40,36 @@ class PedidoService{
         return $this->pedidorepository->listar_por_rango($primer_dia, $ultimo_dia);
     }
 
+    public function cambiar_estado(int $id, string $nuevo_estado)
+    {
+        $pedido = $this->pedidorepository->buscar($id);
+
+        if ($pedido->estado === 'cancelado') {
+            return ['ok' => false, 'mensaje' => 'Un pedido cancelado no puede cambiar de estado.'];
+        }
+
+        if ($nuevo_estado === 'cancelado' && !in_array($pedido->estado, ['recibido', 'en_proceso'])) {
+            return ['ok' => false, 'mensaje' => 'Solo se puede cancelar un pedido que esté recibido o en proceso.'];
+        }
+
+        $this->pedidorepository->actualizar($id, ['estado' => $nuevo_estado]);
+        return ['ok' => true];
+    }
+
+    public function listar_para_kanban($dias){
+        $fecha_limite = now()->subDays($dias);
+        $pedidos = $this->pedidorepository->listar_para_kanban($fecha_limite);
+
+        return $pedidos->groupBy('estado')->map(function ($grupo, $estado) {
+            if (in_array($estado, ['entregado', 'cancelado'])) {
+                return $grupo->sortByDesc('updated_at')->values();
+            }
+            return $grupo->sortBy('fecha_entrega')->values();
+        });
+    }
+
+    public function filtrar($cliente, $estado, $desde, $hasta){
+        return $this->pedidorepository->filtrar($cliente, $estado, $desde, $hasta);
+    }
+
 }

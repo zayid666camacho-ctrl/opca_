@@ -58,7 +58,7 @@
 
         {{-- Un div por cada día real del mes --}}
         @for ($dia = 1; $dia <= $dias_en_mes; $dia++)
-            <div class="h-24 border-r border-b border-slate-200 p-1 text-xs relative hover:bg-primary-50">
+            <div class="h-24 border-r border-b border-slate-200 p-1 text-xs relative hover:bg-primary-700">
 
         <span class="text-slate-400">{{ $dia }}</span>
 
@@ -69,7 +69,7 @@
                         @click="open = !open"
                         @click.outside="open = false"
                         type="button"
-                        class="block w-full truncate text-left bg-primary-100 text-primary-700 rounded px-1 py-0.5 hover:bg-primary-200">
+                        class="block w-full truncate text-left bg-primary-100 text-primary-900 rounded px-1 py-0.5 hover:bg-primary-200">
                             {{ $pedido->cliente->nombre }}
                     </button>
 
@@ -90,7 +90,7 @@
         </div>
 
                 <a href="{{ route('pedidos.create', ['fecha' => $primer_dia->copy()->day($dia)->toDateString()]) }}"
-                    class="absolute bottom-1 right-1 text-primary-400 hover:text-primary-600 text-sm font-bold"
+                    class="absolute bottom-1 right-1 text-primary-900 hover:text-primary-600 text-sm font-bold"
                     title="Nuevo pedido este día">
                     +
                 </a>

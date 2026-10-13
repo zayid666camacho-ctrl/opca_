@@ -1,137 +1,97 @@
 @extends('layouts.module')
 
-
-@section('title', 'pedidos')
+@section('title', 'Pedidos')
 @section('page-title', 'Creaciones NayJa: Pedidos')
-
 
 @section('content')
 
-
 <x-card>
-<div class="container mx-auto mt-10">
+    <div class="container mx-auto mt-10">
 
-        <div class="bg-white shadow-lg rounded-lg p-6">
+        <div class="flex justify-between items-center mb-6">
+            <h2 class="text-3xl font-bold text-gray-700">
+                Pedidos
+            </h2>
 
-            <div class="flex justify-between items-center mb-6">
-                <h2 class="text-3xl font-bold text-gray-700">
-                    PEDIDOS
-                </h2>
-
-
-                <a href="{{ route('pedidos.create') }}"
-                class="bg-primary-500 hover:bg-primary-600 text-white px-4 py-2 rounded">
-                    NUEVO PEDIDO
-                </a>
-            </div>
+            <a href="{{ route('pedidos.create') }}"
+            class="bg-primary-500 hover:bg-primary-600 text-white px-4 py-2 rounded">
+                Nuevo pedido
+            </a>
         </div>
 
+        <div x-data="{
+                cliente: '',
+                estado: '',
+                desde: '',
+                hasta: '',
+                filtrar() {
+                    const parametros = new URLSearchParams({
+                        cliente: this.cliente,
+                        estado: this.estado,
+                        desde: this.desde,
+                        hasta: this.hasta,
+                    });
+                    fetch(`{{ route('pedidos.filtrar') }}?${parametros}`)
+                        .then(r => r.text())
+                        .then(html => { this.$refs.tbody.innerHTML = html; });
+                }
+            }"
+            class="bg-white rounded-lg shadow overflow-hidden">
 
-            @if (session('store'))
-                <div class="bg-green-100 border border-green-400 text-green-700 px-4 py-3 rounded mb-4">
-                    {{ session('store') }}
-                </div>
-            @endif
+            <div class="p-4 border-b border-slate-100 flex flex-col lg:flex-row gap-3 lg:items-end">
+                <input
+                    type="text"
+                    x-model="cliente"
+                    @input.debounce.300ms="filtrar()"
+                    placeholder="Buscar por cliente..."
+                    class="w-full lg:w-64 px-4 py-2 border border-slate-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-primary-400"
+                >
 
-            @if (session('edit'))
-                <div class="bg-yellow-100 border border-green-400 text-green-700 px-4 py-3 rounded mb-4">
-                    {{ session('edit') }}
-                </div>
-            @endif
+                <select
+                    x-model="estado"
+                    @change="filtrar()"
+                    class="px-4 py-2 border border-slate-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-primary-400"
+                >
+                    <option value="">Todos los estados</option>
+                    <option value="recibido">Recibido</option>
+                    <option value="en_proceso">En proceso</option>
+                    <option value="terminado">Terminado</option>
+                    <option value="entregado">Entregado</option>
+                    <option value="cancelado">Cancelado</option>
+                </select>
 
-            @if (session('delete'))
-                <div class="bg-red-100 border border-red-400 text-red-500 px-4 py-3 rounded mb-4">
-                    {{ session('delete') }}
-                </div>
-            @endif
+                <label class="text-xs text-slate-500 flex flex-col gap-1">
+                    Desde
+                    <input type="date" x-model="desde" @change="filtrar()"
+                        class="px-3 py-2 border border-slate-300 rounded-lg text-sm text-slate-700 focus:outline-none focus:ring-2 focus:ring-primary-400">
+                </label>
 
+                <label class="text-xs text-slate-500 flex flex-col gap-1">
+                    Hasta
+                    <input type="date" x-model="hasta" @change="filtrar()"
+                        class="px-3 py-2 border border-slate-300 rounded-lg text-sm text-slate-700 focus:outline-none focus:ring-2 focus:ring-primary-400">
+                </label>
+            </div>
 
-
-            <table class="min-w-full border border-gray-200">
-
-                <thead class="bg-gray-200">
-
-                    <tr>
-
-                        <th class="border px-4 py-2">
-                            ID
-                        </th>
-
-                        <th class="border px-4 py-2">
-                            Fecha
-                        </th>
-
-                        <th class="border px-4 py-2">
-                            Fecha de entrega
-                        </th>
-
-                        <th class="border px-4 py-2">
-                            Estado
-                        </th>
-
-                        <th class="border px-4 py-2">
-                            Descripcion
-                        </th>
-
-                        <th class="border px-4 py-2">
-                            ID_Cliente
-                        </th>
-
-                        <th class="border px-4 py-2">
-                            Acciones
-                        </th>
-
-
-
+            <table class="min-w-full">
+                <thead class="bg-slate-50">
+                    <tr class="text-left text-xs font-semibold text-slate-500 uppercase tracking-wide">
+                        <th class="px-6 py-3">Cliente</th>
+                        <th class="px-6 py-3">Descripción</th>
+                        <th class="px-6 py-3">Fecha</th>
+                        <th class="px-6 py-3">Entrega</th>
+                        <th class="px-6 py-3">Estado</th>
+                        <th class="px-6 py-3 text-right">Acciones</th>
                     </tr>
-
                 </thead>
 
-                <tbody>
-
-                @foreach ($pedido as $pedidos)
-
-                    <tr class="text-center hover:bg-gray-50">
-                        <td class="border px-4 py-2">{{ $pedidos->id}}</td>
-                        <td class="border px-4 py-2">{{ $pedidos->fecha}}</td>
-                        <td class="border px-4 py-2">{{ $pedidos->fecha_entrega}}</td>
-                        <td class="border px-4 py-2">{{ $pedidos->estado}}</td>
-                        <td class="border px-4 py-2">{{ $pedidos->descripcion}}</td>
-                        <td class="border px-4 py-2">{{ $pedidos->cliente->nombre}}</td>
-                        
-                        
-
-
-                        
-                        <td>
-                            <a href="{{ route('pedidos.edit', $pedidos->id)}}" class="max-w-xl mx-auto bg-purple-400 shadow-lg rounded-lg p-3 my-4">Editar</a>
-
-                            <form action="{{ route('pedidos.destroy', $pedidos->id)}}" method="post">
-                                @csrf
-                                @method('DELETE')
-
-                                <br>
-                                <button class="max-w-xl mx-auto bg-red-400 shadow-lg rounded-lg p-3">eliminar</button>
-                                
-                            </form>
-                        </td>
-
-                        
-                    </tr>
-
-                @endforeach
-
-                
-
-
+                <tbody x-ref="tbody" class="divide-y divide-slate-100">
+                    @include('pedido._tabla', ['pedidos' => $pedidos])
                 </tbody>
-
             </table>
-
         </div>
 
     </div>
-
 </x-card>
 
-@endsection
+@endsection 

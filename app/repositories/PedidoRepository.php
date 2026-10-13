@@ -33,4 +33,36 @@ class PedidoRepository{
         ->with('cliente')
         ->get();
     }
+
+    public function listar_para_kanban($fecha_limite){
+    return pedido::with('cliente')
+        ->where(function ($consulta) use ($fecha_limite) {
+            $consulta->whereNotIn('estado', ['entregado', 'cancelado'])
+                    ->orWhere('updated_at', '>=', $fecha_limite);
+        })
+        ->get();
+    }
+
+    public function filtrar($cliente, $estado, $desde, $hasta){
+        $consulta = pedido::with('cliente');
+
+        if ($cliente) {
+            $consulta->whereHas('cliente', function ($sub) use ($cliente) {
+                $sub->whereRaw("(nombre || ' ' || apellido) LIKE ?", ["%{$cliente}%"]);
+            });
+        }
+
+        if ($estado) {
+            $consulta->where('estado', $estado);
+        }
+
+        if ($desde) {
+            $consulta->where('fecha', '>=', $desde);
+        }
+
+        if ($hasta) {
+            $consulta->where('fecha', '<=', $hasta);
+        }
+        return $consulta->orderBy('fecha', 'desc')->get();
+    }
 }

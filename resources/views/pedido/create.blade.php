@@ -1,9 +1,8 @@
 @extends('layouts.module')
 
 
-@section('title')
-    TITULO
-@endsection
+@section('title', 'Nuevo pedido')       
+@section('page-title', 'Nuevo pedido')  
 
 
 @section('content')
