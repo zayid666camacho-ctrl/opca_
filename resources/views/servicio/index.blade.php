@@ -1,6 +1,6 @@
 @extends('layouts.module')
 
-@section('title', Servicios')
+@section('title', 'Servicios')
 @section('page-title', 'Creaciones NayJa: Servicios')
 
 @section('content')
@@ -13,7 +13,7 @@
             <div class="flex justify-between items-center mb-6">
 
                 <h2 class="text-3xl font-bold text-gray-700">
-                    PRECIOS BASE
+                    SERVICIOS
                 </h2>
 
                 <a href="{{ route('servicios.create') }}"
@@ -56,16 +56,16 @@
                 </thead>
 
                 <tbody>
-                @foreach ($servicio as $servicio)
+            @foreach ($servicio as $servicio)
                     <tr class="text-center hover:bg-gray-50">
                         <td class="border px-4 py-2">{{ $servicio->id }}</td>
                         <td class="border px-4 py-2">{{ $servicio->descripcion }}</td>
                         <td class="border px-4 py-2">{{ $servicio->precio }}</td>
                         <td class="border px-4 py-2">{{ $servicio->pedido->descripcion }}</td>
                         <td class="border px-4 py-2">{{ $servicio->precio_base->nombre_prenda }}</td>
-                        <td class="border px-4 py-2">{{ $servicio->tipo_servicio->servicio }}</td>
+                        <td class="border px-4 py-2">{{ $servicio->tipo_servicio->nombre }}</td>
                         <td class="border px-4 py-2">
-                            <a href="{{ route('servicios.index', $servicio->id) }}" class="inline-block bg-primary-500 hover:bg-primary-600 text-white shadow rounded-lg px-3 py-1.5">Editar</a>
+                            <a href="{{ route('servicios.edit', $servicio->id) }}" class="inline-block bg-primary-500 hover:bg-primary-600 text-white shadow rounded-lg px-3 py-1.5">Editar</a>
 
                             <form action="{{ route('servicios.destroy', $servicio->id) }}" method="post" class="inline-block mt-2">
                                 @csrf
@@ -74,7 +74,7 @@
                             </form>
                         </td>
                     </tr>
-                @endforeach
+            @endforeach
                 </tbody>
 
             </table>

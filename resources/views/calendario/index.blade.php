@@ -29,7 +29,7 @@
         <a href="{{ route('calendario.index', ['mes' => $mes_anterior->month, 'anio' => $mes_anterior->year]) }}"
             class="text-2xl text-slate-400 hover:text-primary-600 px-3">
             &lsaquo;
-        </a>
+        </a> 
 
         <h2 class="text-3xl font-bold text-slate-700">{{ $nombre_mes }} {{ $anio }}</h2>
 

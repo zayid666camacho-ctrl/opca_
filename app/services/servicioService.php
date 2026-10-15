@@ -33,7 +33,7 @@ class servicioService{
         $datos['precio'] = $precioBase->precio;
 
         $this->servicio_repository->crear($datos);
-        $this->recalcularPedido($datos['id_pedido']);
+        $this->recalcular_pedido($datos['id_pedido']);
     }
 
     public function buscars(int $id){
@@ -49,10 +49,10 @@ class servicioService{
         $idpedido = $servicio->id_pedido;
 
         $this->servicio_repository->delete($id);
-        $this->recalcularPedido($idpedido);
+        $this->recalcular_pedido($idpedido);
     }
 
-    private function recalcularPedido(int $idpedido){
+    private function recalcular_pedido(int $idpedido){
         $total = $this->servicio_repository->listar_por_pedido($idpedido)->sum('precio');
         $this->pedido_repository->actualizar($idpedido, [
             'precio' => $total,

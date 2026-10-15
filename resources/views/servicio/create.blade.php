@@ -1,4 +1,4 @@
-@extends('layouts.app')
+@extends('layouts.module')
 
 @section('title')
     Nuevo servicio
@@ -60,7 +60,7 @@
                 <label for="" class="block mb-2 font-semibold">Servicio</label>
                 <select name="id_tipo_servicios" id="id_tipo_servicios">
                     @foreach ($tipo_servicios as $tipo_servicios)
-                        <option value="{{$tipo_servicios->id}}"> {{$tipo_servicios->servicio}} </option>
+                        <option value="{{$tipo_servicios->id}}"> {{$tipo_servicios->nombre}} </option>
                     @endforeach
                 </select>
             </div>

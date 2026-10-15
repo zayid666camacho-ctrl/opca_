@@ -1,4 +1,4 @@
-@extends('layouts.app')
+@extends('layouts.module')
 
 @section('title')
     Editar tipo de servicio
@@ -34,6 +34,7 @@
                 <select name="servicio" id="servicio" class="w-full border rounded px-3 py-2">
                     <option value="arreglo" {{ $tipo_servicio->servicio == 'arreglo' ? 'selected' : '' }}>Arreglo</option>
                     <option value="confeccion" {{ $tipo_servicio->servicio == 'confeccion' ? 'selected' : '' }}>Confección</option>
+                    <option value="diseno" {{ $tipo_servicio->servicio == 'diseno' ? 'selected' : '' }}>Diseño</option>
                 </select>
             </div>
 

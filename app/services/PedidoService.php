@@ -21,7 +21,7 @@ class PedidoService{
     public function crear(array $datos){
         $datos['precio'] = 0;
         $datos['saldo_pendiente'] = 0;
-        $this->pedidorepository->crear($datos);
+        return $this->pedidorepository->crear($datos);
     }
 
     public function buscar(int $id){
@@ -33,7 +33,13 @@ class PedidoService{
     }
 
     public function delete(int $id){
+        if ($this->pedidorepository->tiene_servicios($id)) {
+            return ['ok' => false, 'mensaje' => 'No se puede eliminar un pedido que ya tiene prendas registradas.'];
+        }
+
         $this->pedidorepository->delete($id);
+
+        return ['ok' => true];
     }
 
     public function listar_por_rango($primer_dia, $ultimo_dia){

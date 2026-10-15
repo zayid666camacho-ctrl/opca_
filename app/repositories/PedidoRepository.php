@@ -3,6 +3,7 @@
 namespace App\repositories;
 
 use App\Models\pedido;
+use App\Models\servicio;
 use GuzzleHttp\Psr7\Request;
 
 class PedidoRepository{
@@ -12,11 +13,11 @@ class PedidoRepository{
     }
 
     public function crear(array $datos){
-        pedido::create($datos);
+        return pedido::create($datos);
     }
 
     public function buscar(int $id){
-        return pedido::with('cliente')->findOrfail($id);
+    return pedido::with(['cliente', 'servicios.precio_base', 'servicios.tipo_servicio'])->findOrfail($id);
     }
 
     public function actualizar(int $id, array $datos){
@@ -64,5 +65,9 @@ class PedidoRepository{
             $consulta->where('fecha', '<=', $hasta);
         }
         return $consulta->orderBy('fecha', 'desc')->get();
+    }
+
+    public function tiene_servicios(int $id){
+        return servicio::where('id_pedido', $id)->exists();
     }
 }

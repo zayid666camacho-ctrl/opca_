@@ -57,10 +57,6 @@
                 <label for="" class="block mb-2 font-semibold">Estado</label>
                 <select name="estado" id="estado" class="w-full border rounded px-3 py-4">
                     <option value="recibido">Recivido</option>
-                    <option value="en_proceso">En proceso</option>
-                    <option value="terminado">Terminado</option>
-                    <option value="entregado">Entregado</option>
-                    <option value="cancelado">Cancelado</option>
                 </select>
     
 
