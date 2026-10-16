@@ -26,7 +26,7 @@
 
         {{-- Navegación --}}
         <nav class="flex-1 overflow-y-auto px-3 py-6 space-y-1"
-             aria-label="Navegación lateral">
+            aria-label="Navegación lateral">
 
             @php
                 $links = [
@@ -34,10 +34,10 @@
                     ['label' => 'Calendario',    'route' => 'calendario.index',    'icon' => 'box'],
                     ['label' => 'Pedidos',       'route' => 'pedidos.index',       'icon' => 'box'],
                     ['label' => 'Kanban',        'route' => 'pedidos.kanban',      'icon' => 'chart'],
+                    ['label' => 'Servicios',     'route' => 'servicios.index',     'icon' => 'chart'],
                     ['label' => 'Clientes',      'route' => 'clientes.index',      'icon' => 'users'],
                     ['label' => 'Precios base',  'route' => 'precio_bases.index',  'icon' => 'tag'],
                     ['label' => 'Tipo_servicio', 'route' => 'tipo_servicio.index', 'icon' => 'shield'],
-                    ['label' => 'Servicios',     'route' => 'servicios.index',     'icon' => 'chart'],
                     ['label' => 'Inventario',    'route' => 'inventario.index',    'icon' => 'tag'],
                     ['label' => 'Trabajos',      'route' => 'galeria.index',       'icon' => 'chart'],
                     ['label' => 'Finanzas',      'route' => 'finanzas.index',      'icon' => 'shield'],
