@@ -26,3 +26,4 @@ Route::resource('pedidos', PedidoController::class);
 Route::resource('servicios', ServicioController::class);
 
 Route::get('/calendario', [CalendarioController::class, 'index'])->name('calendario.index');
+Route::view('/configuracion', 'configuracion.index')->name('configuracion.index');

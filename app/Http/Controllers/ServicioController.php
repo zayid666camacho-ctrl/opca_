@@ -52,10 +52,15 @@ class ServicioController extends Controller
      */
     public function store(Request $request)
     {
-        //
+        $request->validate([
+            'descripcion'       => 'required|string|max:255',
+            'id_pedido'         => 'required|exists:pedidos,id',
+            'id_precio_bases'   => 'required|exists:precio_bases,id',
+            'id_tipo_servicios' => 'required|exists:tipo_servicios,id',
+        ]);
+
         $this->servicio_service->crear($request->all());
-        return redirect()->route('servicios.index');
-        
+        return redirect()->back()->with('success', 'Prenda agregada al pedido.');
     }
 
     /**
@@ -98,6 +103,6 @@ class ServicioController extends Controller
     {
         //
         $this->servicio_service->delete($id);
-        return redirect()->route('servicios.index');
+        return redirect()->back()->with('success', 'Prenda quitada del pedido.');
     }
 }

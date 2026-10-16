@@ -1,4 +1,4 @@
-@extends('layouts.app')
+@extends('layouts.module')
 
 @section('title')
     Nuevo tipo de servicio
@@ -33,6 +33,7 @@
                 <select name="servicio" id="servicio" class="w-full border rounded px-3 py-2">
                     <option value="arreglo">Arreglo</option>
                     <option value="confeccion">Confección</option>
+                    <option value="diseno">Diseño</option>
                 </select>
             </div>
 

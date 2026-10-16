@@ -29,11 +29,11 @@ class ClientesRepository{
         cliente::destroy($id);
     }
 
-    public function obtenerDetalle(int $id){
+    public function obtener_detalle(int $id){
         return cliente::findOrFail($id);
     }
 
-    public function buscarPorNombre(string $termino){
+    public function buscar_por_nombre(string $termino){
     return cliente::whereRaw("(nombre || ' ' || apellido) LIKE ?", ["%{$termino}%"])->get();
 }
 

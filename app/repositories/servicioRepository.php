@@ -15,7 +15,7 @@ class servicioRepository{
     }
 
     public function buscars(int $id){
-        return servicio::with(['pedido', 'precioBase', 'tipoServicio'])->findOrfail($id);
+        return servicio::with(['pedido', 'precio_base', 'tipo_servicio'])->findOrfail($id);
     }
 
     public function actualizar(int $id, array $datos){

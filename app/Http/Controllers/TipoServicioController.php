@@ -18,7 +18,7 @@ class TipoServicioController extends Controller
     public function index()
     {
         $tiposervicio = $this->tiposervicioservice->listar();
-        return view('tipo_servicio.index', compact('tiposervicio'));
+        return view('tipo_servicio.index', compact('tiposervicio'));    
     }
 
     public function create()

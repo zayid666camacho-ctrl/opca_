@@ -33,12 +33,12 @@ class ClientesService{
         return $this->clientesrepository->delete($id);
     }
 
-    public function obtenerDetalle(int $id){
-        return $this->clientesrepository->obtenerDetalle($id);
+    public function obtener_detalle(int $id){
+        return $this->clientesrepository->obtener_detalle($id);
     }
 
-    public function buscarPorNombre(string $termino){
-    return $this->clientesrepository->buscarPorNombre($termino);
+    public function buscar_por_nombre(string $termino){
+    return $this->clientesrepository->buscar_por_nombre($termino);
 }
 
 }

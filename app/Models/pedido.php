@@ -15,7 +15,7 @@ class pedido extends Model
         return $this->belongsTo(cliente::class,'idcliente');
     }
 
-    public function servicio(){
-        return $this->hasMany(servicio::class);
+    public function servicios(){
+        return $this->hasMany(servicio::class, 'id_pedido');
     }
 }

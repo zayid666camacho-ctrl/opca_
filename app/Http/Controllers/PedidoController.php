@@ -6,6 +6,8 @@ use App\Models\pedido;
 use App\repositories\PedidoRepository;
 use App\services\ClientesService;
 use App\services\PedidoService;
+use App\services\PreciobaseService;
+use App\services\TiposervicioService;
 use Illuminate\Http\Request;
 
 class PedidoController extends Controller
@@ -13,10 +15,14 @@ class PedidoController extends Controller
 
     private PedidoService $pedidoservice;
     private ClientesService $clientesservice;
+    private PreciobaseService $preciobaseservice;
+    private TiposervicioService $tiposervicioservice;
 
-    public function __construct(PedidoService $pedidoservice, ClientesService $clientesservice) {
+    public function __construct(PedidoService $pedidoservice, ClientesService $clientesservice, PreciobaseService $preciobaseservice, TiposervicioService $tiposervicioservice) {
         $this->pedidoservice = $pedidoservice;
         $this->clientesservice = $clientesservice;
+        $this->preciobaseservice = $preciobaseservice;
+        $this->tiposervicioservice = $tiposervicioservice;
     }
 
     
@@ -80,8 +86,9 @@ class PedidoController extends Controller
     {
         //
         
-        $this->pedidoservice->Crear($request->all());
-        return redirect()->route('pedidos.index');
+        $pedido = $this->pedidoservice->crear($request->all());
+        return redirect()->route('pedidos.edit', $pedido->id)
+        ->with('success', 'Pedido creado. Ahora agrega las prendas y revisa las medidas del cliente.');
     }
 
     /**
@@ -97,11 +104,12 @@ class PedidoController extends Controller
      */
     public function edit(int $id)
     {
-        //
         $pedido = $this->pedidoservice->buscar($id);
-
         $cliente = $this->clientesservice->listar();
-        return view('pedido.edit', compact('cliente', 'pedido'));
+        $precio_bases = $this->preciobaseservice->listar();
+        $tipo_servicios = $this->tiposervicioservice->listar();
+
+        return view('pedido.edit', compact('cliente', 'pedido', 'precio_bases', 'tipo_servicios'));
     }
 
     /**
@@ -120,8 +128,11 @@ class PedidoController extends Controller
      */
     public function destroy(int $id)
     {
-        //
-        $this->pedidoservice->delete($id);
-        return redirect()->route('pedidos.index');
+        $resultado = $this->pedidoservice->delete($id);
+
+        if (!$resultado['ok']) {
+            return redirect()->route('pedidos.index')->with('error', $resultado['mensaje']);
+        }
+        return redirect()->route('pedidos.index')->with('success', 'Pedido eliminado.');
     }
 }
