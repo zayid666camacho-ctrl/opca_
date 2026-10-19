@@ -70,4 +70,23 @@ class PedidoRepository{
     public function tiene_servicios(int $id){
         return servicio::where('id_pedido', $id)->exists();
     }
+
+    public function listar_por_cliente(int $id_cliente, int $excluir_id){
+        return pedido::where('idcliente', $id_cliente)
+            ->where('id', '!=', $excluir_id)
+            ->orderBy('fecha', 'desc')
+            ->get();
+    }
+
+    public function total_pagado(int $id){
+        return pedido::findOrFail($id)->pagos()->sum('monto');
+    }
+
+    public function listar_con_saldo(){
+        return pedido::with('cliente')
+            ->where('saldo_pendiente', '>', 0)
+            ->orderBy('fecha', 'desc')
+            ->get();
+    }
+
 }

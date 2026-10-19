@@ -54,9 +54,11 @@ class servicioService{
 
     private function recalcular_pedido(int $idpedido){
         $total = $this->servicio_repository->listar_por_pedido($idpedido)->sum('precio');
+        $pagado = $this->pedido_repository->total_pagado($idpedido);
+
         $this->pedido_repository->actualizar($idpedido, [
             'precio' => $total,
-            'saldo_pendiente' => $total,
+            'saldo_pendiente' => $total - $pagado,
         ]);
     }
 

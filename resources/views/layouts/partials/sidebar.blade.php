@@ -32,15 +32,15 @@
                 $links = [
                     ['label' => 'Dashboard',     'route' => 'dashboard.index',     'icon' => 'home'],
                     ['label' => 'Calendario',    'route' => 'calendario.index',    'icon' => 'box'],
-                    ['label' => 'Pedidos',       'route' => 'pedidos.index',       'icon' => 'box'],
                     ['label' => 'Kanban',        'route' => 'pedidos.kanban',      'icon' => 'chart'],
-                    ['label' => 'Servicios',     'route' => 'servicios.index',     'icon' => 'chart'],
+                    ['label' => 'Finanzas',      'route' => 'finanzas.index',      'icon' => 'shield'],
+                    ['label' => 'Pedidos',       'route' => 'pedidos.index',       'icon' => 'box'],
                     ['label' => 'Clientes',      'route' => 'clientes.index',      'icon' => 'users'],
+                    ['label' => 'Servicios',     'route' => 'servicios.index',     'icon' => 'chart'],
                     ['label' => 'Precios base',  'route' => 'precio_bases.index',  'icon' => 'tag'],
                     ['label' => 'Tipo_servicio', 'route' => 'tipo_servicio.index', 'icon' => 'shield'],
                     ['label' => 'Inventario',    'route' => 'inventario.index',    'icon' => 'tag'],
                     ['label' => 'Trabajos',      'route' => 'galeria.index',       'icon' => 'chart'],
-                    ['label' => 'Finanzas',      'route' => 'finanzas.index',      'icon' => 'shield'],
                 ];
             @endphp
 

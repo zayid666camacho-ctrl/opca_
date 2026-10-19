@@ -18,4 +18,8 @@ class pedido extends Model
     public function servicios(){
         return $this->hasMany(servicio::class, 'id_pedido');
     }
+
+    public function finanzas(){
+        return $this->hasMany(finanza::class, 'id_pedido');
+    }
 }

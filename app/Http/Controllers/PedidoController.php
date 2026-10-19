@@ -108,8 +108,9 @@ class PedidoController extends Controller
         $cliente = $this->clientesservice->listar();
         $precio_bases = $this->preciobaseservice->listar();
         $tipo_servicios = $this->tiposervicioservice->listar();
+        $historial = $this->pedidoservice->historial_cliente($pedido->idcliente, $pedido->id);
 
-        return view('pedido.edit', compact('cliente', 'pedido', 'precio_bases', 'tipo_servicios'));
+        return view('pedido.edit', compact('cliente', 'pedido', 'precio_bases', 'tipo_servicios', 'historial'));
     }
 
     /**
@@ -134,5 +135,26 @@ class PedidoController extends Controller
             return redirect()->route('pedidos.index')->with('error', $resultado['mensaje']);
         }
         return redirect()->route('pedidos.index')->with('success', 'Pedido eliminado.');
+    }
+
+    public function actualizar_medidas(int $id, Request $request)
+    {
+        $campos = [
+            'ancho_espalda', 'largo_espalda', 'contorno_pecho', 'hombro', 'manga', 'puño',
+            'antebrazo', 'cintura_suelta', 'largo_total', 'cintura', 'tiro', 'pierna',
+            'rodilla', 'largo_pierna', 'bota',
+        ];
+
+        $reglas = [];
+        foreach ($campos as $campo) {
+            $reglas[$campo] = 'nullable|numeric|between:0,999.99';
+        }
+
+        $datos = $request->validate($reglas);
+
+        $pedido = $this->pedidoservice->buscar($id);
+        $this->clientesservice->actualizar($pedido->idcliente, $datos);
+
+        return redirect()->route('pedidos.edit', $id)->with('success', 'Medidas del cliente actualizadas.');
     }
 }

@@ -41,6 +41,25 @@
         </a>
     </div>
 
+                <div class="flex flex-wrap items-center justify-end gap-4 mb-3 text-xs font-medium text-slate-600">
+                    <span class="flex items-center gap-1.5">
+                        <span class="w-3 h-3 rounded-full bg-blue-500 inline-block"></span>
+                        Terminado / Entregado
+                    </span>
+                    <span class="flex items-center gap-1.5">
+                        <span class="w-3 h-3 rounded-full bg-red-500 inline-block"></span>
+                        Urgente (Hoy / Mañana / Atrazado)
+                    </span>
+                    <span class="flex items-center gap-1.5">
+                        <span class="w-3 h-3 rounded-full bg-emerald-500 inline-block"></span>
+                        Con margen (2+ días)
+                    </span>
+                    <span class="flex items-center gap-1.5">
+                        <span class="w-3 h-3 rounded-full bg-slate-400 inline-block"></span>
+                        Cancelado
+                    </span>
+                </div>
+
     <div class="border border-slate-300 rounded-lg overflow-hidden shadow-sm">
     <div class="grid grid-cols-7 bg-slate-100 border-b border-slate-300 text-center text-xs font-bold text-slate-700 uppercase tracking-wider">
         <div class="py-2.5 border-r border-slate-300">Lunes</div>
@@ -54,6 +73,7 @@
     
 
     <div class="grid grid-cols-7 border-l border-slate-200">
+
 
         {{-- Celdas vacías antes del día 1, según en qué día de la semana cae --}}
         @for ($i = 1; $i < $dia_semana_inicio; $i++)
@@ -70,14 +90,23 @@
             @foreach (($pedidos_por_dia[$dia] ?? []) as $pedido)
 
             @php
-                // Calculamos los días restantes comparando la entrega con hoy
+                
                 $fecha_entrega = \Carbon\Carbon::parse($pedido->fecha_entrega)->startOfDay();
                 $dias_restantes = $hoy->diffInDays($fecha_entrega, false);
-
-                // Si falta 1 día o menos (o ya pasó), rojo suave. Si no, verde suave.
-                if ($dias_restantes <= 1) {
+                
+                if (in_array($pedido->estado, ['terminado', 'entregado'])) {
+                    $clases_color = 'bg-blue-100 text-blue-800 hover:bg-blue-200 border-l-2 border-blue-500';
+                }               
+                elseif ($pedido->estado === 'cancelado') {
+                    $clases_color = 'bg-slate-100 text-slate-400 hover:bg-slate-200 border-l-2 border-slate-300 line-through';
+                }               
+                elseif ($dias_restantes < 0) {
+                    $clases_color = 'bg-slate-200 text-slate-700 hover:bg-slate-300 border-l-2 border-slate-500';
+                }                
+                elseif ($dias_restantes <= 1) {
                     $clases_color = 'bg-red-100 text-red-800 hover:bg-red-200 border-l-2 border-red-500';
-                } else {
+                } 
+                else {
                     $clases_color = 'bg-emerald-100 text-emerald-800 hover:bg-emerald-200 border-l-2 border-emerald-500';
                 }
             @endphp
