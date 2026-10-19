@@ -78,4 +78,12 @@ class PedidoService{
         return $this->pedidorepository->filtrar($cliente, $estado, $desde, $hasta);
     }
 
+    public function historial_cliente(int $id_cliente, int $excluir_id){
+        return $this->pedidorepository->listar_por_cliente($id_cliente, $excluir_id);
+    }
+
+    public function listar_con_saldo(){
+        return $this->pedidorepository->listar_con_saldo();
+    }
+
 }

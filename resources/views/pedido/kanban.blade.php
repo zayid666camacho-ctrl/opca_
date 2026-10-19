@@ -1,4 +1,4 @@
-@extends('layouts.module')
+@extends('layouts.app')
 
 @section('title', 'Kanban de pedidos')
 @section('page-title', 'Kanban de pedidos')

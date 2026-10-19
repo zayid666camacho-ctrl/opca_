@@ -188,6 +188,126 @@
 
     </div>
 
+        <div class="max-w-3xl mx-auto bg-white shadow-lg rounded-lg p-8 mt-6">
+
+        <h3 class="text-2xl font-bold text-gray-700">Medidas del cliente en CM</h3>
+        <p class="text-sm text-slate-500 mb-4">
+            {{ $pedido->cliente->nombre }} {{ $pedido->cliente->apellido }}.
+            Se guardan en el perfil del cliente y se reutilizan en sus próximos pedidos.
+        </p>
+
+        @php
+            $grupos = [
+                'camisa' => [
+                    'titulo' => 'Medidas Camisa',
+                    'campos' => [
+                        'ancho_espalda'  => 'Ancho espalda',
+                        'largo_espalda'  => 'Largo espalda',
+                        'contorno_pecho' => 'Contorno pecho',
+                        'hombro'         => 'Hombro',
+                        'manga'          => 'Manga',
+                        'puño'           => 'Puño',
+                        'antebrazo'      => 'Antebrazo',
+                        'cintura_suelta' => 'Cintura suelta',
+                    ],
+                ],
+                'pantalon' => [
+                    'titulo' => 'Medidas Pantalón',
+                    'campos' => [
+                        'cintura'      => 'Cintura',
+                        'tiro'         => 'Tiro',
+                        'pierna'       => 'Pierna',
+                        'rodilla'      => 'Rodilla',
+                        'largo_pierna' => 'Largo pierna',
+                        'bota'         => 'Bota',
+                    ],
+                ],
+                'generales' => [
+                    'titulo' => 'Medidas Generales',
+                    'campos' => [
+                        'largo_total' => 'Largo total',
+                    ],
+                ],
+            ];
+        @endphp
+
+        <form action="{{ route('pedidos.medidas', $pedido->id) }}" method="POST" x-data="{ seccion: 'camisa' }">
+            @csrf
+            @method('PATCH')
+
+            @foreach ($grupos as $clave => $grupo)
+                <div class="border border-slate-200 rounded-lg mb-3">
+                    <button type="button"
+                        @click="seccion = (seccion === '{{ $clave }}') ? null : '{{ $clave }}'"
+                        class="w-full flex justify-between items-center px-4 py-3 font-semibold text-slate-700">
+                        {{ $grupo['titulo'] }}
+                        <span x-text="seccion === '{{ $clave }}' ? '−' : '+'"></span>
+                    </button>
+
+                    <div x-show="seccion === '{{ $clave }}'" x-cloak class="px-4 pb-4 grid grid-cols-2 gap-4">
+                        @foreach ($grupo['campos'] as $campo => $etiqueta)
+                            <div>
+                                <label class="block text-sm font-medium text-slate-600">{{ $etiqueta }}</label>
+                                <input type="number" step="0.01" name="{{ $campo }}"
+                                    value="{{ old($campo, $pedido->cliente->$campo) }}"
+                                    class="mt-1 w-full rounded border-slate-300 focus:ring-primary-500 focus:border-primary-500">
+                                @error($campo) <p class="text-red-600 text-sm mt-1">{{ $message }}</p> @enderror
+                            </div>
+                        @endforeach
+                    </div>
+                </div>
+            @endforeach
+
+            <div class="flex justify-end">
+                <button type="submit" class="px-4 py-2 rounded bg-primary-600 text-white hover:bg-primary-700">
+                    Guardar medidas
+                </button>
+            </div>
+        </form>
+
+    </div>
+
+        <div class="max-w-3xl mx-auto bg-white shadow-lg rounded-lg p-8 mt-6">
+
+        <h3 class="text-2xl font-bold text-gray-700 mb-4">Otros pedidos de este cliente</h3>
+
+        <table class="min-w-full">
+            <thead class="bg-slate-50">
+                <tr class="text-left text-xs font-semibold text-slate-500 uppercase tracking-wide">
+                    <th class="px-4 py-3">Fecha</th>
+                    <th class="px-4 py-3">Entrega</th>
+                    <th class="px-4 py-3">Estado</th>
+                    <th class="px-4 py-3 text-right">Total</th>
+                    <th class="px-4 py-3 text-right">Abrir</th>
+                </tr>
+            </thead>
+
+            <tbody class="divide-y divide-slate-100">
+                @forelse ($historial as $anterior)
+                    <tr>
+                        <td class="px-4 py-3 text-slate-700">{{ $anterior->fecha }}</td>
+                        <td class="px-4 py-3 text-slate-500">{{ $anterior->fecha_entrega }}</td>
+                        <td class="px-4 py-3 text-slate-500">{{ ucfirst(str_replace('_', ' ', $anterior->estado)) }}</td>
+                        <td class="px-4 py-3 text-right text-slate-700">${{ number_format($anterior->precio, 2) }}</td>
+                        <td class="px-4 py-3">
+                            <a href="{{ route('pedidos.edit', $anterior->id) }}"
+                                class="w-5 h-5 block ml-auto text-slate-400 hover:text-primary-600" title="Abrir pedido">
+                                @include('layouts.partials.icons', ['icon' => 'eye'])
+                            </a>
+                        </td>
+                    </tr>
+                @empty
+                    <tr>
+                        <td colspan="5" class="px-4 py-6 text-center text-slate-400">
+                            Este cliente no tiene otros pedidos.
+                        </td>
+                    </tr>
+                @endforelse
+            </tbody>
+        </table>
+
+    </div>
+
 </div>
 </x-card>
 

@@ -10,6 +10,7 @@
 
 <x-card>
 <div class="max-w-3xl mx-auto">
+
     <h1 class="text-2xl font-bold text-slate-800 mb-6">EDITAR CLIENTE</h1>
 
     <form action="{{ route('clientes.update', $cliente->id) }}" method="POST" x-data="{ seccion: 'datos' }">
