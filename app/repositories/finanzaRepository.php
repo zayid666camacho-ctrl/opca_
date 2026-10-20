@@ -25,4 +25,11 @@ class finanzaRepository{
         finanza::destroy($id);
     }
 
+    public function listar_por_anio(int $anio){
+        return finanza::with('pedido.cliente')
+        ->whereYear('fecha', $anio)
+        ->orderBy('fecha')
+        ->get();
+    }
+
 }
