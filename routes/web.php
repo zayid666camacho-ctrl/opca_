@@ -32,3 +32,4 @@ Route::get('/calendario', [CalendarioController::class, 'index'])->name('calenda
 Route::view('/configuracion', 'configuracion.index')->name('configuracion.index');
 
 Route::resource('finanzas', FinanzaController::class)->only(['index', 'store', 'destroy']);
+Route::get('/finanzas/exportar', [FinanzaController::class, 'exportar'])->name('finanzas.exportar');

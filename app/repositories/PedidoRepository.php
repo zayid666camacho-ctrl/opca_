@@ -79,7 +79,7 @@ class PedidoRepository{
     }
 
     public function total_pagado(int $id){
-        return pedido::findOrFail($id)->pagos()->sum('monto');
+        return pedido::findOrFail($id)->finanzas()->sum('monto');
     }
 
     public function listar_con_saldo(){

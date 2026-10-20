@@ -15,7 +15,7 @@ return new class extends Migration
             $table->id();
             $table->decimal('monto', 10, 2);
             $table->date('fecha');
-            $table->string('notas');
+            $table->string('notas')->nullable();
 
             $table->unsignedBigInteger('id_pedido');
             $table->foreign('id_pedido')->references('id')->on('pedidos');

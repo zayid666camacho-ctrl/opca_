@@ -21,7 +21,7 @@
 
         <div class="flex items-center gap-2 sm:gap-4">
 
-            @if (request()->routeIs('dashboard.index') || request()->routeIs('calendario.index'))
+            @if (request()->routeIs('dashboard.index') || request()->routeIs('calendario.index') || request()->routeIs('pedidos.kanban'))
 
                 {{-- Notificaciones --}}
                 <div x-data="{ open: false }" class="relative">
@@ -99,13 +99,32 @@
 
                 @yield('header-actions')
 
-                <a href="{{ route('dashboard.index') }}"
-                    class="flex items-center gap-1 px-4 py-2 rounded-lg text-neutral-200 hover:bg-neutral-800 hover:text-white font-medium">
-                    ← volver
-                </a>
+                <div class="flex items-center gap-2">
+
+                    @if (request()->routeIs('*create*', '*edit*', '*show*'))
+                        {{-- Muestra SOLO Volver en subvistas de creación, edición o detalle --}}
+                        <button onclick="window.history.back()"
+                            type="button"
+                            class="flex items-center gap-2 px-4 py-2 rounded-lg bg-neutral-800 border border-neutral-700 text-white hover:bg-neutral-700 hover:border-neutral-600 font-semibold text-sm transition shadow-sm cursor-pointer">
+                            <svg class="w-4 h-4 text-primary-400" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M10 19l-7-7m0 0l7-7m-7 7h18"></path>
+                            </svg>
+                            Volver
+                        </button>
+                    @else
+                        {{-- Muestra SOLO Inicio en las demás vistas principales --}}
+                        <a href="{{ route('dashboard.index') }}"
+                            class="flex items-center gap-2 px-4 py-2 rounded-lg bg-neutral-800 border border-neutral-700 text-white hover:bg-neutral-700 hover:border-neutral-600 font-semibold text-sm transition shadow-sm">
+                            <svg class="w-4 h-4 text-primary-400" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M3 12l2-2m0 0l7-7 7 7M5 10v10a1 1 0 001 1h3m10-11l2 2m-2-2v10a1 1 0 01-1 1h-3m-6 0a1 1 0 001-1v-4a1 1 0 011-1h2a1 1 0 011 1v4a1 1 0 001 1m-6 0h6"></path>
+                            </svg>
+                            Inicio
+                        </a>
+                    @endif
+
+                </div>
 
             @endif
-
         </div>
     </div>
 </header>

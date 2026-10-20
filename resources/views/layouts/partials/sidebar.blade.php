@@ -33,8 +33,8 @@
                     ['label' => 'Dashboard',     'route' => 'dashboard.index',     'icon' => 'home'],
                     ['label' => 'Calendario',    'route' => 'calendario.index',    'icon' => 'box'],
                     ['label' => 'Kanban',        'route' => 'pedidos.kanban',      'icon' => 'chart'],
-                    ['label' => 'Finanzas',      'route' => 'finanzas.index',      'icon' => 'shield'],
                     ['label' => 'Pedidos',       'route' => 'pedidos.index',       'icon' => 'box'],
+                    ['label' => 'Finanzas',      'route' => 'finanzas.index',      'icon' => 'shield'],
                     ['label' => 'Clientes',      'route' => 'clientes.index',      'icon' => 'users'],
                     ['label' => 'Servicios',     'route' => 'servicios.index',     'icon' => 'chart'],
                     ['label' => 'Precios base',  'route' => 'precio_bases.index',  'icon' => 'tag'],
@@ -70,7 +70,7 @@
         {{-- Cerrar sesión --}}
         <div class="px-3 py-4 border-t border-slate-200">
             <form method="POST"
-                  action="{{ Route::has('logout') ? route('logout') : '#' }}">
+                action="{{ Route::has('logout') ? route('logout') : '#' }}">
                 @csrf
 
                 <button
