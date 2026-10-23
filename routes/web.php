@@ -8,11 +8,12 @@ use App\Http\Controllers\InventarioController;
 use App\Http\Controllers\PedidoController;
 use App\Http\Controllers\PrecioBaseController;
 use App\Http\Controllers\ServicioController;
+use App\Http\Controllers\SitioPublicoController;
 use App\Http\Controllers\TipoServicioController;
 use Illuminate\Support\Facades\Route;
 
-Route::get('/', [DashboardController::class, 'index'])
-        ->name('dashboard.index');
+Route::get('/', [SitioPublicoController::class, 'index'])
+        ->name('sitio.index');
 
 Route::get('/clientes/buscar', [ClienteController::class, 'buscar'])->name('clientes.buscar');
 Route::get('/clientes/buscar-json', [ClienteController::class, 'buscar_json'])->name('clientes.buscar_json');

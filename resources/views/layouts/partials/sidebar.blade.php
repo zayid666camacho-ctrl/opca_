@@ -30,7 +30,7 @@
 
             @php
                 $links = [
-                    ['label' => 'Dashboard',     'route' => 'dashboard.index',     'icon' => 'home'],
+                    ['label' => 'Publico',     'route' => 'sitio.index',     'icon' => 'home'],
                     ['label' => 'Calendario',    'route' => 'calendario.index',    'icon' => 'box'],
                     ['label' => 'Kanban',        'route' => 'pedidos.kanban',      'icon' => 'chart'],
                     ['label' => 'Pedidos',       'route' => 'pedidos.index',       'icon' => 'box'],
