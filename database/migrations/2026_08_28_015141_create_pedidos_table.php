@@ -16,7 +16,7 @@ return new class extends Migration
             $table->date('fecha');
             $table->date('fecha_entrega');
             $table->enum('estado', ['recibido', 'en_proceso', 'terminado', 'entregado', 'cancelado']);
-            $table->string('descripcion');
+            $table->string('descripcion')->nullable();
             $table->decimal('precio', 10,2);
             $table->decimal('saldo_pendiente', 10,2);
             $table->foreignId('idcliente');

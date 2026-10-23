@@ -15,8 +15,11 @@ return new class extends Migration
             $table->id();
             $table->string('nombre_prenda');
             $table->enum('complejidad', ['Baja', 'Media', 'Alta']);
-            $table->decimal('precio');
-            $table->text('descripcion');
+            $table->decimal('precio', 10, 2);
+            $table->text('descripcion')->nullable();
+            $table->boolean('requiere_camisa')->default(false);
+            $table->boolean('requiere_pantalon')->default(false);
+            $table->boolean('requiere_generales')->default(false);
             $table->timestamps();
         });
     }
