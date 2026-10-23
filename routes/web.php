@@ -4,6 +4,7 @@ use App\Http\Controllers\CalendarioController;
 use App\Http\Controllers\ClienteController;
 use App\Http\Controllers\DashboardController;
 use App\Http\Controllers\FinanzaController;
+use App\Http\Controllers\InventarioController;
 use App\Http\Controllers\PedidoController;
 use App\Http\Controllers\PrecioBaseController;
 use App\Http\Controllers\ServicioController;
@@ -14,6 +15,8 @@ Route::get('/', [DashboardController::class, 'index'])
         ->name('dashboard.index');
 
 Route::get('/clientes/buscar', [ClienteController::class, 'buscar'])->name('clientes.buscar');
+Route::get('/clientes/buscar-json', [ClienteController::class, 'buscar_json'])->name('clientes.buscar_json');
+Route::get('/pedidos/nuevo', [PedidoController::class, 'nuevo'])->name('pedidos.nuevo');
 
 Route::resource('clientes', ClienteController::class);
 Route::resource('tipo_servicio', TipoServicioController::class);
@@ -23,6 +26,7 @@ Route::get('/pedidos/kanban', [PedidoController::class, 'kanban'])->name('pedido
 Route::get('/pedidos/filtrar', [PedidoController::class, 'filtrar'])->name('pedidos.filtrar');
 Route::patch('/pedidos/{id}/estado', [PedidoController::class, 'cambiarEstado'])->name('pedidos.estado');
 Route::patch('/pedidos/{id}/medidas', [PedidoController::class, 'actualizar_medidas'])->name('pedidos.medidas');
+Route::post('/pedidos/guardar', [PedidoController::class, 'guardar'])->name('pedidos.guardar');
 
 Route::resource('pedidos', PedidoController::class);
 
@@ -33,3 +37,5 @@ Route::view('/configuracion', 'configuracion.index')->name('configuracion.index'
 
 Route::resource('finanzas', FinanzaController::class)->only(['index', 'store', 'destroy']);
 Route::get('/finanzas/exportar', [FinanzaController::class, 'exportar'])->name('finanzas.exportar');
+
+Route::resource('inventario', InventarioController::class);
