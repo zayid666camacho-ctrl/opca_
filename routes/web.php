@@ -10,15 +10,22 @@ use App\Http\Controllers\ServicioController;
 use App\Http\Controllers\TipoServicioController;
 use Illuminate\Support\Facades\Route;
 
-Route::get('/', [DashboardController::class, 'index'])
+Route::middleware('auth')->group(function () { 
+
+Route::get('/dashboard', [DashboardController::class, 'index'])
         ->name('dashboard.index');
 
 Route::get('/clientes/buscar', [ClienteController::class, 'buscar'])->name('clientes.buscar');
 
-Route::resource('clientes', ClienteController::class);
+Route::get('/clientes/buscar-json', [ClienteController::class, 'buscar_json'])->name('clientes.buscar_json');
+Route::get('/pedidos/nuevo', [PedidoController::class, 'nuevo'])->name('pedidos.nuevo');
+
+Route::resource('clientes', ClienteController::class)->names('clientes') ->middleware('modulo:clientes'); 
+
 Route::resource('tipo_servicio', TipoServicioController::class);
 Route::resource('precio_bases', PrecioBaseController::class);
 
+Route::post('/pedidos/guardar', [PedidoController::class, 'guardar'])->name('pedidos.guardar');
 Route::get('/pedidos/kanban', [PedidoController::class, 'kanban'])->name('pedidos.kanban');
 Route::get('/pedidos/filtrar', [PedidoController::class, 'filtrar'])->name('pedidos.filtrar');
 Route::patch('/pedidos/{id}/estado', [PedidoController::class, 'cambiarEstado'])->name('pedidos.estado');
@@ -33,3 +40,6 @@ Route::view('/configuracion', 'configuracion.index')->name('configuracion.index'
 
 Route::resource('finanzas', FinanzaController::class)->only(['index', 'store', 'destroy']);
 Route::get('/finanzas/exportar', [FinanzaController::class, 'exportar'])->name('finanzas.exportar');
+
+
+}); 

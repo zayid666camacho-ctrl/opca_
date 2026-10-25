@@ -40,9 +40,9 @@ class ClienteController extends Controller
 
     public function show(int $id)
     {
-    $cliente = $this->clientesservice->obtener_detalle($id);
+        $cliente = $this->clientesservice->obtener_detalle($id);
 
-    return view('clientes.show', compact('cliente'));
+        return view('clientes.show', compact('cliente'));
     }
 
 
@@ -70,9 +70,21 @@ class ClienteController extends Controller
     }
 
     public function buscar(Request $request)
-{
-    $termino = $request->query('q', '');
-    $clientes = $this->clientesservice->buscar_por_nombre($termino);
-    return view('clientes._tabla', compact('clientes'));
-}
+    {
+        $termino = $request->query('q', '');
+        $clientes = $this->clientesservice->buscar_por_nombre($termino);
+        return view('clientes._tabla', compact('clientes'));
+    }
+
+    public function buscar_json(Request $request)
+    {
+        $termino = trim($request->query('q', ''));
+
+        if (strlen($termino) < 2) {
+            return response()->json([]);
+        }
+
+        $clientes = $this->clientesservice->buscar_por_nombre($termino);
+        return response()->json($clientes->take(8)->values());
+    }
 }

@@ -41,7 +41,12 @@
                     ['label' => 'Tipo_servicio', 'route' => 'tipo_servicio.index', 'icon' => 'shield'],
                     ['label' => 'Inventario',    'route' => 'inventario.index',    'icon' => 'tag'],
                     ['label' => 'Trabajos',      'route' => 'galeria.index',       'icon' => 'chart'],
-                ];
+                    ['label' => 'Seguridad',      'route' => 'seguridad.permisos.index',       'icon' => 'chart'],
+
+                    
+
+                
+                    ];
             @endphp
 
             @foreach ($links as $link)

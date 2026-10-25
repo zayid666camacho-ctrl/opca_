@@ -157,4 +157,13 @@ class PedidoController extends Controller
 
         return redirect()->route('pedidos.edit', $id)->with('success', 'Medidas del cliente actualizadas.');
     }
+
+    public function nuevo(Request $request)
+    {
+        $fecha = $request->query('fecha');
+        $precio_bases = $this->preciobaseservice->listar();
+        $tipo_servicios = $this->tiposervicioservice->listar();
+
+        return view('pedido.nuevo', compact('fecha', 'precio_bases', 'tipo_servicios'));
+    }
 }
