@@ -164,17 +164,12 @@ class PedidoController extends Controller
         return redirect()->route('pedidos.edit', $id)->with('success', 'Medidas del cliente actualizadas.');
     }
 
-    public function guardar(StorePedidoCompletoRequest $request)
+    public function nuevo(Request $request)
     {
-        try {
-            $pedido = $this->nuevopedidoservice->crear($request->validated());
-        } catch (\DomainException $e) {
-            return redirect()->back()->withInput()->with('error', $e->getMessage());
-        }
+        $fecha = $request->query('fecha');
+        $precio_bases = $this->preciobaseservice->listar();
+        $tipo_servicios = $this->tiposervicioservice->listar();
 
-        $fecha = \Carbon\Carbon::parse($pedido->fecha);
-
-        return redirect()->route('calendario.index', ['mes' => $fecha->month, 'anio' => $fecha->year])
-            ->with('success', 'Pedido creado y agregado al calendario.');
+        return view('pedido.nuevo', compact('fecha', 'precio_bases', 'tipo_servicios'));
     }
 }

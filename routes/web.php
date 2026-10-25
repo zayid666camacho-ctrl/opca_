@@ -19,10 +19,15 @@ Route::get('/clientes/buscar', [ClienteController::class, 'buscar'])->name('clie
 Route::get('/clientes/buscar-json', [ClienteController::class, 'buscar_json'])->name('clientes.buscar_json');
 Route::get('/pedidos/nuevo', [PedidoController::class, 'nuevo'])->name('pedidos.nuevo');
 
-Route::resource('clientes', ClienteController::class);
+Route::get('/clientes/buscar-json', [ClienteController::class, 'buscar_json'])->name('clientes.buscar_json');
+Route::get('/pedidos/nuevo', [PedidoController::class, 'nuevo'])->name('pedidos.nuevo');
+
+Route::resource('clientes', ClienteController::class)->names('clientes') ->middleware('modulo:clientes'); 
+
 Route::resource('tipo_servicio', TipoServicioController::class);
 Route::resource('precio_bases', PrecioBaseController::class);
 
+Route::post('/pedidos/guardar', [PedidoController::class, 'guardar'])->name('pedidos.guardar');
 Route::get('/pedidos/kanban', [PedidoController::class, 'kanban'])->name('pedidos.kanban');
 Route::get('/pedidos/filtrar', [PedidoController::class, 'filtrar'])->name('pedidos.filtrar');
 Route::patch('/pedidos/{id}/estado', [PedidoController::class, 'cambiarEstado'])->name('pedidos.estado');
