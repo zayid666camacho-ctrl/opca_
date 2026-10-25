@@ -2,6 +2,9 @@
 
 namespace App\Http\Controllers;
 
+use App\Http\Requests\StorePedidoCompletoRequest;
+use App\services\NuevoPedidoService;
+
 use App\Models\pedido;
 use App\repositories\PedidoRepository;
 use App\services\ClientesService;
@@ -17,12 +20,15 @@ class PedidoController extends Controller
     private ClientesService $clientesservice;
     private PreciobaseService $preciobaseservice;
     private TiposervicioService $tiposervicioservice;
+    private NuevoPedidoService $nuevopedidoservice;
 
-    public function __construct(PedidoService $pedidoservice, ClientesService $clientesservice, PreciobaseService $preciobaseservice, TiposervicioService $tiposervicioservice) {
+
+    public function __construct(PedidoService $pedidoservice, ClientesService $clientesservice, PreciobaseService $preciobaseservice, TiposervicioService $tiposervicioservice, NuevoPedidoService $nuevopedidoservice) {
         $this->pedidoservice = $pedidoservice;
         $this->clientesservice = $clientesservice;
         $this->preciobaseservice = $preciobaseservice;
         $this->tiposervicioservice = $tiposervicioservice;
+        $this->nuevopedidoservice = $nuevopedidoservice;
     }
 
     
