@@ -18,6 +18,7 @@ class DatabaseSeeder extends Seeder
         $this->call([
             TipoServicioSeeder::class,
             PrecioBaseSeeder::class,
+            SeguridadSeeder::class, // Rol administrador + usuaria administradora inicial
         ]);
     }
 }

@@ -1,9 +1,11 @@
-@extends('layouts.app')
+@extends('layouts.module')
 
 @section('title', 'Kanban de pedidos')
-@section('page-title', 'Kanban de pedidos')
+@section('page-title', 'Tablero Kanban de Pedidos')
 
 @section('content')
+
+<div class="max-w-7xl mx-auto">
 
 @php
     $etiquetas = [
@@ -14,6 +16,21 @@
         'cancelado'  => 'Cancelado',
     ];
 @endphp
+
+{{-- Barra superior de accesos rápidos desde el Kanban --}}
+<div class="flex flex-wrap items-center justify-between gap-3 mb-5">
+    <p class="text-xs sm:text-sm text-brand-900/70">
+        Arrastra cada pedido entre columnas para actualizar su estado. Los entregados y cancelados muestran los últimos {{ $dias }} días.
+    </p>
+    <div class="flex items-center gap-2">
+        <a href="{{ route('pedidos.index') }}" class="px-3.5 py-2 rounded-xl bg-white border border-brand-200 text-xs font-semibold text-brand-900 hover:bg-brand-100/60 transition-colors shadow-xs">
+            Ver historial completo de pedidos
+        </a>
+        <a href="{{ route('clientes.index') }}" class="px-3.5 py-2 rounded-xl bg-white border border-brand-200 text-xs font-semibold text-brand-900 hover:bg-brand-100/60 transition-colors shadow-xs">
+            Directorio de clientes
+        </a>
+    </div>
+</div>
 
 <div class="grid grid-cols-1 md:grid-cols-3 xl:grid-cols-5 gap-4">
 
@@ -45,6 +62,7 @@
         </div>
     @endforeach
 
+</div>
 </div>
 
 @endsection

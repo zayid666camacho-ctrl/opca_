@@ -1,89 +1,127 @@
-
 {{--
-    Sidebar principal.
-    Usa la ruta actual para resaltar el enlace activo.
+    OPCA — Sidebar principal del Panel de Administración.
+    - Enfoque operativo limpio: los 5 módulos principales arriba + acceso rápido a Clientes, Historial de Pedidos y Configuración.
+    - Los módulos de uso esporádico o técnico (Precios Base, Seguridad, etc.) viven dentro de Configuración.
 --}}
 <aside
     x-cloak
     :class="sidebarOpen ? 'translate-x-0' : '-translate-x-full lg:translate-x-0'"
-    class="fixed inset-y-0 left-0 z-40 w-64 bg-white text-neutral-900 border-r border-slate-500 transform transition-transform duration-200 ease-in-out lg:translate-x-0"
+    class="fixed inset-y-0 left-0 z-40 w-64 bg-brand-900 text-white border-r border-white/10 transform transition-transform duration-200 ease-in-out lg:translate-x-0 shadow-xl"
     aria-label="Menú principal">
 
     <div class="h-full flex flex-col">
 
-        {{-- Logo --}}
-        <div class="flex items-center gap-3 h-16 px-6 border-b border-slate-200">
-            <div class="w-9 h-9 rounded-lg bg-blue-100 text-neutral-900 flex items-center justify-center font-bold">
-                <span class="w-5 h-5 block">
-                    @include('layouts.partials.icons', ['icon' => 'eye'])
+        {{-- Logo del software OPCA + taller activo --}}
+        <div class="flex items-center gap-3 h-16 px-5 border-b border-white/10">
+            <img src="{{ asset('img/logo-opca.png') }}" alt="Logo OPCA" class="h-10 w-10 object-contain drop-shadow">
+            <div class="leading-tight min-w-0">
+                <span class="text-white font-extrabold text-lg tracking-tight block">
+                    OPCA
+                </span>
+                <span class="text-[11px] text-gold-500 font-semibold truncate block">
+                    Creaciones Nayja
                 </span>
             </div>
-
-            <span class="text-neutral-900 font-semibold text-lg tracking-tight">
-                OPCA
-            </span>
         </div>
 
-        {{-- Navegación --}}
-        <nav class="flex-1 overflow-y-auto px-3 py-6 space-y-1"
+        {{-- Navegación principal (los 5 módulos clave del taller) --}}
+        <nav class="flex-1 overflow-y-auto px-3 py-5 space-y-6"
             aria-label="Navegación lateral">
 
             @php
-                $links = [
-                    ['label' => 'Publico',     'route' => 'sitio.index',     'icon' => 'home'],
-                    ['label' => 'Calendario',    'route' => 'calendario.index',    'icon' => 'box'],
-                    ['label' => 'Kanban',        'route' => 'pedidos.kanban',      'icon' => 'chart'],
-                    ['label' => 'Pedidos',       'route' => 'pedidos.index',       'icon' => 'box'],
-                    ['label' => 'Finanzas',      'route' => 'finanzas.index',      'icon' => 'shield'],
-                    ['label' => 'Clientes',      'route' => 'clientes.index',      'icon' => 'users'],
-                    ['label' => 'Servicios',     'route' => 'servicios.index',     'icon' => 'chart'],
-                    ['label' => 'Precios base',  'route' => 'precio_bases.index',  'icon' => 'tag'],
-                    ['label' => 'Tipo_servicio', 'route' => 'tipo_servicio.index', 'icon' => 'shield'],
-                    ['label' => 'Inventario',    'route' => 'inventario.index',    'icon' => 'tag'],
-                    ['label' => 'Trabajos',      'route' => 'galeria.index',       'icon' => 'chart'],
-                    ['label' => 'Seguridad',      'route' => 'seguridad.permisos.index',       'icon' => 'chart'],
+                $principales = [
+                    ['label' => 'Calendario',        'route' => 'calendario.index', 'icon' => 'calendar'],
+                    ['label' => 'Kanban de Pedidos', 'route' => 'pedidos.kanban',   'icon' => 'chart'],
+                    ['label' => 'Finanzas',          'route' => 'finanzas.index',   'icon' => 'tag'],
+                    ['label' => 'Inventario',        'route' => 'inventario.index', 'icon' => 'box'],
+                    ['label' => 'Galería',           'route' => 'galeria.index',    'icon' => 'eye'],
+                ];
 
-                    
-
-                
-                    ];
+                $accesos_rapidos = [
+                    ['label' => 'Clientes y Medidas',  'route' => 'clientes.index',      'icon' => 'users'],
+                    ['label' => 'Lista de Pedidos',    'route' => 'pedidos.index',       'icon' => 'search'],
+                    ['label' => 'Configuración y Más', 'route' => 'configuracion.index', 'icon' => 'cog'],
+                ];
             @endphp
 
-            @foreach ($links as $link)
-                @php
-                    $active = Route::has($link['route'])
-                        && request()->routeIs(explode('.', $link['route'])[0] . '.*');
-                @endphp
+            {{-- Bloque 1: Gestión Diaria --}}
+            <div class="space-y-1">
+                <span class="px-3.5 text-[10px] font-bold uppercase tracking-widest text-slate-400">
+                    Gestión Principal
+                </span>
 
-                <a
-                    href="{{ Route::has($link['route']) ? route($link['route']) : '#' }}"
-                    @if($active) aria-current="page" @endif
-                    class="group flex items-center gap-3 px-3 py-2.5 rounded-lg text-sm font-medium transition-colors
-                        {{ $active
-                            ? 'bg-blue-100 text-neutral-900 shadow-sm'
-                            : 'text-neutral-700 hover:bg-slate-100 hover:text-black' }}">
+                @foreach ($principales as $link)
+                    @php
+                        $active = Route::has($link['route']) && request()->routeIs($link['route']);
+                    @endphp
 
-                    <span class="w-5 h-5 flex-shrink-0" aria-hidden="true">
-                        @include('layouts.partials.icons', ['icon' => $link['icon']])
-                    </span>
+                    <a
+                        href="{{ Route::has($link['route']) ? route($link['route']) : '#' }}"
+                        @if($active) aria-current="page" @endif
+                        class="group flex items-center gap-3 px-3.5 py-2.5 rounded-xl text-sm font-medium transition-all
+                            {{ $active
+                                ? 'bg-brand-600 text-white font-semibold shadow-sm'
+                                : 'text-slate-300 hover:bg-white/10 hover:text-white' }}">
 
-                    <span>{{ $link['label'] }}</span>
-                </a>
-            @endforeach
+                        <span class="w-5 h-5 flex-shrink-0 {{ $active ? 'text-white' : 'text-slate-400 group-hover:text-brand-200' }}" aria-hidden="true">
+                            @include('layouts.partials.icons', ['icon' => $link['icon']])
+                        </span>
+
+                        <span>{{ $link['label'] }}</span>
+                    </a>
+                @endforeach
+            </div>
+
+            {{-- Bloque 2: Consultas y Configuración --}}
+            <div class="space-y-1 pt-3 border-t border-white/10">
+                <span class="px-3.5 text-[10px] font-bold uppercase tracking-widest text-slate-400">
+                    Directorio y Ajustes
+                </span>
+
+                @foreach ($accesos_rapidos as $link)
+                    @php
+                        $active = Route::has($link['route']) && request()->routeIs($link['route']);
+                    @endphp
+
+                    <a
+                        href="{{ Route::has($link['route']) ? route($link['route']) : '#' }}"
+                        @if($active) aria-current="page" @endif
+                        class="group flex items-center gap-3 px-3.5 py-2 rounded-xl text-xs font-medium transition-all
+                            {{ $active
+                                ? 'bg-brand-600 text-white font-semibold shadow-sm'
+                                : 'text-slate-300 hover:bg-white/10 hover:text-white' }}">
+
+                        <span class="w-4 h-4 flex-shrink-0 {{ $active ? 'text-white' : 'text-slate-400 group-hover:text-brand-200' }}" aria-hidden="true">
+                            @include('layouts.partials.icons', ['icon' => $link['icon']])
+                        </span>
+
+                        <span>{{ $link['label'] }}</span>
+                    </a>
+                @endforeach
+            </div>
+
         </nav>
 
-        {{-- Cerrar sesión --}}
-        <div class="px-3 py-4 border-t border-slate-200">
+        {{-- Pie del Sidebar: Sitio público + Cerrar sesión --}}
+        <div class="px-3 py-4 border-t border-white/10 space-y-1">
+            <a href="{{ route('sitio.index') }}"
+                class="w-full flex items-center gap-3 px-3.5 py-2 rounded-xl text-xs font-medium text-slate-300 hover:bg-white/10 hover:text-white transition-colors">
+                <span class="w-4 h-4 text-gold-500">
+                    @include('layouts.partials.icons', ['icon' => 'home'])
+                </span>
+                Ver sitio público
+            </a>
+
             <form method="POST"
                 action="{{ Route::has('logout') ? route('logout') : '#' }}">
                 @csrf
 
                 <button
                     type="submit"
-                    class="w-full flex items-center gap-3 px-3 py-2.5 rounded-lg text-sm font-medium text-neutral-700 hover:bg-rose-50 hover:text-neutral-900 transition-colors focus:outline-none focus:ring-2 focus:ring-blue-200"
+                    class="w-full flex items-center gap-3 px-3.5 py-2 rounded-xl text-xs font-medium text-slate-300 hover:bg-brand-600/20 hover:text-brand-200 transition-colors focus:outline-none cursor-pointer"
                     aria-label="Cerrar sesión">
 
-                    <svg class="w-5 h-5" fill="none" viewBox="0 0 24 24"
+                    <svg class="w-4 h-4 text-brand-500" fill="none" viewBox="0 0 24 24"
                         stroke="currentColor" aria-hidden="true">
                         <path stroke-linecap="round" stroke-linejoin="round"
                             stroke-width="2"

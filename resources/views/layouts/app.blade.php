@@ -1,28 +1,55 @@
+{{--
+    OPCA — Layout Principal del Panel (con Sidebar)
+    Usado en Calendario y Kanban.
+    - Paleta A: Carbón (#2B2B33), Rosa coral (#D6546A), Azul marino (#2F4B7C), Dorado (#C9A24B) y Crema cálido (#FFF8F5).
+--}}
 <!DOCTYPE html>
-<html lang="es" class="h-full bg-white">
+<html lang="es" class="h-full bg-brand-50">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>@yield('title', 'Dashboard') - {{ config('app.name', 'Admin') }}</title>
+    <title>@yield('title', 'Panel') — {{ config('app.name', 'OPCA') }}</title>
 
-    {{-- Tailwind CSS. Reemplazar por tu build de Vite/PostCSS en producción (ver README). --}}
+    {{-- Tailwind CSS vía CDN --}}
     <script src="https://cdn.tailwindcss.com"></script>
     <script>
         tailwind.config = {
             theme: {
                 extend: {
                     colors: {
+                        brand: {
+                            50:  '#FFF8F5', // Fondo crema cálido
+                            100: '#FDE8EA', // Rosa pastel suave
+                            200: '#F8CFD4', // Bordes suaves
+                            500: '#DF687C',
+                            600: '#D6546A', // Rosa coral principal
+                            700: '#BD3F55', // Hover rosa coral
+                            800: '#2F4B7C', // Azul marino
+                            900: '#2B2B33', // Carbón oscuro
+                        },
+                        gold: {
+                            50:  '#FBF7EE',
+                            100: '#F5EBCD',
+                            500: '#C9A24B',
+                            600: '#A88434',
+                        },
+                        accent: {
+                            50:  '#EEF2F8',
+                            100: '#DCE5F2',
+                            400: '#4A6FA5',
+                            500: '#2F4B7C',
+                        },
                         primary: {
-                            50:  '#FFFFFF',
-                            100: '#F0F5FF',
-                            200: '#DCE8F8',
-                            300: '#C5D7F2',
-                            400: '#A9C4E8',
-                            500: '#DCE8F8',
-                            600: '#C5D7F2',
-                            700: '#A9C4E8',
-                            800: '#171717',
-                            900: '#171717'
+                            50:  '#FFF8F5',
+                            100: '#FDE8EA',
+                            200: '#F8CFD4',
+                            300: '#F0959B',
+                            400: '#DF687C',
+                            500: '#D6546A',
+                            600: '#BD3F55',
+                            700: '#2F4B7C',
+                            800: '#2B2B33',
+                            900: '#2B2B33'
                         }
                     },
                     fontFamily: {
@@ -45,7 +72,7 @@
 
     @stack('styles')
 </head>
-<body class="h-full text-neutral-900 antialiased">
+<body class="h-full bg-brand-50 text-brand-900 antialiased">
 
     <div x-data="{ sidebarOpen: false }" class="min-h-screen flex">
 
@@ -54,7 +81,7 @@
             x-show="sidebarOpen"
             x-cloak
             @click="sidebarOpen = false"
-            class="fixed inset-0 z-30 bg-slate-900/50 lg:hidden"
+            class="fixed inset-0 z-30 bg-brand-900/60 backdrop-blur-xs lg:hidden"
             aria-hidden="true"
         ></div>
 

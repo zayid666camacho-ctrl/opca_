@@ -12,9 +12,16 @@ return new class extends Migration
     public function up(): void
     {
         Schema::create('galerias', function (Blueprint $table) {
-            $table->id();
-            $table->timestamps();
-        });
+        $table->id();
+        $table->string('titulo');
+        $table->text('descripcion')->nullable();
+        $table->string('imagen'); // Ruta relativa en storage (Opción 1)
+        $table->string('categoria')->nullable(); // Vestidos, Pantalones, Arreglos, etc.
+        $table->timestamp('fecha')->useCurrent(); // Como en tu diagrama
+        $table->string('realizado_por')->default('Creaciones Nayja');
+        $table->boolean('visible_publico')->default(true);
+        $table->timestamps();
+    });
     }
 
     /**
