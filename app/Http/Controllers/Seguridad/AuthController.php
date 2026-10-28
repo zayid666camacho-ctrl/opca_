@@ -48,6 +48,7 @@ class AuthController extends Controller
         $request->session()->invalidate();
         $request->session()->regenerateToken();
 
-        return redirect()->route('login');
+        // Al cerrar sesión se vuelve al sitio público
+        return redirect()->route('sitio.index');
     }
 }

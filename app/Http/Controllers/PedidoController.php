@@ -74,30 +74,6 @@ class PedidoController extends Controller
     }
 
     /**
-     * Show the form for creating a new resource.
-     */
-    public function create(Request $request)
-    {
-        //
-        $cliente = $this->clientesservice->listar();
-        $fecha = $request->query('fecha');
-        
-        return view('pedido.create', compact('cliente', 'fecha'));
-    }
-
-    /**
-     * Store a newly created resource in storage.
-     */
-    public function store(Request $request)
-    {
-        //
-        
-        $pedido = $this->pedidoservice->crear($request->all());
-        return redirect()->route('pedidos.edit', $pedido->id)
-        ->with('success', 'Pedido creado. Ahora agrega las prendas y revisa las medidas del cliente.');
-    }
-
-    /**
      * Display the specified resource.
      */
     public function show()
@@ -126,7 +102,7 @@ class PedidoController extends Controller
     {
         //
         $this->pedidoservice->actualizar($id, $request->all());
-        return redirect()->route('pedido.index');
+        return redirect()->route('pedidos.index');
 
     }
 
@@ -171,5 +147,25 @@ class PedidoController extends Controller
         $tipo_servicios = $this->tiposervicioservice->listar();
 
         return view('pedido.nuevo', compact('fecha', 'precio_bases', 'tipo_servicios'));
+    }
+
+    /**
+     * Guarda el pedido completo del flujo guiado (cliente, medidas, prendas y abono).
+     * La validación la hace StorePedidoCompletoRequest y el guardado atómico NuevoPedidoService.
+     */
+    public function guardar(StorePedidoCompletoRequest $request)
+    {
+        try {
+            $pedido = $this->nuevopedidoservice->crear($request->validated());
+        } catch (\DomainException $e) {
+            // Error de negocio (ej. abono mayor al total): se vuelve al formulario con el mensaje
+            return back()->withInput()->withErrors(['abono_monto' => $e->getMessage()]);
+        }
+
+        // Se vuelve al Calendario, en el mes de la fecha del pedido, para verlo ya agendado
+        $fecha_pedido = \Carbon\Carbon::parse($pedido->fecha);
+
+        return redirect()->route('calendario.index', ['mes' => $fecha_pedido->month, 'anio' => $fecha_pedido->year])
+            ->with('success', 'Pedido creado correctamente.');
     }
 }
