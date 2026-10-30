@@ -1,72 +1,77 @@
 @extends('layouts.module')
 
-
-@section('title', 'Editar Cliente')       
-@section('page-title', 'Editar Cliente')
-
+@section('title', 'Editar Cliente')
+@section('page-title', 'Editar Ficha de Cliente')
 
 @section('content')
 
-
-<x-card>
 <div class="max-w-3xl mx-auto">
 
-    <h1 class="text-2xl font-bold text-slate-800 mb-6">EDITAR CLIENTE</h1>
+    <div class="bg-white rounded-2xl border border-brand-200/80 shadow-xs p-5 mb-6 flex items-center justify-between gap-4">
+        <div>
+            <h2 class="text-xl font-bold text-brand-900">Editar Cliente: {{ $cliente->nombre }} {{ $cliente->apellido }}</h2>
+            <p class="text-xs sm:text-sm text-brand-900/65 mt-0.5">Actualiza sus datos personales, medidas corporales en CM o notas.</p>
+        </div>
+        <a href="{{ route('clientes.index') }}"
+           class="px-3.5 py-2 rounded-xl bg-brand-50 border border-brand-200 text-xs font-semibold text-brand-900 hover:bg-brand-100 transition-colors">
+            ← Volver al directorio
+        </a>
+    </div>
 
-    <form action="{{ route('clientes.update', $cliente->id) }}" method="POST" x-data="{ seccion: 'datos' }">
+    <form action="{{ route('clientes.update', $cliente->id) }}" method="POST" x-data="{ seccion: 'datos' }" class="space-y-4">
         @csrf
         @method('PUT')
 
         {{-- ===== Datos generales ===== --}}
-        <div class="bg-white rounded-lg shadow mb-4">
+        <div class="bg-white rounded-2xl border border-brand-200/80 shadow-xs overflow-hidden">
             <button type="button"
                 @click="seccion = (seccion === 'datos') ? null : 'datos'"
-                class="w-full flex justify-between items-center px-4 py-3 font-semibold text-slate-700">
-                Datos generales
-                <span x-text="seccion === 'datos' ? '−' : '+'"></span>
+                class="w-full flex justify-between items-center px-5 py-3.5 bg-brand-50/70 hover:bg-brand-100/50 font-bold text-sm text-brand-900 transition-colors">
+                <span>1. Datos generales de contacto</span>
+                <span class="text-brand-600 text-base font-bold" x-text="seccion === 'datos' ? '−' : '+'"></span>
             </button>
 
-            <div x-show="seccion === 'datos'" x-cloak class="px-4 pb-4 space-y-4">
+            <div x-show="seccion === 'datos'" x-cloak class="p-5 grid grid-cols-1 sm:grid-cols-2 gap-4">
                 <div>
-                    <label class="block text-sm font-medium text-slate-600">Nombre</label>
-                    <input type="text" name="nombre" value="{{ old('nombre', $cliente->nombre ) }}"
-                        class="mt-1 w-full rounded border-slate-300 focus:ring-primary-500 focus:border-primary-500">
-                    @error('nombre') <p class="text-red-600 text-sm mt-1">{{ $message }}</p> @enderror
+                    <label class="block text-xs font-semibold text-brand-900/80 mb-1">Nombre *</label>
+                    <input type="text" name="nombre" value="{{ old('nombre', $cliente->nombre) }}"
+                        class="w-full rounded-xl bg-brand-50/40 border border-brand-200 px-3.5 py-2 text-sm text-brand-900 focus:outline-none focus:ring-2 focus:ring-brand-500">
+                    @error('nombre') <p class="text-rose-600 text-xs mt-1">{{ $message }}</p> @enderror
                 </div>
 
                 <div>
-                    <label class="block text-sm font-medium text-slate-600">Apellido</label>
+                    <label class="block text-xs font-semibold text-brand-900/80 mb-1">Apellido *</label>
                     <input type="text" name="apellido" value="{{ old('apellido', $cliente->apellido) }}"
-                        class="mt-1 w-full rounded border-slate-300 focus:ring-primary-500 focus:border-primary-500">
-                    @error('apellido') <p class="text-red-600 text-sm mt-1">{{ $message }}</p> @enderror
+                        class="w-full rounded-xl bg-brand-50/40 border border-brand-200 px-3.5 py-2 text-sm text-brand-900 focus:outline-none focus:ring-2 focus:ring-brand-500">
+                    @error('apellido') <p class="text-rose-600 text-xs mt-1">{{ $message }}</p> @enderror
                 </div>
 
                 <div>
-                    <label class="block text-sm font-medium text-slate-600">Correo</label>
+                    <label class="block text-xs font-semibold text-brand-900/80 mb-1">Correo electrónico</label>
                     <input type="email" name="correo" value="{{ old('correo', $cliente->correo) }}"
-                        class="mt-1 w-full rounded border-slate-300 focus:ring-primary-500 focus:border-primary-500">
-                    @error('correo') <p class="text-red-600 text-sm mt-1">{{ $message }}</p> @enderror
+                        class="w-full rounded-xl bg-brand-50/40 border border-brand-200 px-3.5 py-2 text-sm text-brand-900 focus:outline-none focus:ring-2 focus:ring-brand-500">
+                    @error('correo') <p class="text-rose-600 text-xs mt-1">{{ $message }}</p> @enderror
                 </div>
 
                 <div>
-                    <label class="block text-sm font-medium text-slate-600">Teléfono</label>
+                    <label class="block text-xs font-semibold text-brand-900/80 mb-1">Teléfono / WhatsApp</label>
                     <input type="text" name="telefono" value="{{ old('telefono', $cliente->telefono) }}"
-                        class="mt-1 w-full rounded border-slate-300 focus:ring-primary-500 focus:border-primary-500">
-                    @error('telefono') <p class="text-red-600 text-sm mt-1">{{ $message }}</p> @enderror
+                        class="w-full rounded-xl bg-brand-50/40 border border-brand-200 px-3.5 py-2 text-sm text-brand-900 focus:outline-none focus:ring-2 focus:ring-brand-500">
+                    @error('telefono') <p class="text-rose-600 text-xs mt-1">{{ $message }}</p> @enderror
                 </div>
             </div>
         </div>
 
         {{-- ===== Medidas Camisa ===== --}}
-        <div class="bg-white rounded-lg shadow mb-4">
+        <div class="bg-white rounded-2xl border border-brand-200/80 shadow-xs overflow-hidden">
             <button type="button"
                 @click="seccion = (seccion === 'camisa') ? null : 'camisa'"
-                class="w-full flex justify-between items-center px-4 py-3 font-semibold text-slate-700">
-                Medidas Camisa
-                <span x-text="seccion === 'camisa' ? '−' : '+'"></span>
+                class="w-full flex justify-between items-center px-5 py-3.5 bg-brand-50/70 hover:bg-brand-100/50 font-bold text-sm text-brand-900 transition-colors">
+                <span>2. Medidas Superiores / Camisa (CM)</span>
+                <span class="text-brand-600 text-base font-bold" x-text="seccion === 'camisa' ? '−' : '+'"></span>
             </button>
 
-            <div x-show="seccion === 'camisa'" x-cloak class="px-4 pb-4 grid grid-cols-2 gap-4">
+            <div x-show="seccion === 'camisa'" x-cloak class="p-5 grid grid-cols-2 sm:grid-cols-4 gap-4">
                 @foreach ([
                     'ancho_espalda' => 'Ancho espalda',
                     'largo_espalda' => 'Largo espalda',
@@ -78,25 +83,25 @@
                     'cintura_suelta' => 'Cintura suelta',
                 ] as $campo => $etiqueta)
                     <div>
-                        <label class="block text-sm font-medium text-slate-600">{{ $etiqueta }}</label>
+                        <label class="block text-xs font-semibold text-brand-900/75 mb-1">{{ $etiqueta }}</label>
                         <input type="number" step="0.01" name="{{ $campo }}" value="{{ old($campo, $cliente->$campo) }}"
-                            class="mt-1 w-full rounded border-slate-300 focus:ring-primary-500 focus:border-primary-500">
-                        @error($campo) <p class="text-red-600 text-sm mt-1">{{ $message }}</p> @enderror
+                            class="w-full rounded-xl bg-brand-50/40 border border-brand-200 px-3 py-2 text-sm text-brand-900 focus:outline-none focus:ring-2 focus:ring-brand-500">
+                        @error($campo) <p class="text-rose-600 text-xs mt-1">{{ $message }}</p> @enderror
                     </div>
                 @endforeach
             </div>
         </div>
 
         {{-- ===== Medidas Pantalón ===== --}}
-        <div class="bg-white rounded-lg shadow mb-4">
+        <div class="bg-white rounded-2xl border border-brand-200/80 shadow-xs overflow-hidden">
             <button type="button"
                 @click="seccion = (seccion === 'pantalon') ? null : 'pantalon'"
-                class="w-full flex justify-between items-center px-4 py-3 font-semibold text-slate-700">
-                Medidas Pantalón
-                <span x-text="seccion === 'pantalon' ? '−' : '+'"></span>
+                class="w-full flex justify-between items-center px-5 py-3.5 bg-brand-50/70 hover:bg-brand-100/50 font-bold text-sm text-brand-900 transition-colors">
+                <span>3. Medidas Inferiores / Pantalón (CM)</span>
+                <span class="text-brand-600 text-base font-bold" x-text="seccion === 'pantalon' ? '−' : '+'"></span>
             </button>
 
-            <div x-show="seccion === 'pantalon'" x-cloak class="px-4 pb-4 grid grid-cols-2 gap-4">
+            <div x-show="seccion === 'pantalon'" x-cloak class="p-5 grid grid-cols-2 sm:grid-cols-3 gap-4">
                 @foreach ([
                     'cintura' => 'Cintura',
                     'tiro' => 'Tiro',
@@ -106,60 +111,59 @@
                     'bota' => 'Bota',
                 ] as $campo => $etiqueta)
                     <div>
-                        <label class="block text-sm font-medium text-slate-600">{{ $etiqueta }}</label>
+                        <label class="block text-xs font-semibold text-brand-900/75 mb-1">{{ $etiqueta }}</label>
                         <input type="number" step="0.01" name="{{ $campo }}" value="{{ old($campo, $cliente->$campo) }}"
-                            class="mt-1 w-full rounded border-slate-300 focus:ring-primary-500 focus:border-primary-500">
-                        @error($campo) <p class="text-red-600 text-sm mt-1">{{ $message }}</p> @enderror
+                            class="w-full rounded-xl bg-brand-50/40 border border-brand-200 px-3 py-2 text-sm text-brand-900 focus:outline-none focus:ring-2 focus:ring-brand-500">
+                        @error($campo) <p class="text-rose-600 text-xs mt-1">{{ $message }}</p> @enderror
                     </div>
                 @endforeach
             </div>
         </div>
 
         {{-- ===== Medidas Generales ===== --}}
-        <div class="bg-white rounded-lg shadow mb-4">
+        <div class="bg-white rounded-2xl border border-brand-200/80 shadow-xs overflow-hidden">
             <button type="button"
                 @click="seccion = (seccion === 'generales') ? null : 'generales'"
-                class="w-full flex justify-between items-center px-4 py-3 font-semibold text-slate-700">
-                Medidas Generales
-                <span x-text="seccion === 'generales' ? '−' : '+'"></span>
+                class="w-full flex justify-between items-center px-5 py-3.5 bg-brand-50/70 hover:bg-brand-100/50 font-bold text-sm text-brand-900 transition-colors">
+                <span>4. Medidas Generales (CM)</span>
+                <span class="text-brand-600 text-base font-bold" x-text="seccion === 'generales' ? '−' : '+'"></span>
             </button>
 
-            <div x-show="seccion === 'generales'" x-cloak class="px-4 pb-4">
-                <label class="block text-sm font-medium text-slate-600">Largo total</label>
+            <div x-show="seccion === 'generales'" x-cloak class="p-5">
+                <label class="block text-xs font-semibold text-brand-900/75 mb-1">Largo total</label>
                 <input type="number" step="0.01" name="largo_total" value="{{ old('largo_total', $cliente->largo_total) }}"
-                    class="mt-1 w-full rounded border-slate-300 focus:ring-primary-500 focus:border-primary-500">
-                @error('largo_total') <p class="text-red-600 text-sm mt-1">{{ $message }}</p> @enderror
+                    class="w-full sm:w-64 rounded-xl bg-brand-50/40 border border-brand-200 px-3.5 py-2 text-sm text-brand-900 focus:outline-none focus:ring-2 focus:ring-brand-500">
+                @error('largo_total') <p class="text-rose-600 text-xs mt-1">{{ $message }}</p> @enderror
             </div>
         </div>
 
         {{-- ===== Notas ===== --}}
-        <div class="bg-white rounded-lg shadow mb-4">
+        <div class="bg-white rounded-2xl border border-brand-200/80 shadow-xs overflow-hidden">
             <button type="button"
                 @click="seccion = (seccion === 'notas') ? null : 'notas'"
-                class="w-full flex justify-between items-center px-4 py-3 font-semibold text-slate-700">
-                Notas
-                <span x-text="seccion === 'notas' ? '−' : '+'"></span>
+                class="w-full flex justify-between items-center px-5 py-3.5 bg-brand-50/70 hover:bg-brand-100/50 font-bold text-sm text-brand-900 transition-colors">
+                <span>5. Notas y Observaciones</span>
+                <span class="text-brand-600 text-base font-bold" x-text="seccion === 'notas' ? '−' : '+'"></span>
             </button>
 
-            <div x-show="seccion === 'notas'" x-cloak class="px-4 pb-4">
+            <div x-show="seccion === 'notas'" x-cloak class="p-5">
                 <textarea name="notas" rows="3"
-                    class="mt-1 w-full rounded border-slate-300 focus:ring-primary-500 focus:border-primary-500">{{ old('notas', $cliente->notas) }}</textarea>
-                @error('notas') <p class="text-red-600 text-sm mt-1">{{ $message }}</p> @enderror
+                    class="w-full rounded-xl bg-brand-50/40 border border-brand-200 px-3.5 py-2 text-sm text-brand-900 focus:outline-none focus:ring-2 focus:ring-brand-500">{{ old('notas', $cliente->notas) }}</textarea>
+                @error('notas') <p class="text-rose-600 text-xs mt-1">{{ $message }}</p> @enderror
             </div>
         </div>
 
-        <div class="flex justify-end gap-3">
+        <div class="flex justify-end gap-3 pt-2">
             <a href="{{ route('clientes.index') }}"
-                class="px-4 py-2 rounded border border-slate-300 text-slate-600 hover:bg-slate-50">
+                class="px-4 py-2.5 rounded-xl bg-white border border-brand-200 text-sm font-medium text-brand-900 hover:bg-brand-50 transition-colors">
                 Cancelar
             </a>
             <button type="submit"
-                class="px-4 py-2 rounded bg-primary-600 text-white hover:bg-primary-700">
-                Guardar cliente
+                class="px-5 py-2.5 rounded-xl bg-brand-600 text-white text-sm font-semibold hover:bg-brand-700 shadow-xs transition-colors">
+                Guardar cambios
             </button>
         </div>
     </form>
 </div>
-</x-card>
 
 @endsection

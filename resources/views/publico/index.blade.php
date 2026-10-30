@@ -12,14 +12,14 @@
 @section('content')
 
 {{-- =====================================================================
-     1. SECCIÓN HERO (Composición Imagen 1 + hero-sastre.jpg)
-     ===================================================================== --}}
+    1. SECCIÓN HERO (Composición Imagen 1 + hero-sastre.jpg)
+    ===================================================================== --}}
 <section id="inicio" class="relative min-h-[560px] lg:min-h-[640px] flex items-center overflow-hidden bg-brand-900 text-white">
     {{-- Imagen real del sastre en tono rosa --}}
-    <div 
-        class="absolute inset-0 bg-cover bg-center opacity-55"
-        style="background-image: url('{{ asset('img/hero-sastre.jpg') }}');">
-    </div>
+    <img 
+        src="{{ asset('img/hero-sastre.jpg') }}" 
+        alt="" 
+        class="absolute inset-0 w-full h-full object-cover object-center opacity-55 pointer-events-none select-none">
 
     {{-- Superposición gradual más oscura a la izquierda para máxima legibilidad del texto --}}
     <div class="absolute inset-0 bg-gradient-to-r from-brand-900/90 via-brand-900/75 to-brand-900/40"></div>
@@ -182,12 +182,12 @@
     ===================================================================== --}}
 <section id="servicios" class="relative py-20 sm:py-24 overflow-hidden border-b border-brand-200/60">
     {{-- Imagen de fondo de la máquina de coser en tono rosa --}}
-    <div 
-        class="absolute inset-0 bg-cover bg-center"
-        style="background-image: url('{{ asset('img/servicios-maquina.jpg') }}');">
-    </div>
+    <img 
+        src="{{ asset('img/servicios-maquina.jpg') }}" 
+        alt="" 
+        class="absolute inset-0 w-full h-full object-cover object-center pointer-events-none select-none">
     {{-- Velo cálido translúcido para que se aprecie la máquina de coser sin perder lectura --}}
-    <div class="absolute inset-0 bg-brand-900/75 backdrop-blur-[2px]"></div>
+    <div class="absolute inset-0 bg-brand-900/80"></div>
 
     <div class="relative max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
         

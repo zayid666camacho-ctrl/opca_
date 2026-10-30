@@ -2,7 +2,7 @@
     OPCA — Galería Pública de Trabajos (Sprint 9)
     Vista dedicada para clientes y visitantes (HU29).
     - Ordenada de más reciente a más antigua (Regla de negocio 11).
-    - Paleta C: Morado / Lavanda + Dorado + Rosa.
+    - Incluye enlace de WhatsApp con referencia única (?trabajo=ID#trabajo-ID) y auto-apertura de la prenda al abrir el link.
 --}}
 
 @extends('layouts.publico')
@@ -10,10 +10,17 @@
 @section('title', 'Galería de Trabajos — Creaciones Nayja')
 
 @section('content')
+@php
+    $trabajoDestacadoId = request()->query('trabajo');
+    $trabajoInicial = $trabajoDestacadoId ? $galeria->firstWhere('id', (int) $trabajoDestacadoId) : null;
+@endphp
+
 <div class="py-12 sm:py-16 bg-brand-50 min-h-screen" x-data="{ 
     categoriaActiva: 'todas',
-    modalFoto: null,
-    modalTitulo: ''
+    destacadoId: {{ $trabajoInicial ? (int) $trabajoInicial->id : 'null' }},
+    modalFoto: {{ $trabajoInicial ? "'" . $trabajoInicial->url_imagen() . "'" : 'null' }},
+    modalTitulo: {{ $trabajoInicial ? "'" . addslashes($trabajoInicial->titulo) . " (Ref. #" . $trabajoInicial->id . ")'" : "''" }},
+    modalWhatsappUrl: ''
 }">
     <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
 
@@ -79,18 +86,29 @@
                     @php 
                         $slugItem = strtolower(trim($item->categoria ?? 'sin-categoria'));
                         $url = $item->url_imagen();
+                        $urlAbsolutaImagen = url($url);
+                        $urlDirectaPrenda = route('sitio.galeria', ['trabajo' => $item->id]) . '#trabajo-' . $item->id;
+
+                        $mensajeWhatsapp = "¡Hola Creaciones Nayja! Me encantó este trabajo de su galería y quisiera cotizar algo similar:\n"
+                            . "• Prenda: {$item->titulo} (Ref. #{$item->id}" . ($item->categoria ? " · {$item->categoria}" : "") . ")\n"
+                            . "• Ver prenda en galería: {$urlDirectaPrenda}\n"
+                            . "• Foto de referencia: {$urlAbsolutaImagen}";
+
+                        $linkWhatsapp = "https://wa.me/{$taller['whatsapp']}?text=" . urlencode($mensajeWhatsapp);
                     @endphp
                     <div 
+                        id="trabajo-{{ $item->id }}"
                         x-show="categoriaActiva === 'todas' || categoriaActiva === '{{ $slugItem }}'"
                         x-transition:enter="transition ease-out duration-200"
                         x-transition:enter-start="opacity-0 scale-95"
                         x-transition:enter-end="opacity-100 scale-100"
-                        class="bg-white rounded-2xl border border-brand-100 shadow-sm overflow-hidden flex flex-col justify-between group hover:shadow-md hover:border-brand-200 transition-all">
+                        :class="destacadoId === {{ $item->id }} ? 'ring-2 ring-brand-600 border-brand-600 shadow-lg' : 'border-brand-100 hover:border-brand-200 shadow-sm hover:shadow-md'"
+                        class="bg-white rounded-2xl border overflow-hidden flex flex-col justify-between group transition-all">
                         
                         {{-- Imagen --}}
                         <div 
                             class="relative aspect-square w-full bg-brand-50 overflow-hidden cursor-pointer"
-                            @click="modalFoto = '{{ $url }}'; modalTitulo = '{{ addslashes($item->titulo) }}'">
+                            @click="modalFoto = '{{ $url }}'; modalTitulo = '{{ addslashes($item->titulo) }} (Ref. #{{ $item->id }})'; modalWhatsappUrl = '{{ $linkWhatsapp }}'">
                             <img 
                                 src="{{ $url }}" 
                                 alt="{{ $item->titulo }}"
@@ -102,6 +120,10 @@
                                     {{ $item->categoria }}
                                 </span>
                             @endif
+
+                            <span class="absolute top-3 right-3 px-2 py-0.5 rounded-full text-[10px] font-bold bg-brand-900/80 text-white">
+                                Ref. #{{ $item->id }}
+                            </span>
 
                             <div class="absolute inset-0 bg-brand-900/25 opacity-0 group-hover:opacity-100 transition-opacity flex items-center justify-center">
                                 <span class="p-2 bg-white/90 rounded-full text-brand-900 shadow">
@@ -129,9 +151,9 @@
                             </div>
 
                             <div class="pt-4 mt-4 border-t border-brand-100 flex items-center justify-between">
-                                <span class="text-[11px] text-brand-900/50 font-medium">{{ $item->realizado_por }}</span>
+                                <span class="text-[11px] text-brand-900/50 font-medium">Ref. #{{ $item->id }}</span>
                                 <a 
-                                    href="https://wa.me/{{ $taller['whatsapp'] }}?text={{ urlencode('¡Hola Creaciones Nayja! Me encantó la prenda ' . $item->titulo . ' que vi en su galería. ¿Podríamos cotizar algo similar?') }}" 
+                                    href="{{ $linkWhatsapp }}" 
                                     target="_blank" 
                                     rel="noopener noreferrer"
                                     class="inline-flex items-center gap-1 text-xs font-semibold text-brand-600 hover:text-brand-800 transition-colors">
@@ -161,12 +183,20 @@
                     <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12"/>
                 </svg>
             </button>
-            <div class="max-h-[80vh] bg-slate-950 flex items-center justify-center overflow-hidden">
-                <img :src="modalFoto" :alt="modalTitulo" class="max-h-[80vh] w-auto object-contain">
+            <div class="max-h-[75vh] bg-slate-950 flex items-center justify-center overflow-hidden">
+                <img :src="modalFoto" :alt="modalTitulo" class="max-h-[75vh] w-auto object-contain">
             </div>
-            <div class="p-4 bg-white border-t border-brand-100 flex items-center justify-between">
+            <div class="p-4 bg-white border-t border-brand-100 flex flex-wrap items-center justify-between gap-3">
                 <span class="font-bold text-brand-900 text-sm" x-text="modalTitulo"></span>
-                <button @click="modalFoto = null" class="text-xs font-semibold text-brand-600 hover:text-brand-900">Cerrar</button>
+                <div class="flex items-center gap-3">
+                    <template x-if="modalWhatsappUrl">
+                        <a :href="modalWhatsappUrl" target="_blank" rel="noopener noreferrer"
+                           class="px-3.5 py-1.5 rounded-lg bg-brand-600 hover:bg-brand-700 text-white text-xs font-semibold transition-colors">
+                            Cotizar esta prenda por WhatsApp &rarr;
+                        </a>
+                    </template>
+                    <button @click="modalFoto = null" class="text-xs font-semibold text-brand-900/60 hover:text-brand-900">Cerrar</button>
+                </div>
             </div>
         </div>
     </div>

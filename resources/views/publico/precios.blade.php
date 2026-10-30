@@ -1,7 +1,7 @@
 {{--
     OPCA — Catálogo Público de Tarifas y Precios Base
     Vista dedicada para clientes y visitantes del taller Creaciones Nayja.
-    - Paleta C: Morado / Lavanda + Dorado + Rosa.
+    - Incluye enlace a WhatsApp con referencia única (?prenda=ID#prenda-ID).
 --}}
 
 @extends('layouts.publico')
@@ -9,9 +9,14 @@
 @section('title', 'Tarifas y Precios de Referencia — Creaciones Nayja')
 
 @section('content')
+@php
+    $prendaDestacadaId = (int) request()->query('prenda', 0);
+@endphp
+
 <div class="py-12 sm:py-16 bg-brand-50 min-h-screen" x-data="{
     buscar: '',
     complejidadFiltro: 'todas',
+    destacadaId: {{ $prendaDestacadaId ?: 'null' }},
     coincide(item) {
         const textoMatch = !this.buscar || item.nombre_prenda.toLowerCase().includes(this.buscar.toLowerCase()) || (item.descripcion && item.descripcion.toLowerCase().includes(this.buscar.toLowerCase()));
         const complejidadMatch = this.complejidadFiltro === 'todas' || item.complejidad.toLowerCase() === this.complejidadFiltro.toLowerCase();
@@ -76,21 +81,31 @@
                             'precio' => (float) $item->precio,
                         ]);
                         $complejidadLower = strtolower($item->complejidad);
+                        $urlDirectaTarifa = route('sitio.precios', ['prenda' => $item->id]) . '#prenda-' . $item->id;
+                        $mensajeTarifa = "¡Hola Creaciones Nayja! Me interesa cotizar esta prenda de su catálogo de tarifas:\n"
+                            . "• Prenda: {$item->nombre_prenda} (Ref. #{$item->id} · Complejidad {$item->complejidad})\n"
+                            . "• Tarifa base: $" . number_format($item->precio, 0, ',', '.') . " COP\n"
+                            . "• Ver referencia: {$urlDirectaTarifa}";
                     @endphp
 
                     <div 
+                        id="prenda-{{ $item->id }}"
                         x-show="coincide({{ $itemJson }})"
                         x-transition:enter="transition ease-out duration-200"
                         x-transition:enter-start="opacity-0 scale-95"
                         x-transition:enter-end="opacity-100 scale-100"
-                        class="bg-white rounded-2xl border border-brand-100 p-6 shadow-sm hover:shadow-md hover:border-brand-200 transition-all flex flex-col justify-between group">
+                        :class="destacadaId === {{ $item->id }} ? 'ring-2 ring-brand-600 border-brand-600 shadow-lg' : 'border-brand-100 hover:border-brand-200 shadow-sm hover:shadow-md'"
+                        class="bg-white rounded-2xl border p-6 transition-all flex flex-col justify-between group">
                         
                         <div>
                             {{-- Cabecera de la tarjeta --}}
                             <div class="flex items-start justify-between gap-3 mb-3">
-                                <h3 class="text-lg font-bold text-brand-900 leading-snug group-hover:text-brand-600 transition-colors">
-                                    {{ $item->nombre_prenda }}
-                                </h3>
+                                <div>
+                                    <span class="text-[10px] font-bold text-brand-900/45 uppercase tracking-wider block">Ref. #{{ $item->id }}</span>
+                                    <h3 class="text-lg font-bold text-brand-900 leading-snug group-hover:text-brand-600 transition-colors">
+                                        {{ $item->nombre_prenda }}
+                                    </h3>
+                                </div>
 
                                 {{-- Badge de Complejidad --}}
                                 @if ($complejidadLower === 'baja')
@@ -132,7 +147,7 @@
                         {{-- Botón de Acción a WhatsApp --}}
                         <div class="pt-5 mt-5 border-t border-brand-100">
                             <a 
-                                href="https://wa.me/{{ $taller['whatsapp'] }}?text={{ urlencode('¡Hola Creaciones Nayja! Me interesa cotizar una confección de ' . $item->nombre_prenda . ' (complejidad ' . $item->complejidad . '), con precio base de $' . number_format($item->precio, 0, ',', '.') . ' COP.') }}" 
+                                href="https://wa.me/{{ $taller['whatsapp'] }}?text={{ urlencode($mensajeTarifa) }}" 
                                 target="_blank" 
                                 rel="noopener noreferrer"
                                 class="w-full inline-flex items-center justify-center gap-2 px-4 py-2.5 bg-brand-600 hover:bg-brand-700 text-white text-xs font-semibold rounded-xl transition-colors shadow-sm">

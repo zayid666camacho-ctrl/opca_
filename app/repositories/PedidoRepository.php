@@ -89,4 +89,16 @@ class PedidoRepository{
             ->get();
     }
 
+    public function buscar_por_correo_cliente(string $correo)
+    {
+        $correo_limpio = strtolower(trim($correo));
+        return pedido::with(['cliente', 'servicios.precio_base', 'servicios.tipo_servicio'])
+            ->whereHas('cliente', function ($consulta) use ($correo_limpio) {
+                $consulta->whereRaw('LOWER(TRIM(correo)) = ?', [$correo_limpio]);
+            })
+            ->orderBy('fecha', 'desc')
+            ->orderBy('id', 'desc')
+            ->get();
+    }
+
 }
