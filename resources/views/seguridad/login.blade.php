@@ -51,10 +51,10 @@
 <body class="min-h-screen relative flex items-center bg-brand-900 text-white antialiased overflow-x-hidden">
 
     {{-- Imagen de fondo de la máquina de coser del taller --}}
-    <div 
-        class="fixed inset-0 bg-cover bg-center opacity-35 pointer-events-none"
-        style="background-image: url('{{ asset('img/servicios-maquina.jpg') }}');">
-    </div>
+    <img 
+        src="{{ asset('img/servicios-maquina.jpg') }}" 
+        alt="" 
+        class="fixed inset-0 w-full h-full object-cover object-center opacity-35 pointer-events-none select-none">
 
     {{-- Superposición oscura cálida para contraste perfecto del texto --}}
     <div class="fixed inset-0 bg-gradient-to-r from-brand-900/95 via-brand-900/85 to-brand-900/75 pointer-events-none"></div>

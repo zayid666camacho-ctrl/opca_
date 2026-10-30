@@ -86,4 +86,12 @@ class PedidoService{
         return $this->pedidorepository->listar_con_saldo();
     }
 
+    public function consultar_por_correo(?string $correo){
+        if (!$correo || trim($correo) === '') {
+            return collect();
+        }
+
+        return $this->pedidorepository->buscar_por_correo_cliente($correo);
+    }
+
 }

@@ -23,6 +23,8 @@ Route::get('/', [SitioPublicoController::class, 'index'])->name('sitio.index');
 Route::get('/trabajos', [SitioPublicoController::class, 'galeria'])->name('sitio.galeria');
 Route::get('/tarifas', [SitioPublicoController::class, 'precios'])->name('sitio.precios');
 
+Route::get('/mi-pedido', [SitioPublicoController::class, 'estado_pedido'])->name('sitio.estado_pedido');
+
 /*
 |--------------------------------------------------------------------------
 | Panel de administración (requiere sesión iniciada)
@@ -55,7 +57,8 @@ Route::middleware('auth')->group(function () {
 
     Route::resource('servicios', ServicioController::class);
 
-    Route::view('/configuracion', 'configuracion.index')->name('configuracion.index');
+    Route::get('/perfil-taller', [SitioPublicoController::class, 'perfil_taller'])->name('taller.perfil');
+    Route::put('/perfil-taller', [SitioPublicoController::class, 'actualizar_perfil_taller'])->name('taller.perfil.actualizar');
 
     Route::get('/finanzas/exportar', [FinanzaController::class, 'exportar'])->name('finanzas.exportar');
     Route::resource('finanzas', FinanzaController::class)->only(['index', 'store', 'destroy']);

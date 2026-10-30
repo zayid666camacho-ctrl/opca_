@@ -85,6 +85,10 @@
                         </a>
                     @endif
 
+                    <a href="{{ route('sitio.estado_pedido') }}" class="px-4 py-2 text-xs font-semibold bg-brand-600 hover:bg-brand-700 text-white rounded-lg shadow-xs transition-colors">
+                        Consultar mi pedido
+                    </a>
+
                     {{-- Si ya hay sesión se va al panel; si no, al formulario de ingreso --}}
                     <a href="{{ auth()->check() ? route('calendario.index') : route('login') }}" class="px-4 py-2 text-xs font-semibold text-brand-800 border border-brand-200 hover:bg-brand-100/60 rounded-lg transition-colors">
                         {{ auth()->check() ? 'Ir al panel' : 'Acceso Taller' }}

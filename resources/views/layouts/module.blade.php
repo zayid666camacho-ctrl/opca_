@@ -1,10 +1,11 @@
 {{--
     OPCA — Layout de Módulos del Panel (sin Sidebar)
-    Usado en Pedidos, Clientes, Finanzas, Inventario, Galería, Precios Base, etc.
-    - Paleta A: Carbón (#2B2B33), Rosa coral (#D6546A), Azul marino (#2F4B7C), Dorado (#C9A24B) y Crema cálido (#FFF8F5).
+    Estética arquitectónica y profesional:
+    - Fondos y bordes neutros limpios (#F4F5F7, #EEF0F4, #E2E8F0) para tablas, tarjetas e inputs.
+    - Colores de marca reservados para autoridad y acciones: Carbón (#2B2B33), Rosa coral (#D6546A), Azul marino (#2F4B7C) y Dorado (#C9A24B).
 --}}
 <!DOCTYPE html>
-<html lang="es" class="h-full bg-brand-50">
+<html lang="es" class="h-full bg-[#F4F5F7]">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
@@ -17,14 +18,14 @@
                 extend: {
                     colors: {
                         brand: {
-                            50:  '#FFF8F5',
-                            100: '#FDE8EA',
-                            200: '#F8CFD4',
+                            50:  '#F8FAFC', // Gris perla neutro muy limpio para fondos suaves
+                            100: '#F1F5F9', // Gris neutro para cabeceras de tabla y hovers
+                            200: '#E2E8F0', // Borde neutro arquitectónico (sin tinte rosado)
                             500: '#DF687C',
-                            600: '#D6546A',
-                            700: '#BD3F55',
-                            800: '#2F4B7C',
-                            900: '#2B2B33',
+                            600: '#D6546A', // Acento principal (botones y acciones primarias)
+                            700: '#BD3F55', // Hover de botones primarios
+                            800: '#2F4B7C', // Azul profundo corporativo
+                            900: '#2B2B33', // Carbón oscuro para textos y encabezados
                         },
                         gold: {
                             50:  '#FBF7EE',
@@ -39,10 +40,10 @@
                             500: '#2F4B7C',
                         },
                         primary: {
-                            50:  '#FFF8F5',
-                            100: '#FDE8EA',
-                            200: '#F8CFD4',
-                            300: '#F0959B',
+                            50:  '#F8FAFC',
+                            100: '#F1F5F9',
+                            200: '#E2E8F0',
+                            300: '#CBD5E1',
                             400: '#DF687C',
                             500: '#D6546A',
                             600: '#BD3F55',
@@ -68,7 +69,7 @@
 
     @stack('styles')
 </head>
-<body class="h-full bg-brand-50 text-brand-900 antialiased flex flex-col min-h-screen">
+<body class="h-full bg-[#F4F5F7] text-brand-900 antialiased flex flex-col min-h-screen">
 
     @include('layouts.partials.navbar')
 
