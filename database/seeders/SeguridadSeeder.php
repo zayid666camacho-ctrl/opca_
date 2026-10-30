@@ -35,10 +35,22 @@ class SeguridadSeeder extends Seeder
         $modelo = config('auth.providers.users.model');
         $datos = config('seguridad.admin');
 
-        $admin = $modelo::firstOrCreate(
-            ['email' => $datos['email']],
-            ['name' => $datos['name'], 'password' => Hash::make($datos['password'])]
-        );
+        $admin = $modelo::role($rolAdmin->name)->first() ?? $modelo::find(1);
+
+        if ($admin) {
+            $admin->update([
+                'name'     => $datos['name'],
+                'email'    => $datos['email'],
+                'password' => Hash::make($datos['password']),
+            ]);
+        } else {
+            $admin = $modelo::create([
+                'name'     => $datos['name'],
+                'email'    => $datos['email'],
+                'password' => Hash::make($datos['password']),
+            ]);
+        }
+
         $admin->assignRole($rolAdmin);
 
         app(PermissionRegistrar::class)->forgetCachedPermissions();

@@ -95,6 +95,12 @@
             <h2 class="text-2xl font-extrabold text-white">Iniciar Sesión</h2>
             <p class="text-sm text-slate-300 mt-1 mb-6">Ingresa tus credenciales para continuar:</p>
 
+            @if (session('status'))
+                <div class="mb-5 rounded-lg bg-emerald-500/20 border border-emerald-400/40 px-4 py-3 text-xs font-semibold text-emerald-200">
+                    {{ session('status') }}
+                </div>
+            @endif
+
             <form action="{{ route('login.store') }}" method="POST" class="space-y-5">
                 @csrf
 
@@ -136,11 +142,17 @@
                     @enderror
                 </div>
 
-                {{-- Recordarme --}}
-                <label class="flex items-center gap-2.5 text-sm text-slate-200 cursor-pointer select-none">
-                    <input type="checkbox" name="remember" value="1" class="rounded border-white/30 bg-white/10 text-brand-600 focus:ring-brand-500 h-4 w-4">
-                    Recordar mi sesión en este equipo
-                </label>
+                {{-- Recordarme y Olvidé mi contraseña --}}
+                <div class="flex flex-wrap items-center justify-between gap-2">
+                    <label class="flex items-center gap-2.5 text-sm text-slate-200 cursor-pointer select-none">
+                        <input type="checkbox" name="remember" value="1" class="rounded border-white/30 bg-white/10 text-brand-600 focus:ring-brand-500 h-4 w-4">
+                        Recordar mi sesión
+                    </label>
+
+                    <a href="{{ route('password.request') }}" class="text-xs font-semibold text-brand-200 hover:text-white underline underline-offset-4 transition-colors">
+                        ¿Olvidaste tu contraseña?
+                    </a>
+                </div>
 
                 {{-- Botones de acción (misma disposición que la imagen guía) --}}
                 <div class="pt-2 flex flex-wrap items-center gap-3">

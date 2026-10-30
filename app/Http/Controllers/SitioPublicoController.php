@@ -106,6 +106,7 @@ class SitioPublicoController extends Controller
 
     /**
      * Actualiza los datos públicos del taller que se muestran en "Visítanos o Escríbenos".
+     * El correo electrónico está bloqueado y se toma siempre de config('seguridad.admin.email').
      */
     public function actualizar_perfil_taller(Request $request)
     {
@@ -115,7 +116,6 @@ class SitioPublicoController extends Controller
             'descripcion' => ['nullable', 'string', 'max:500'],
             'telefono'    => ['required', 'string', 'max:50'],
             'whatsapp'    => ['required', 'string', 'max:30'],
-            'correo'      => ['required', 'email', 'max:120'],
             'direccion'   => ['required', 'string', 'max:200'],
             'ciudad'      => ['required', 'string', 'max:100'],
             'horario'     => ['required', 'string', 'max:150'],
@@ -131,13 +131,15 @@ class SitioPublicoController extends Controller
      */
     private function obtener_datos_taller(): array
     {
+        $correo_oficial = config('seguridad.admin.email', 'admin@admin.com');
+
         $por_defecto = [
             'nombre' => 'Creaciones Nayja',
             'eslogan' => 'Confección sobre medidas, arreglos y alta costura',
             'descripcion' => 'Taller de modistería dedicado al diseño, confección a medida y restauración de prendas de vestir con acabados de alta calidad.',
             'telefono' => '+57 310 8289121',
             'whatsapp' => '573108289121',
-            'correo' => 'contacto@creacionesnayja.com',
+            'correo' => $correo_oficial,
             'direccion' => 'Calle 3 # 4-50, Taller Creaciones Nayja - al frente de la casa Ludica',
             'ciudad' => 'Colombia',
             'horario' => 'Lunes a Viernes: 8:30 AM - 8:30:00 PM',
@@ -146,7 +148,9 @@ class SitioPublicoController extends Controller
         if (Storage::disk('local')->exists('taller.json')) {
             $guardados = json_decode(Storage::disk('local')->get('taller.json'), true);
             if (is_array($guardados)) {
-                return array_merge($por_defecto, $guardados);
+                $combinados = array_merge($por_defecto, $guardados);
+                $combinados['correo'] = $correo_oficial;
+                return $combinados;
             }
         }
 
