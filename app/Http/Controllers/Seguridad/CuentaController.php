@@ -3,7 +3,7 @@
 namespace App\Http\Controllers\Seguridad;
 
 use App\Http\Controllers\Controller;
-use App\Services\Seguridad\CuentaService;
+use App\services\Seguridad\CuentaService;
 use Exception;
 use Illuminate\Http\RedirectResponse;
 use Illuminate\Http\Request;

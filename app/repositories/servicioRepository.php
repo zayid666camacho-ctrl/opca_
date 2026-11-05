@@ -3,8 +3,9 @@
 namespace App\repositories;
 
 use App\Models\servicio;
+use App\repositories\Contracts\ServicioRepositoryInterface;
 
-class servicioRepository{
+class servicioRepository implements ServicioRepositoryInterface{
 
     public function listar(){
         return servicio::with(['pedido', 'precio_base', 'tipo_servicio'])->get();

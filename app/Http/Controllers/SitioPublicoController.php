@@ -2,7 +2,7 @@
 
 namespace App\Http\Controllers;
 
-use App\Services\GaleriaService;
+use App\services\GaleriaService;
 use App\services\PedidoService;
 use App\services\PreciobaseService;
 use Illuminate\Http\Request;

@@ -93,7 +93,8 @@ class InventarioSeeder extends Seeder
             ],
         ];
         foreach ($materiales as $material) {
-            inventario::create($material);
+            // firstOrCreate: se puede ejecutar varias veces sin duplicar materiales
+            inventario::firstOrCreate(['nombre' => $material['nombre']], $material);
         }
     }
 }

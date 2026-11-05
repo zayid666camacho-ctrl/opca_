@@ -2,7 +2,7 @@
 
 namespace App\Http\Controllers;
 
-use App\Services\GaleriaService;
+use App\services\GaleriaService;
 use Illuminate\Http\Request;
 
 class GaleriaController extends Controller

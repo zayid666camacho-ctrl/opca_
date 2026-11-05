@@ -2,15 +2,13 @@
 
 namespace App\services;
 
-use App\Models\pedido;
-use App\repositories\PedidoRepository;
-use GuzzleHttp\Psr7\Request;
+use App\repositories\Contracts\PedidoRepositoryInterface;
 
 class PedidoService{
 
-    private PedidoRepository $pedidorepository;
+    private PedidoRepositoryInterface $pedidorepository;
 
-    public function __construct(PedidoRepository $pedidorepository) {
+    public function __construct(PedidoRepositoryInterface $pedidorepository) {
         $this->pedidorepository = $pedidorepository;
     }
 

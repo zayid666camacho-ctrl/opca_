@@ -2,14 +2,13 @@
 
 namespace App\services;
 
-use App\Models\tipo_servicio;
-use App\repositories\PreciobaseRepository;
+use App\repositories\Contracts\PreciobaseRepositoryInterface;
 
 class PreciobaseService{
 
-    private PreciobaseRepository $preciobaserepository;
+    private PreciobaseRepositoryInterface $preciobaserepository;
 
-    public function __construct(PreciobaseRepository $preciobaserepository) {
+    public function __construct(PreciobaseRepositoryInterface $preciobaserepository) {
         $this->preciobaserepository = $preciobaserepository;
     }
 

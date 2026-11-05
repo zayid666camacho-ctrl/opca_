@@ -2,14 +2,13 @@
 
 namespace App\services;
 
-use App\Models\tipo_servicio;
-use App\repositories\TiposervicioRepository;
+use App\repositories\Contracts\TiposervicioRepositoryInterface;
 
 class TiposervicioService{
 
-    private TiposervicioRepository $tiposerviciorepository;
+    private TiposervicioRepositoryInterface $tiposerviciorepository;
 
-    public function __construct(TiposervicioRepository $tiposerviciorepository) {
+    public function __construct(TiposervicioRepositoryInterface $tiposerviciorepository) {
         $this->tiposerviciorepository = $tiposerviciorepository;
     }
 

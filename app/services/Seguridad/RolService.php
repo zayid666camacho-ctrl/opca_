@@ -1,9 +1,9 @@
 <?php
 
-namespace App\Services\Seguridad;
+namespace App\services\Seguridad;
 
-use App\Repositories\Seguridad\RolRepository;
-use App\Repositories\Seguridad\UsuarioRepository;
+use App\repositories\Seguridad\RolRepository;
+use App\repositories\Seguridad\UsuarioRepository;
 use Exception;
 use Illuminate\Contracts\Auth\Authenticatable;
 use Illuminate\Database\Eloquent\Collection;

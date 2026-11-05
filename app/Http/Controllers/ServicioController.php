@@ -2,7 +2,6 @@
 
 namespace App\Http\Controllers;
 
-use App\Models\servicio;
 use App\services\PedidoService;
 use App\services\PreciobaseService;
 use App\services\servicioService;
@@ -52,14 +51,14 @@ class ServicioController extends Controller
      */
     public function store(Request $request)
     {
-        $request->validate([
+        $datos = $request->validate([
             'descripcion'       => 'required|string|max:255',
             'id_pedido'         => 'required|exists:pedidos,id',
             'id_precio_bases'   => 'required|exists:precio_bases,id',
             'id_tipo_servicios' => 'required|exists:tipo_servicios,id',
         ]);
 
-        $this->servicio_service->crear($request->all());
+        $this->servicio_service->crear($datos);
         return redirect()->back()->with('success', 'Prenda agregada al pedido.');
     }
 
@@ -91,8 +90,13 @@ class ServicioController extends Controller
      */
     public function update(int $id, Request $request)
     {
-        //
-        $this->servicio_service->actualizar($id, $request->all());
+        $datos = $request->validate([
+            'descripcion'       => 'nullable|string|max:255',
+            'id_precio_bases'   => 'sometimes|required|exists:precio_bases,id',
+            'id_tipo_servicios' => 'sometimes|required|exists:tipo_servicios,id',
+        ]);
+
+        $this->servicio_service->actualizar($id, $datos);
         return redirect()->route('servicios.index');
     }
 

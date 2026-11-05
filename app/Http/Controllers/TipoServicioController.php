@@ -28,7 +28,9 @@ class TipoServicioController extends Controller
 
     public function store(Request $request)
     {
-        $this->tiposervicioservice->crear($request->all());
+        $datos = $request->validate($this->reglas());
+
+        $this->tiposervicioservice->crear($datos);
         return redirect()->route('tipo_servicio.index');
     }
 
@@ -45,7 +47,9 @@ class TipoServicioController extends Controller
 
     public function update(int $id, Request $request)
     {
-        $this->tiposervicioservice->actualizar($id, $request->all());
+        $datos = $request->validate($this->reglas());
+
+        $this->tiposervicioservice->actualizar($id, $datos);
         return redirect()->route('tipo_servicio.index');
     }
 
@@ -53,5 +57,16 @@ class TipoServicioController extends Controller
     {
         $this->tiposervicioservice->delete($id);
         return redirect()->route('tipo_servicio.index');
+    }
+
+    /**
+     * Reglas de validación compartidas por store() y update().
+     */
+    private function reglas(): array
+    {
+        return [
+            'servicio'    => 'required|in:arreglo,confeccion,diseno',
+            'descripcion' => 'required|string|max:255',
+        ];
     }
 }

@@ -3,8 +3,9 @@
 namespace App\repositories;
 
 use App\Models\cliente;
+use App\repositories\Contracts\ClientesRepositoryInterface;
 
-class ClientesRepository{
+class ClientesRepository implements ClientesRepositoryInterface{
 
     public function listar(){
         $clientes = cliente::all();

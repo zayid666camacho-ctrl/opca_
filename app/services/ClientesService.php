@@ -2,23 +2,23 @@
 
 namespace App\services;
 
-use App\repositories\ClientesRepository;
+use App\repositories\Contracts\ClientesRepositoryInterface;
 
 class ClientesService{
 
-    private ClientesRepository $clientesrepository;
+    private ClientesRepositoryInterface $clientesrepository;
 
-    public function __construct(ClientesRepository $clientesrepository) {
+    public function __construct(ClientesRepositoryInterface $clientesrepository) {
         $this->clientesrepository = $clientesrepository;
     }
 
     public function listar(){
-        return $this->clientesrepository->Listar();
+        return $this->clientesrepository->listar();
     }
 
     public function crear(array $datos){
         $datos['fecha_registro'] = now();
-        return $this->clientesrepository->Crear($datos);
+        return $this->clientesrepository->crear($datos);
     }
 
     public function buscar(int $id){

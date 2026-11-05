@@ -1,10 +1,11 @@
 <?php
 
-namespace App\Repositories;
+namespace App\repositories;
 
 use App\Models\inventario;
+use App\repositories\Contracts\InventarioRepositoryInterface;
 
-class InventarioRepository
+class inventarioRepository implements InventarioRepositoryInterface
 {
     public function listar(?string $buscar = null, ?string $categoria = null)
     {
