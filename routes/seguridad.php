@@ -15,6 +15,14 @@ Route::middleware('web')->group(function () {
         Route::post('/login', [AuthController::class, 'login'])
             ->middleware('throttle:5,1')
             ->name('login.store');
+
+        // Recuperación y restablecimiento de contraseña por correo electrónico
+        Route::get('/olvide-contrasena', [AuthController::class, 'mostrar_solicitud_recuperacion'])->name('password.request');
+        Route::post('/olvide-contrasena', [AuthController::class, 'enviar_enlace_recuperacion'])
+            ->middleware('throttle:5,1')
+            ->name('password.email');
+        Route::get('/restablecer-contrasena/{token}', [AuthController::class, 'mostrar_formulario_restablecer'])->name('password.reset');
+        Route::post('/restablecer-contrasena', [AuthController::class, 'restablecer_contrasena'])->name('password.update');
     });
 
     Route::middleware('auth')->group(function () {

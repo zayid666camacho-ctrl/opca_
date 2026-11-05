@@ -11,8 +11,23 @@
 @section('content')
 
 @php
-    $pedidos_por_dia = $pedidos->groupBy(function ($pedido) {
+    // Pedidos registrados en este mes (agrupados por día de recepción)
+    $pedidos_por_dia = $pedidos->filter(function ($pedido) use ($mes, $anio) {
+        $f = \Carbon\Carbon::parse($pedido->fecha);
+        return $f->month == $mes && $f->year == $anio;
+    })->groupBy(function ($pedido) {
         return \Carbon\Carbon::parse($pedido->fecha)->day;
+    });
+
+    // Marcas de agua de entregas programadas en este mes (cuando fecha_entrega es distinta a fecha de recepción)
+    $entregas_por_dia = $pedidos->filter(function ($pedido) use ($mes, $anio) {
+        if (empty($pedido->fecha_entrega) || $pedido->estado === 'cancelado') {
+            return false;
+        }
+        $fe = \Carbon\Carbon::parse($pedido->fecha_entrega);
+        return $fe->month == $mes && $fe->year == $anio && $pedido->fecha_entrega !== $pedido->fecha;
+    })->groupBy(function ($pedido) {
+        return \Carbon\Carbon::parse($pedido->fecha_entrega)->day;
     });
 
     $dias_en_mes = $primer_dia->daysInMonth;
@@ -189,6 +204,10 @@
                     <span class="w-2.5 h-2.5 rounded-full bg-slate-400 inline-block"></span>
                     Cancelado
                 </span>
+                <span class="flex items-center gap-1.5 text-slate-500">
+                    <span class="w-3.5 h-2.5 rounded-xs border border-dashed border-slate-400 bg-slate-50 inline-block"></span>
+                    Marca de entrega
+                </span>
             </div>
         </div>
 
@@ -255,14 +274,16 @@
                                         @click="open = !open"
                                         @click.outside="open = false"
                                         type="button"
-                                        class="block w-full truncate text-left rounded px-1.5 py-0.5 font-medium transition-colors shadow-2xs cursor-pointer {{ $clases_color }}">
-                                            {{ $pedido->cliente->nombre }}
+                                        class="flex items-center justify-between gap-1 w-full text-left rounded px-1.5 py-0.5 font-medium transition-colors shadow-2xs cursor-pointer {{ $clases_color }}">
+                                        <span class="truncate">{{ $pedido->cliente->nombre }}</span>
+                                        <span class="text-[9px] opacity-65 font-semibold shrink-0">→ {{ $fecha_entrega->format('d/m') }}</span>
                                     </button>
 
                                     <div
                                         x-show="open" x-cloak x-transition
                                         @click.stop
                                         class="absolute z-40 {{ $clases_popover_pos }} w-60 bg-white border border-slate-200 rounded-lg shadow-xl p-3.5 text-xs text-brand-900/80 space-y-1">
+                                        <p><span class="font-bold text-brand-900">Recibido:</span> {{ $pedido->fecha }}</p>
                                         <p><span class="font-bold text-brand-900">Entrega:</span> {{ $pedido->fecha_entrega }}</p>
                                         <p><span class="font-bold text-brand-900">Estado:</span> {{ ucfirst(str_replace('_', ' ', $pedido->estado)) }}</p>
                                         @if ($pedido->descripcion)
@@ -270,6 +291,37 @@
                                         @endif
                                         <p><span class="font-bold text-brand-900">Precio:</span> ${{ number_format($pedido->precio, 0, ',', '.') }}</p>
                                         <a href="{{ route('pedidos.edit', $pedido->id) }}" class="inline-block mt-2 font-bold text-brand-600 hover:text-brand-700 hover:underline">
+                                            Editar pedido &rarr;
+                                        </a>
+                                    </div>
+                                </div>
+                            @endforeach
+
+                            {{-- Marcas de agua de entregas programadas para este día --}}
+                            @foreach (($entregas_por_dia[$dia] ?? []) as $entrega)
+                                <div x-data="{ open: false }" class="relative">
+                                    <button
+                                        @click="open = !open"
+                                        @click.outside="open = false"
+                                        type="button"
+                                        title="Entrega programada del pedido #{{ $entrega->id }} (recibido el {{ $entrega->fecha }})"
+                                        class="block w-full truncate text-left rounded px-1.5 py-0.5 text-[10px] font-medium border border-dashed border-slate-300 bg-slate-50/70 text-slate-500 opacity-65 hover:opacity-100 hover:border-brand-600 hover:text-brand-900 transition-all cursor-pointer">
+                                        ↳ Entrega: {{ $entrega->cliente->nombre }}
+                                    </button>
+
+                                    <div
+                                        x-show="open" x-cloak x-transition
+                                        @click.stop
+                                        class="absolute z-40 {{ $clases_popover_pos }} w-60 bg-white border border-slate-200 rounded-lg shadow-xl p-3.5 text-xs text-brand-900/80 space-y-1">
+                                        <p class="text-[10px] font-bold uppercase tracking-wider text-brand-600">Fecha de entrega programada</p>
+                                        <p><span class="font-bold text-brand-900">Cliente:</span> {{ $entrega->cliente->nombre }} {{ $entrega->cliente->apellido ?? '' }}</p>
+                                        <p><span class="font-bold text-brand-900">Recibido el:</span> {{ $entrega->fecha }}</p>
+                                        <p><span class="font-bold text-brand-900">Estado:</span> {{ ucfirst(str_replace('_', ' ', $entrega->estado)) }}</p>
+                                        @if ($entrega->descripcion)
+                                            <p><span class="font-bold text-brand-900">Descripción:</span> {{ $entrega->descripcion }}</p>
+                                        @endif
+                                        <p><span class="font-bold text-brand-900">Precio:</span> ${{ number_format($entrega->precio, 0, ',', '.') }}</p>
+                                        <a href="{{ route('pedidos.edit', $entrega->id) }}" class="inline-block mt-2 font-bold text-brand-600 hover:text-brand-700 hover:underline">
                                             Editar pedido &rarr;
                                         </a>
                                     </div>

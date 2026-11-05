@@ -30,9 +30,15 @@ class PedidoRepository{
     }
 
     public function listar_por_rango($primer_dia, $ultimo_dia){
-        return pedido::whereBetween('fecha', [$primer_dia, $ultimo_dia])
-        ->with('cliente')
-        ->get();
+        $inicio = $primer_dia instanceof \Carbon\Carbon ? $primer_dia->toDateString() : $primer_dia;
+        $fin = $ultimo_dia instanceof \Carbon\Carbon ? $ultimo_dia->toDateString() : $ultimo_dia;
+
+        return pedido::where(function ($consulta) use ($inicio, $fin) {
+                $consulta->whereBetween('fecha', [$inicio, $fin])
+                        ->orWhereBetween('fecha_entrega', [$inicio, $fin]);
+            })
+            ->with('cliente')
+            ->get();
     }
 
     public function listar_para_kanban($fecha_limite){
