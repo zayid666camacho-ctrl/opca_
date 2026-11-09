@@ -4,9 +4,9 @@ namespace App\repositories;
 
 use App\Models\pedido;
 use App\Models\servicio;
-use GuzzleHttp\Psr7\Request;
+use App\repositories\Contracts\PedidoRepositoryInterface;
 
-class PedidoRepository{
+class PedidoRepository implements PedidoRepositoryInterface{
 
     public function listar(){
         return pedido::with('cliente')->get();

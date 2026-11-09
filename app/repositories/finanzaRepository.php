@@ -1,10 +1,11 @@
 <?php
 
-namespace App\Repositories;
+namespace App\repositories;
 
 use App\Models\finanza;
+use App\repositories\Contracts\FinanzaRepositoryInterface;
 
-class finanzaRepository{
+class finanzaRepository implements FinanzaRepositoryInterface{
 
     public function listar(){
         return finanza::with('pedido.cliente')

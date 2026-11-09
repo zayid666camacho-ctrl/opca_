@@ -11,6 +11,11 @@ class finanza extends Model
 
     protected $fillable = ['monto', 'fecha', 'notas', 'id_pedido'];
 
+    protected $casts = [
+        'monto'     => 'decimal:2',
+        'id_pedido' => 'integer',
+    ];
+
     public function pedido(){
         return $this->belongsTo(pedido::class, 'id_pedido');
     }

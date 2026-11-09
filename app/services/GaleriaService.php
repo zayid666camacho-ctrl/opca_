@@ -1,15 +1,15 @@
 <?php
 
-namespace App\Services;
+namespace App\services;
 
-use App\Repositories\GaleriaRepository;
+use App\repositories\Contracts\GaleriaRepositoryInterface;
 use Illuminate\Support\Facades\Storage;
 
 class GaleriaService
 {
-    private GaleriaRepository $galeriarepository;
+    private GaleriaRepositoryInterface $galeriarepository;
 
-    public function __construct(GaleriaRepository $galeriarepository)
+    public function __construct(GaleriaRepositoryInterface $galeriarepository)
     {
         $this->galeriarepository = $galeriarepository;
     }

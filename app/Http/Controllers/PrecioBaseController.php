@@ -2,7 +2,6 @@
 
 namespace App\Http\Controllers;
 
-use App\Models\precio_base;
 use App\services\PreciobaseService;
 use Illuminate\Http\Request;
 
@@ -33,10 +32,11 @@ class PrecioBaseController extends Controller
     
     public function store(Request $request)
     {
-    $this->preciobaseservice->crear($request->all());
+        $datos = $request->validate($this->reglas());
 
-    return redirect()->route('precio_bases.index')->with('store', 'Precio base creado correctamente');
+        $this->preciobaseservice->crear($datos);
 
+        return redirect()->route('precio_bases.index')->with('store', 'Precio base creado correctamente');
     }
 
     
@@ -56,8 +56,9 @@ class PrecioBaseController extends Controller
     
     public function update(int $id, Request $request)
     {
-        //
-        $this->preciobaseservice->actualizar($id, $request->all());
+        $datos = $request->validate($this->reglas());
+
+        $this->preciobaseservice->actualizar($id, $datos);
         return redirect()->route('precio_bases.index');
     }
 
@@ -67,5 +68,18 @@ class PrecioBaseController extends Controller
         //
         $this->preciobaseservice->delete($id);
         return redirect()->route('precio_bases.index');
+    }
+
+    /**
+     * Reglas de validación compartidas por store() y update().
+     */
+    private function reglas(): array
+    {
+        return [
+            'nombre_prenda' => 'required|string|max:100',
+            'complejidad'   => 'required|in:Baja,Media,Alta',
+            'precio'        => 'required|numeric|min:0|max:99999999.99',
+            'descripcion'   => 'nullable|string|max:500',
+        ];
     }
 }

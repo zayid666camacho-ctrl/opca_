@@ -2,23 +2,28 @@
 
 namespace Database\Seeders;
 
-use App\Models\User;
-use Illuminate\Database\Console\Seeds\WithoutModelEvents;
 use Illuminate\Database\Seeder;
 
 class DatabaseSeeder extends Seeder
 {
-    use WithoutModelEvents;
-
     /**
-     * Seed the application's database.
+     * Orquesta todos los seeders de OPCA en el orden correcto de dependencias.
+     * Uso: php artisan migrate:fresh --seed
      */
     public function run(): void
     {
         $this->call([
+            // 1. Seguridad: rol administrador + usuaria administradora (datos en config/seguridad.php)
+            SeguridadSeeder::class,
+
+            // 2. Catálogos base del taller
             TipoServicioSeeder::class,
             PrecioBaseSeeder::class,
-            SeguridadSeeder::class, // Rol administrador + usuaria administradora inicial
+            InventarioSeeder::class,
+
+            // 3. Datos de demostración (dependen de los catálogos)
+            ClienteSeeder::class,
+            PedidoSeeder::class, // incluye prendas (servicios) y abonos (finanzas)
         ]);
     }
 }

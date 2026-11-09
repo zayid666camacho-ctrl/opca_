@@ -1,6 +1,6 @@
 <?php
 
-namespace App\Repositories\Seguridad;
+namespace App\repositories\Seguridad;
 
 use Illuminate\Database\Eloquent\Collection;
 use Spatie\Permission\Models\Role;

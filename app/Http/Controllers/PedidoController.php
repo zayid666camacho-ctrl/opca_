@@ -4,9 +4,6 @@ namespace App\Http\Controllers;
 
 use App\Http\Requests\StorePedidoCompletoRequest;
 use App\services\NuevoPedidoService;
-
-use App\Models\pedido;
-use App\repositories\PedidoRepository;
 use App\services\ClientesService;
 use App\services\PedidoService;
 use App\services\PreciobaseService;
@@ -100,10 +97,16 @@ class PedidoController extends Controller
      */
     public function update(int $id, Request $request)
     {
-        //
-        $this->pedidoservice->actualizar($id, $request->all());
-        return redirect()->route('pedidos.index');
+        $datos = $request->validate([
+            'fecha'         => 'required|date',
+            'fecha_entrega' => 'required|date|after_or_equal:fecha',
+            'estado'        => 'required|in:recibido,en_proceso,terminado,entregado,cancelado',
+            'descripcion'   => 'nullable|string|max:255',
+            'idcliente'     => 'required|exists:clientes,id',
+        ]);
 
+        $this->pedidoservice->actualizar($id, $datos);
+        return redirect()->route('pedidos.index');
     }
 
     /**

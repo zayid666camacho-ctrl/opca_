@@ -3,8 +3,9 @@
 namespace App\repositories;
 
 use App\Models\precio_base;
+use App\repositories\Contracts\PreciobaseRepositoryInterface;
 
-class PreciobaseRepository{
+class PreciobaseRepository implements PreciobaseRepositoryInterface{
     
     public function listar(){
         $preciobase = precio_base::all();

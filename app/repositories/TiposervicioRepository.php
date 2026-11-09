@@ -3,8 +3,9 @@
 namespace App\repositories;
 
 use App\Models\tipo_servicio;
+use App\repositories\Contracts\TiposervicioRepositoryInterface;
 
-class TiposervicioRepository{
+class TiposervicioRepository implements TiposervicioRepositoryInterface{
 
     public function listar(){
         $tipo_servicio = tipo_servicio::all();

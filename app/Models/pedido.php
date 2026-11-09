@@ -11,6 +11,16 @@ class pedido extends Model
 
     protected $fillable = ['fecha', 'fecha_entrega', 'estado', 'descripcion', 'precio', 'saldo_pendiente', 'idcliente'];
 
+    /**
+     * 'fecha' y 'fecha_entrega' se dejan como texto Y-m-d a propósito:
+     * así se usan directo en los <input type="date"> y en el Calendario.
+     */
+    protected $casts = [
+        'precio'          => 'decimal:2',
+        'saldo_pendiente' => 'decimal:2',
+        'idcliente'       => 'integer',
+    ];
+
     public function cliente(){
         return $this->belongsTo(cliente::class,'idcliente');
     }

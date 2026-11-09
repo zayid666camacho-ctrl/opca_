@@ -1,8 +1,8 @@
 <?php
 
-namespace App\Services\Seguridad;
+namespace App\services\Seguridad;
 
-use App\Repositories\Seguridad\UsuarioRepository;
+use App\repositories\Seguridad\UsuarioRepository;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Hash;
 

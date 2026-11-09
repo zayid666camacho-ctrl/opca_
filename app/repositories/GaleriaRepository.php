@@ -1,10 +1,11 @@
 <?php
 
-namespace App\Repositories;
+namespace App\repositories;
 
 use App\Models\Galeria;
+use App\repositories\Contracts\GaleriaRepositoryInterface;
 
-class GaleriaRepository
+class GaleriaRepository implements GaleriaRepositoryInterface
 {
     /**
      * Lista los trabajos registrados.

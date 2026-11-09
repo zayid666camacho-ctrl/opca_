@@ -2,21 +2,19 @@
 
 namespace App\services;
 
-use App\Models\pedido;
-use App\Models\servicio;
-use App\repositories\PedidoRepository;
-use App\repositories\PreciobaseRepository;
-use App\repositories\servicioRepository;
-use App\repositories\TiposervicioRepository;
+use App\repositories\Contracts\PedidoRepositoryInterface;
+use App\repositories\Contracts\PreciobaseRepositoryInterface;
+use App\repositories\Contracts\ServicioRepositoryInterface;
+use App\repositories\Contracts\TiposervicioRepositoryInterface;
 
 class servicioService{
 
-    private servicioRepository $servicio_repository;
-    private PedidoRepository $pedido_repository;
-    private PreciobaseRepository $preciobase_repository;
-    private TiposervicioRepository $tiposervicio_repository;
+    private ServicioRepositoryInterface $servicio_repository;
+    private PedidoRepositoryInterface $pedido_repository;
+    private PreciobaseRepositoryInterface $preciobase_repository;
+    private TiposervicioRepositoryInterface $tiposervicio_repository;
 
-    public function __construct(servicioRepository $servicio_repository, PedidoRepository $pedido_repository, PreciobaseRepository $preciobase_repository, TiposervicioRepository $tiposervicio_repository) {
+    public function __construct(ServicioRepositoryInterface $servicio_repository, PedidoRepositoryInterface $pedido_repository, PreciobaseRepositoryInterface $preciobase_repository, TiposervicioRepositoryInterface $tiposervicio_repository) {
         $this->servicio_repository = $servicio_repository;
         $this->pedido_repository = $pedido_repository;
         $this->preciobase_repository = $preciobase_repository;

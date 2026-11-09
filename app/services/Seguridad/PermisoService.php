@@ -1,9 +1,9 @@
 <?php
 
-namespace App\Services\Seguridad;
+namespace App\services\Seguridad;
 
-use App\Repositories\Seguridad\PermisoRepository;
-use App\Repositories\Seguridad\RolRepository;
+use App\repositories\Seguridad\PermisoRepository;
+use App\repositories\Seguridad\RolRepository;
 use Exception;
 use Illuminate\Database\Eloquent\Collection;
 use Spatie\Permission\Models\Permission;

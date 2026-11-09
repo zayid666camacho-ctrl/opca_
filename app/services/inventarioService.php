@@ -1,14 +1,14 @@
 <?php
 
-namespace App\Services;
+namespace App\services;
 
-use App\Repositories\InventarioRepository;
+use App\repositories\Contracts\InventarioRepositoryInterface;
 
-class InventarioService
+class inventarioService
 {
-    private InventarioRepository $inventariorepository;
+    private InventarioRepositoryInterface $inventariorepository;
 
-    public function __construct(InventarioRepository $inventariorepository)
+    public function __construct(InventarioRepositoryInterface $inventariorepository)
     {
         $this->inventariorepository = $inventariorepository;
     }

@@ -11,6 +11,13 @@ class servicio extends Model
 
     protected $fillable = ['descripcion', 'precio', 'id_pedido', 'id_precio_bases', 'id_tipo_servicios'];
 
+    protected $casts = [
+        'precio'            => 'decimal:2',
+        'id_pedido'         => 'integer',
+        'id_precio_bases'   => 'integer',
+        'id_tipo_servicios' => 'integer',
+    ];
+
     public function pedido(){
         return $this->belongsTo(pedido::class, 'id_pedido');
     }

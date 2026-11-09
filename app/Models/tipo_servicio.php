@@ -14,7 +14,7 @@ class tipo_servicio extends Model
     protected $fillable = ['servicio', 'descripcion'];
 
     public function servicio(){
-        return $this->hasMany(servicio::class);
+        return $this->hasMany(servicio::class, 'id_tipo_servicios');
     }
 
     /*---------------------------------------------------------------*/

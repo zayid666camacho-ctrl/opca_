@@ -1,16 +1,16 @@
 <?php
 
 namespace App\services;
-use App\Repositories\finanzaRepository;
-use App\repositories\PedidoRepository;
+use App\repositories\Contracts\FinanzaRepositoryInterface;
+use App\repositories\Contracts\PedidoRepositoryInterface;
 use PhpOffice\PhpSpreadsheet\Spreadsheet;
 
 class finanzaService{
 
-    private FinanzaRepository $finanzarepository;
-    private PedidoRepository $pedidorepository;
+    private FinanzaRepositoryInterface $finanzarepository;
+    private PedidoRepositoryInterface $pedidorepository;
 
-    public function __construct(FinanzaRepository $finanzarepository, PedidoRepository $pedidorepository) {
+    public function __construct(FinanzaRepositoryInterface $finanzarepository, PedidoRepositoryInterface $pedidorepository) {
         $this->finanzarepository = $finanzarepository;
         $this->pedidorepository = $pedidorepository;
     }
