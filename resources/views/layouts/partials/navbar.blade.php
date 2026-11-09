@@ -71,6 +71,11 @@
                         <span>Perfil del Taller</span>
                     </a>
 
+                    <a href="{{ route('seguridad.roles.index') }}" class="flex items-center gap-2.5 px-4 py-2.5 text-xs font-medium text-slate-200 hover:bg-white/10 hover:text-white transition-colors">
+                        <span class="w-4 h-4 text-brand-500 shrink-0">@include('layouts.partials.icons', ['icon' => 'shield'])</span>
+                        <span>Seguridad y Roles</span>
+                    </a>
+
                     <a href="{{ route('sitio.index') }}" class="flex items-center gap-2.5 px-4 py-2.5 text-xs font-medium text-slate-200 hover:bg-white/10 hover:text-white transition-colors">
                         <span class="w-4 h-4 text-gold-500 shrink-0">@include('layouts.partials.icons', ['icon' => 'eye'])</span>
                         <span>Ver Sitio Público</span>
