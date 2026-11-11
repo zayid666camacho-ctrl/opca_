@@ -45,7 +45,7 @@ class StorePedidoCompletoRequest extends FormRequest
             'medidas.*' => 'nullable|numeric|between:0,999.99',
 
             'abono_activo' => 'nullable|boolean',
-            'abono_monto'  => 'required_if:abono_activo,1|nullable|numeric|gt:0',
+            'abono_monto'  => 'required_if:abono_activo,1|nullable|numeric|min:1000',
             'abono_fecha'  => 'required_if:abono_activo,1|nullable|date',
             'abono_notas'  => 'nullable|string|max:255',
         ];

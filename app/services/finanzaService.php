@@ -19,6 +19,10 @@ class finanzaService{
         return $this->finanzarepository->listar();
     }
 
+    public function listar_historial(?string $mes_filtro = null){
+        return $this->finanzarepository->listar_historial($mes_filtro);
+    }
+
     public function crear(array $datos){
         $pedido = $this->pedidorepository->buscar($datos['id_pedido']);
 
@@ -31,6 +35,26 @@ class finanzaService{
 
         $this->finanzarepository->crear($datos);
         $this->recalcular_saldo($datos['id_pedido']);
+
+        return ['ok' => true];
+    }
+
+    public function actualizar(int $id, array $datos){
+        $pago = $this->finanzarepository->buscar($id);
+        $pedido = $this->pedidorepository->buscar($pago->id_pedido);
+
+        // El máximo permitido para este pago es el saldo pendiente actual más el monto que ya tenía registrado este mismo pago
+        $maximo_permitido = (float) $pedido->saldo_pendiente + (float) $pago->monto;
+
+        if ((float) $datos['monto'] > $maximo_permitido) {
+            return [
+                'ok' => false,
+                'mensaje' => 'El monto editado no puede superar el saldo disponible del pedido ($' . number_format($maximo_permitido, 2) . ').',
+            ];
+        }
+
+        $this->finanzarepository->actualizar($id, $datos);
+        $this->recalcular_saldo($pago->id_pedido);
 
         return ['ok' => true];
     }

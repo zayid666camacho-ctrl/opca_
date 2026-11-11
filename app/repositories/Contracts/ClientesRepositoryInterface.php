@@ -18,6 +18,8 @@ interface ClientesRepositoryInterface
 
     public function delete(int $id);
 
+    public function tiene_pedidos_activos(int $id): bool;
+
     public function obtener_detalle(int $id);
 
     public function buscar_por_nombre(string $termino);

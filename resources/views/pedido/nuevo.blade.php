@@ -337,11 +337,15 @@
             <div x-show="abono_activo" class="grid grid-cols-1 sm:grid-cols-3 gap-4">
                 <div>
                     <label class="block text-xs font-semibold text-neutral-700 uppercase tracking-wider mb-1">Monto del abono *</label>
-                    <input type="number" step="0.01" min="1" :max="total_prendas()"
+                    <input type="number" step="0.01" min="1000" :max="total_prendas()"
                         name="abono_monto" x-model="abono_monto"
-                        class="w-full border border-slate-300 rounded-lg px-3 py-2 text-sm focus:ring-2 focus:ring-blue-100">
+                        :class="error_abono() ? 'border-red-500 focus:ring-red-100 bg-red-50/40' : 'border-slate-300 focus:ring-blue-100'"
+                        class="w-full border rounded-lg px-3 py-2 text-sm focus:ring-2 transition-colors">
                     <p class="text-xs text-slate-400 mt-1">
-                        Máximo: $<span x-text="total_prendas().toLocaleString('es-CO')"></span>
+                        Mínimo: $1.000 (sin negativos) · Máximo: $<span x-text="total_prendas().toLocaleString('es-CO')"></span>
+                    </p>
+                    <p x-show="error_abono()" x-cloak x-text="error_abono()"
+                        class="text-xs font-semibold text-red-600 mt-1.5 bg-red-50 border border-red-200 rounded-lg px-2.5 py-1.5">
                     </p>
                 </div>
                 <div>
@@ -432,7 +436,16 @@
                 class="px-4 py-2 rounded-lg border border-slate-300 text-slate-600 text-sm font-medium hover:bg-slate-50 transition-colors">
                 ← Atrás
             </button>
-            <span x-show="paso === 1"></span>
+            @php
+                $url_anterior = url()->previous();
+                if ($url_anterior === url()->current() || str_contains($url_anterior, '/pedidos/nuevo') || str_contains($url_anterior, '/pedidos/guardar')) {
+                    $url_anterior = route('calendario.index');
+                }
+            @endphp
+            <a href="{{ $url_anterior }}" x-show="paso === 1"
+                class="px-4 py-2 rounded-lg border border-slate-300 text-slate-600 text-sm font-medium hover:bg-slate-50 transition-colors">
+                ← Volver
+            </a>
 
             <button type="button" @click="siguiente()" x-show="paso < pasos.length" x-cloak
                 :disabled="!puede_avanzar()"
@@ -606,6 +619,23 @@
             abono_fecha: fecha_inicial,
             abono_notas: '',
 
+            error_abono() {
+                if (!this.abono_activo || this.abono_monto === '' || this.abono_monto === null) {
+                    return '';
+                }
+                const monto = Number(this.abono_monto);
+                if (isNaN(monto) || monto < 0) {
+                    return 'No se permiten valores negativos en el abono.';
+                }
+                if (monto < 1000) {
+                    return 'El monto mínimo del abono es de $1.000.';
+                }
+                if (monto > this.total_prendas()) {
+                    return 'El abono no puede superar el valor total del pedido ($' + this.total_prendas().toLocaleString('es-CO') + ').';
+                }
+                return '';
+            },
+
             // ===== Navegación entre pasos =====
             puede_avanzar() {
                 if (this.paso === 1) {
@@ -624,7 +654,15 @@
                 if (this.paso === 4) {
                     return this.fecha_entrega !== '' && this.fecha_entrega >= this.fecha;
                 }
-                // Pasos 3 (medidas opcionales), 5 (abono opcional): siempre puede avanzar
+                if (this.paso === 5 && this.abono_activo) {
+                    const monto = Number(this.abono_monto);
+                    return this.abono_monto !== ''
+                        && !isNaN(monto)
+                        && monto >= 1000
+                        && monto <= this.total_prendas()
+                        && this.abono_fecha !== '';
+                }
+                // Paso 3 (medidas opcionales) y Paso 5 sin abono activo: siempre puede avanzar
                 return true;
             },
 

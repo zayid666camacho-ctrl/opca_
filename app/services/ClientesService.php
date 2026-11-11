@@ -30,7 +30,16 @@ class ClientesService{
     }
 
     public function delete(int $id){
-        return $this->clientesrepository->delete($id);
+        if ($this->clientesrepository->tiene_pedidos_activos($id)) {
+            return [
+                'ok' => false,
+                'mensaje' => 'No se puede eliminar este cliente porque tiene pedidos activos en el taller (recibido, en proceso o terminado).',
+            ];
+        }
+
+        $this->clientesrepository->delete($id);
+
+        return ['ok' => true];
     }
 
     public function obtener_detalle(int $id){

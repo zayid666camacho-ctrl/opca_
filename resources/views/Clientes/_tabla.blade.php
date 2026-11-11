@@ -25,11 +25,11 @@
                 </a>
                 <form action="{{ route('clientes.destroy', $cliente->id) }}"
                     method="POST"
-                    onsubmit="return confirm('¿Eliminar este cliente?');">
+                    onsubmit="return confirm('¿Estás seguro de que deseas eliminar al cliente {{ addslashes($cliente->nombre . ' ' . $cliente->apellido) }}?');">
                     @csrf
                     @method('DELETE')
                     <button type="submit"
-                        class="w-5 h-5 text-brand-900/45 hover:text-rose-600 transition-colors" title="Eliminar cliente">
+                        class="w-5 h-5 text-brand-900/45 hover:text-rose-600 transition-colors cursor-pointer" title="Eliminar cliente">
                         @include('layouts.partials.icons', ['icon' => 'trash'])
                     </button>
                 </form>

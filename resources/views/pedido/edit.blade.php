@@ -149,16 +149,20 @@
                                     <td class="px-4 py-3 text-right font-semibold text-brand-900">
                                         ${{ number_format($servicio->precio, 2) }}
                                     </td>
-                                    <td class="px-4 py-3">
-                                        <form action="{{ route('servicios.destroy', $servicio->id) }}" method="POST"
-                                            class="flex justify-end"
-                                            onsubmit="return confirm('¿Quitar esta prenda del pedido?');">
-                                            @csrf
-                                            @method('DELETE')
-                                            <button type="submit" class="w-5 h-5 text-brand-900/40 hover:text-rose-600 transition-colors" title="Quitar">
-                                                @include('layouts.partials.icons', ['icon' => 'trash'])
-                                            </button>
-                                        </form>
+                                    <td class="px-4 py-3 text-right">
+                                        @if ($pedido->servicios->count() > 1)
+                                            <form action="{{ route('servicios.destroy', $servicio->id) }}" method="POST"
+                                                class="flex justify-end"
+                                                onsubmit="return confirm('¿Estás seguro de que quieres eliminar esta prenda del pedido?');">
+                                                @csrf
+                                                @method('DELETE')
+                                                <button type="submit" class="w-5 h-5 text-brand-900/40 hover:text-rose-600 transition-colors cursor-pointer" title="Quitar prenda">
+                                                    @include('layouts.partials.icons', ['icon' => 'trash'])
+                                                </button>
+                                            </form>
+                                        @else
+                                            <span class="text-xs text-brand-900/30 select-none" title="Un pedido debe conservar al menos una prenda">—</span>
+                                        @endif
                                     </td>
                                 </tr>
                             @empty

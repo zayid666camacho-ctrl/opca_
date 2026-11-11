@@ -3,7 +3,11 @@
 namespace App\repositories;
 
 use App\Models\cliente;
+use App\Models\finanza;
+use App\Models\pedido;
+use App\Models\servicio;
 use App\repositories\Contracts\ClientesRepositoryInterface;
+use Illuminate\Support\Facades\DB;
 
 class ClientesRepository implements ClientesRepositoryInterface{
 
@@ -27,7 +31,24 @@ class ClientesRepository implements ClientesRepositoryInterface{
     }
 
     public function delete(int $id){
-        cliente::destroy($id);
+        DB::transaction(function () use ($id) {
+            $ids_pedidos = pedido::where('idcliente', $id)->pluck('id');
+
+            if ($ids_pedidos->isNotEmpty()) {
+                servicio::whereIn('id_pedido', $ids_pedidos)->delete();
+                finanza::whereIn('id_pedido', $ids_pedidos)->delete();
+                pedido::whereIn('id', $ids_pedidos)->delete();
+            }
+
+            cliente::destroy($id);
+        });
+    }
+
+    public function tiene_pedidos_activos(int $id): bool
+    {
+        return pedido::where('idcliente', $id)
+            ->whereIn('estado', ['recibido', 'en_proceso', 'terminado'])
+            ->exists();
     }
 
     public function obtener_detalle(int $id){

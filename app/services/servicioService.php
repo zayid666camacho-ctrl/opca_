@@ -44,10 +44,30 @@ class servicioService{
 
     public function delete(int $id){
         $servicio = $this->servicio_repository->buscars($id);
-        $idpedido = $servicio->id_pedido;
+        $idpedido = $servicio->id_pedido ?? $servicio->id_pedidos;
+
+        $prendas_pedido = $this->servicio_repository->listar_por_pedido($idpedido);
+        if ($prendas_pedido->count() <= 1) {
+            return [
+                'ok' => false,
+                'mensaje' => 'No se puede quitar la única prenda del pedido. Todo pedido debe tener al menos una prenda.',
+            ];
+        }
+
+        $nuevo_total = $prendas_pedido->sum('precio') - $servicio->precio;
+        $pagado = $this->pedido_repository->total_pagado($idpedido);
+
+        if ($nuevo_total < $pagado) {
+            return [
+                'ok' => false,
+                'mensaje' => 'No se puede quitar esta prenda porque el cliente ya abonó $' . number_format($pagado, 2) . ' y superaría el nuevo total del pedido.',
+            ];
+        }
 
         $this->servicio_repository->delete($id);
         $this->recalcular_pedido($idpedido);
+
+        return ['ok' => true];
     }
 
     private function recalcular_pedido(int $idpedido){

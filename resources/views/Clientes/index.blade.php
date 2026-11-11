@@ -23,12 +23,6 @@
         </a>
     </div>
 
-    @if (session('success'))
-        <div class="bg-emerald-50 border border-emerald-300 text-emerald-800 px-4 py-3 rounded-xl text-sm shadow-xs">
-            {{ session('success') }}
-        </div>
-    @endif
-
     <div x-data="{ termino: '' }" class="bg-white rounded-2xl border border-brand-200/80 shadow-xs overflow-hidden">
 
         <div class="p-4 sm:p-5 bg-brand-50/50 border-b border-brand-100">
