@@ -105,8 +105,12 @@ class ServicioController extends Controller
      */
     public function destroy(int $id)
     {
-        //
-        $this->servicio_service->delete($id);
+        $resultado = $this->servicio_service->delete($id);
+
+        if (is_array($resultado) && !$resultado['ok']) {
+            return redirect()->back()->with('error', $resultado['mensaje']);
+        }
+
         return redirect()->back()->with('success', 'Prenda quitada del pedido.');
     }
 }

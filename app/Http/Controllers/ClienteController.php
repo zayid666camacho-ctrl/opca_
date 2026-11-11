@@ -63,9 +63,13 @@ class ClienteController extends Controller
 
     public function destroy(int $id)
     {
-        //
-        $this->clientesservice->delete($id);
-        return redirect()->route('clientes.index');
+        $resultado = $this->clientesservice->delete($id);
+
+        if (!$resultado['ok']) {
+            return redirect()->route('clientes.index')->with('error', $resultado['mensaje']);
+        }
+
+        return redirect()->route('clientes.index')->with('success', 'Cliente eliminado correctamente.');
     }
 
     public function buscar(Request $request)

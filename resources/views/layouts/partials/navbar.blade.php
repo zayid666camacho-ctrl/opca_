@@ -8,7 +8,7 @@
 
         {{-- Izquierda: Emblema OPCA + Título de la pantalla --}}
         <div class="flex items-center gap-3 min-w-0">
-            <a href="{{ route('calendario.index') }}" class="flex items-center gap-2.5 group shrink-0" title="Ir al Panel Principal y Calendario">
+            <a href="{{ route('panel.index') }}" class="flex items-center gap-2.5 group shrink-0" title="Ir al Panel Principal">
                 <img src="{{ asset('img/logo-opca.png') }}" alt="OPCA" class="h-10 w-10 object-contain drop-shadow group-hover:scale-105 transition-transform">
                 <div class="hidden sm:block leading-tight pr-2.5 border-r border-white/15">
                     <span class="font-extrabold text-base tracking-tight text-white block">OPCA</span>
@@ -26,17 +26,17 @@
 
             @yield('header-actions')
 
-            @if (!request()->routeIs('calendario.index'))
-                <a href="{{ route('calendario.index') }}"
+            @if (!request()->routeIs('panel.index'))
+                <a href="{{ route('panel.index') }}"
                     class="inline-flex items-center gap-1.5 px-3.5 py-2 rounded-lg bg-brand-600 hover:bg-brand-700 text-white font-semibold text-xs transition shadow-xs">
                     <span class="w-4 h-4">@include('layouts.partials.icons', ['icon' => 'home'])</span>
-                    <span>Panel y Calendario</span>
+                    <span>Panel</span>
                 </a>
             @else
-                <a href="{{ route('pedidos.nuevo') }}"
+                <a href="{{ route('inventario.index') }}"
                     class="inline-flex items-center gap-1.5 px-4 py-2 rounded-lg bg-brand-600 hover:bg-brand-700 text-white text-xs font-semibold shadow-xs transition-colors">
-                    <span class="w-4 h-4">@include('layouts.partials.icons', ['icon' => 'plus-circle'])</span>
-                    <span>Nuevo Pedido</span>
+                    <span class="w-4 h-4">@include('layouts.partials.icons', ['icon' => 'box'])</span>
+                    <span>Inventario</span>
                 </a>
             @endif
 

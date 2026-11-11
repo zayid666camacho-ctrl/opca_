@@ -21,12 +21,13 @@ class FinanzaController extends Controller
     public function index(Request $request)
     {
         $anio = (int) $request->query('anio', now()->year);
+        $mes_historial = $request->query('mes_historial');
 
-        $pagos = $this->finanzaservice->listar();
+        $pagos = $this->finanzaservice->listar_historial($mes_historial);
         $pedidos = $this->pedidoservice->listar_con_saldo();
         $resumen = $this->finanzaservice->resumen_por_mes($anio);
 
-        return view('finanzas.index', compact('pagos', 'pedidos', 'resumen', 'anio'));
+        return view('finanzas.index', compact('pagos', 'pedidos', 'resumen', 'anio', 'mes_historial'));
     }
 
     public function store(Request $request)
@@ -44,10 +45,24 @@ class FinanzaController extends Controller
         return redirect()->route('finanzas.index')->with('success', 'Pago registrado.');
     }
 
-    public function destroy(int $id)
+    public function update(int $id, Request $request)
     {
-        $this->finanzaservice->delete($id);
-        return redirect()->route('finanzas.index')->with('success', 'Pago eliminado.');
+        $datos = $request->validate([
+            'monto' => 'required|numeric|min:1000',
+            'fecha' => 'required|date',
+            'notas' => 'nullable|string|max:255',
+        ]);
+
+        $resultado = $this->finanzaservice->actualizar($id, $datos);
+
+        if (!$resultado['ok']) {
+            return redirect()->back()->with('error', $resultado['mensaje']);
+        }
+
+        return redirect()->route('finanzas.index', array_filter([
+            'anio' => $request->query('anio'),
+            'mes_historial' => $request->query('mes_historial'),
+        ]))->with('success', 'Pago actualizado correctamente.');
     }
 
     public function exportar(Request $request)

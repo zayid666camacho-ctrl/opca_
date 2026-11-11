@@ -33,8 +33,9 @@ Route::get('/mi-pedido', [SitioPublicoController::class, 'estado_pedido'])->name
 */
 Route::middleware('auth')->group(function () {
 
-    // El Calendario es la pantalla principal del panel de administración
-    Route::redirect('/admin', '/calendario');
+    // El Panel Principal es la pantalla de bienvenida y el Calendario tiene su vista dedicada
+    Route::redirect('/admin', '/panel');
+    Route::get('/panel', [CalendarioController::class, 'panel'])->name('panel.index');
     Route::get('/calendario', [CalendarioController::class, 'index'])->name('calendario.index');
 
     Route::get('/clientes/buscar', [ClienteController::class, 'buscar'])->name('clientes.buscar');
@@ -61,7 +62,7 @@ Route::middleware('auth')->group(function () {
     Route::put('/perfil-taller', [SitioPublicoController::class, 'actualizar_perfil_taller'])->name('taller.perfil.actualizar');
 
     Route::get('/finanzas/exportar', [FinanzaController::class, 'exportar'])->name('finanzas.exportar');
-    Route::resource('finanzas', FinanzaController::class)->only(['index', 'store', 'destroy']);
+    Route::resource('finanzas', FinanzaController::class)->only(['index', 'store', 'update']);
 
     Route::resource('inventario', InventarioController::class);
 

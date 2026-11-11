@@ -199,9 +199,9 @@
 
         @php
             $estilos_tarjetas = [
-                ['borde' => 'border-t-4 border-t-brand-600', 'icono' => 'bg-brand-100 text-brand-700'],
-                ['borde' => 'border-t-4 border-t-gold-500',  'icono' => 'bg-gold-100 text-gold-600'],
-                ['borde' => 'border-t-4 border-t-brand-800', 'icono' => 'bg-accent-100 text-brand-800'],
+                ['borde' => 'border-t-4 border-t-brand-600'],
+                ['borde' => 'border-t-4 border-t-gold-500'],
+                ['borde' => 'border-t-4 border-t-brand-800'],
             ];
         @endphp
 
@@ -210,11 +210,7 @@
                 @php $estilo = $estilos_tarjetas[$i % 3]; @endphp
                 <div class="bg-white/95 backdrop-blur-sm p-8 rounded-2xl border border-white/20 {{ $estilo['borde'] }} shadow-lg hover:shadow-xl transition-all flex flex-col justify-between">
                     <div>
-                        <div class="w-12 h-12 rounded-xl {{ $estilo['icono'] }} flex items-center justify-center mb-6">
-                            <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M14.121 14.121L19 19m-7-7l7-7m-7 7l-2.879 2.879M12 12L9.121 9.121m0 5.758a3 3 0 10-4.243 4.243 3 3 0 004.243-4.243zm0-5.758a3 3 0 10-4.243-4.243 3 3 0 004.243 4.243z"/>
-                            </svg>
-                        </div>
+                        
                         <h3 class="text-xl font-bold text-brand-900 mb-2">{{ $servicio['titulo'] }}</h3>
                         <p class="text-sm text-brand-900/75 leading-relaxed">{{ $servicio['descripcion'] }}</p>
                     </div>
@@ -248,7 +244,11 @@
                     </div>
                     <div>
                         <span class="text-xs font-semibold text-brand-900/60 uppercase tracking-wider">Teléfono / WhatsApp</span>
-                        <a href="https://wa.me/{{ $taller['whatsapp'] }}" class="block font-bold text-brand-900 hover:text-brand-600 transition-colors mt-0.5">
+                        <a 
+                            href="https://wa.me/{{ $taller['whatsapp'] }}?text={{ urlencode('Hola Creaciones Nayja, deseo información sobre sus servicios.') }}" 
+                            target="_blank" 
+                            rel="noopener noreferrer"
+                            class="block font-bold text-brand-900 hover:text-brand-600 transition-colors mt-0.5">
                             {{ $taller['telefono'] }}
                         </a>
                         <span class="text-xs text-brand-900/60">Atención rápida por chat</span>

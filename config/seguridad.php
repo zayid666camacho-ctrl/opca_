@@ -25,7 +25,7 @@ return [
 
     'auditar_prefijos' => ['App\\'],
 
-    'redirect_despues_login' => '/calendario',
+    'redirect_despues_login' => '/panel',
 
     'admin' => [
         'name' => env('SEGURIDAD_ADMIN_NAME', 'Administrador'),

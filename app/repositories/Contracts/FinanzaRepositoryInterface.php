@@ -10,9 +10,13 @@ interface FinanzaRepositoryInterface
 {
     public function listar();
 
+    public function listar_historial(?string $mes_filtro = null);
+
     public function crear(array $datos);
 
     public function buscar(int $id);
+
+    public function actualizar(int $id, array $datos);
 
     public function delete(int $id);
 

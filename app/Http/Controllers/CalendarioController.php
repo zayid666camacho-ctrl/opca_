@@ -14,6 +14,10 @@ class CalendarioController extends Controller
         $this->pedido_service = $pedido_service;
     }
 
+    public function panel()
+    {
+        return view('panel.index');
+    }
 
     public function index(Request $request){
         $mes = $request->query('mes', now()->month);
