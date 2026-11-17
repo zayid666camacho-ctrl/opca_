@@ -59,7 +59,10 @@
     {{-- Superposición oscura cálida para contraste perfecto del texto --}}
     <div class="fixed inset-0 bg-gradient-to-r from-brand-900/95 via-brand-900/85 to-brand-900/75 pointer-events-none"></div>
 
-    <main class="relative z-10 w-full max-w-5xl mx-auto px-6 sm:px-10 lg:px-12 py-14">
+    {{-- Bloqueo en pantallas móviles (solo permite acceso desde computador) --}}
+    @include('layouts.partials.bloqueo_movil')
+
+    <main class="hidden lg:block relative z-10 w-full max-w-5xl mx-auto px-6 sm:px-10 lg:px-12 py-14">
 
         {{-- Identidad superior: Software OPCA + Taller Creaciones Nayja --}}
         <div class="flex flex-wrap items-center gap-4 mb-8">

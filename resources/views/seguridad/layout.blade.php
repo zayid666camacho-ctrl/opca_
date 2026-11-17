@@ -37,7 +37,10 @@
 </head>
 <body class="h-full text-slate-800 antialiased">
 
-    <div x-data="{ sidebarOpen: false }" class="min-h-screen flex">
+    {{-- Bloqueo en pantallas móviles (solo permite gestión desde computador) --}}
+    @include('layouts.partials.bloqueo_movil')
+
+    <div x-data="{ sidebarOpen: false }" class="hidden lg:flex min-h-screen">
 
         {{-- Overlay móvil --}}
         <div

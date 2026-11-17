@@ -89,10 +89,12 @@
                         Consultar mi pedido
                     </a>
 
-                    {{-- Si ya hay sesión se va al panel; si no, al formulario de ingreso --}}
+                    {{-- Si ya hay sesión se va al panel; si no, al formulario de ingreso
+                    y en este momento el boton esta oculto (ignorado)
                     <a href="{{ auth()->check() ? route('calendario.index') : route('login') }}" class="px-4 py-2 text-xs font-semibold text-brand-800 border border-brand-200 hover:bg-brand-100/60 rounded-lg transition-colors">
                         {{ auth()->check() ? 'Ir al panel' : 'Acceso Taller' }}
                     </a>
+                    --}}
                 </div>
             </div>
         </div>
@@ -108,7 +110,10 @@
         <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
             <div class="flex flex-col md:flex-row items-center justify-between gap-6">
                 <div class="flex items-center gap-3">
-                    <img src="{{ asset('img/logo-nayja.jpg') }}" alt="Logo Creaciones Nayja" class="w-10 h-10 rounded-full object-cover ring-2 ring-gold-500/50">
+                    {{-- esto es un enlace al panel o al formulario de ingreso --}}
+                    <a href="{{ auth()->check() ? route('panel.index') : route('login') }}" class="shrink-0">
+                        <img src="{{ asset('img/logo-nayja.jpg') }}" alt="Logo Creaciones Nayja" class="w-10 h-10 rounded-full object-cover ring-2 ring-gold-500/50">
+                    </a>
                     <div>
                         <span class="text-lg font-bold tracking-tight text-white block leading-tight">Creaciones Nayja</span>
                         <p class="text-xs text-slate-400 mt-0.5">Confección y arreglos de costura con dedicación y detalle.</p>

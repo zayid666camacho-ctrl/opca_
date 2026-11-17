@@ -71,20 +71,25 @@
 </head>
 <body class="h-full bg-[#F4F5F7] text-brand-900 antialiased flex flex-col min-h-screen">
 
-    @include('layouts.partials.navbar')
+    {{-- Bloqueo en pantallas móviles (solo permite gestión desde computador) --}}
+    @include('layouts.partials.bloqueo_movil')
 
-    <main class="flex-1 p-4 sm:p-6 lg:p-8">
-        @if (session('success'))
-            <x-alert type="success" class="mb-6">{{ session('success') }}</x-alert>
-        @endif
-        @if (session('error'))
-            <x-alert type="error" class="mb-6">{{ session('error') }}</x-alert>
-        @endif
+    <div class="hidden lg:flex lg:flex-col min-h-screen">
+        @include('layouts.partials.navbar')
 
-        @yield('content')
-    </main>
+        <main class="flex-1 p-4 sm:p-6 lg:p-8">
+            @if (session('success'))
+                <x-alert type="success" class="mb-6">{{ session('success') }}</x-alert>
+            @endif
+            @if (session('error'))
+                <x-alert type="error" class="mb-6">{{ session('error') }}</x-alert>
+            @endif
 
-    @include('layouts.partials.footer')
+            @yield('content')
+        </main>
+
+        @include('layouts.partials.footer')
+    </div>
 
     <script src="https://cdn.jsdelivr.net/npm/alpinejs@3.14.1/dist/cdn.min.js" defer></script>
 
